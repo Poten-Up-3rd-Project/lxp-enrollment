@@ -1,0 +1,53 @@
+package com.lxp.enrollment.domain.model.vo;
+
+import com.lxp.common.domain.model.ValueObject;
+import com.lxp.enrollment.domain.model.enums.CancelReasonType;
+import com.lxp.enrollment.domain.model.enums.CancelType;
+
+import java.time.Instant;
+
+public class CancelDetails extends ValueObject {
+    private Instant canceledAt;
+    private CancelType cancelType;
+    private CancelReasonType cancelReasonType;
+    private String cancelReasonComment;
+
+    @Override
+    protected Object[] getEqualityComponents() {
+        return new Object[]{
+                canceledAt,
+                cancelType,
+                cancelReasonType,
+                cancelReasonComment
+        };
+    }
+
+    private CancelDetails(
+            Instant canceledAt,
+            CancelType cancelType,
+            CancelReasonType cancelReasonType,
+            String cancelReasonComment
+    ) {
+        this.canceledAt = canceledAt;
+        this.cancelType = cancelType;
+        this.cancelReasonType = cancelReasonType;
+        this.cancelReasonComment = cancelReasonComment;
+    }
+
+    public static CancelDetails of(
+            Instant canceledAt,
+            CancelType cancelType,
+            CancelReasonType cancelReasonType,
+            String cancelReasonComment
+    ) {
+        return new CancelDetails(canceledAt, cancelType, cancelReasonType, cancelReasonComment);
+    }
+
+    public static CancelDetails now(
+            CancelType cancelType,
+            CancelReasonType cancelReasonType,
+            String cancelReasonComment
+    ) {
+        return new CancelDetails(Instant.now(), cancelType, cancelReasonType, cancelReasonComment);
+    }
+}
