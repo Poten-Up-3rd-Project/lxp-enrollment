@@ -11,15 +11,15 @@ public enum EnrollmentErrorCode implements ErrorCode {
             "허용되지 않은 수강 상태 변경: IN_PROGRESS 상태로의 변경은 오직 ENROLLED 상태에서만 가능합니다.",
             "BAD_REQUEST"),
     INVALID_STATUS_CHANGE_INTO_CANCELLED(
-            "ENROLLMENT_0003",
+            "ENROLLMENT_0004",
             "허용되지 않은 수강 상태 변경: CANCELLED 상태로의 변경은 오직 ENROLLED, IN_PROGRESS 상태에서만 가능합니다.",
             "BAD_REQUEST"),
     INVALID_STATUS_CHANGE_INTO_COMPLETED(
-            "ENROLLMENT_0003",
+            "ENROLLMENT_0005",
             "허용되지 않은 수강 상태 변경: COMPLETED 상태로의 변경은 오직 IN_PROGRESS 상태에서만 가능합니다.",
             "BAD_REQUEST"),
     INVALID_STATUS_CHANGE_INTO_ENROLLED(
-            "ENROLLMENT_0003",
+            "ENROLLMENT_0006",
             "허용되지 않은 수강 상태 변경: ENROLLED 상태로의 변경은 오직 CANCELLED 상태에서만 가능합니다.",
             "BAD_REQUEST"),
     ;
