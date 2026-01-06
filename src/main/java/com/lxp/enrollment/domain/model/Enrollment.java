@@ -140,6 +140,14 @@ public class Enrollment extends AggregateRoot<UUID> {
     }
 
     public void delete() {
+
+        if (enrollmentStatus.equals(EnrollmentStatus.ENROLLED)
+            || enrollmentStatus.equals(EnrollmentStatus.IN_PROGRESS)) {
+
+            throw new EnrollmentException(
+                    EnrollmentErrorCode.INVALID_DELETION_ATTEMPT_FROM_ENROLLED_OR_IN_PROGRESS_STATUS);
+        }
+
         deletedAt = Instant.now();
     }
 

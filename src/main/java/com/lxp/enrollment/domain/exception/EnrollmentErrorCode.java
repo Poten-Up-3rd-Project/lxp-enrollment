@@ -22,6 +22,11 @@ public enum EnrollmentErrorCode implements ErrorCode {
             "ENROLLMENT_0006",
             "허용되지 않은 수강 상태 변경: ENROLLED 상태로의 변경은 오직 CANCELLED 상태에서만 가능합니다.",
             "BAD_REQUEST"),
+    INVALID_DELETION_ATTEMPT_FROM_ENROLLED_OR_IN_PROGRESS_STATUS(
+            "ENROLLMENT_0007",
+            "ENROLLED 또는 IN_PROGRESS 상태일때는 수강 기록을 삭제할 수 없습니다.",
+            "BAD_REQUEST"
+    ),
     ;
 
     private final String code;
