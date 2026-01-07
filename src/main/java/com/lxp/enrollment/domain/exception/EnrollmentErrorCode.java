@@ -37,6 +37,11 @@ public enum EnrollmentErrorCode implements ErrorCode {
             "수강 정보가 없습니다.",
             "NOT_FOUND"
     ),
+    INVALID_CHRONOLOGY(
+            "ENROLLMENT_0008",
+            "시점 정합성이 깨졌습니다.",
+            "BAD_REQUEST"
+    ),
     ;
 
     private final String code;
