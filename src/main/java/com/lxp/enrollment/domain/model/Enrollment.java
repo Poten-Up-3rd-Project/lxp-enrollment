@@ -135,6 +135,10 @@ public class Enrollment extends AggregateRoot<UUID> {
     }
 
     public void reEnroll() {
+        enrolledAt = Instant.now();
+        activatedAt = null;
+        deletedAt = null;
+        completedAt = null;
         cancelDetails = null;
         enrollmentStatus = enrollmentStatus.toEnrolled();
     }
