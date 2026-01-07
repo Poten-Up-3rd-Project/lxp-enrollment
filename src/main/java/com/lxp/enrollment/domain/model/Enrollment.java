@@ -112,6 +112,8 @@ public class Enrollment extends AggregateRoot<UUID> {
 
     public void begin() {
         activatedAt = Instant.now();
+        validateDatesOrder();
+
         enrollmentStatus = enrollmentStatus.toInProgress();
     }
 
@@ -124,6 +126,8 @@ public class Enrollment extends AggregateRoot<UUID> {
         // To Do: 취소 정책 여기에 적용해야 함
         
         enrollmentStatus = enrollmentStatus.toCancelled();
+        validateDatesOrder();
+
         this.cancelDetails = CancelDetails.now(cancelType, cancelReasonType, cancelReasonComment);
 
         this.registerEvent(new EnrollmentCancelled(id.toString(), courseId.toString(), userId.toString()));
@@ -131,6 +135,8 @@ public class Enrollment extends AggregateRoot<UUID> {
 
     public void complete() {
         completedAt = Instant.now();
+        validateDatesOrder();
+
         enrollmentStatus = enrollmentStatus.toCompleted();
     }
 
@@ -153,6 +159,21 @@ public class Enrollment extends AggregateRoot<UUID> {
         }
 
         deletedAt = Instant.now();
+        validateDatesOrder();
+    }
+
+    // ---------- validators
+
+    private void validateDatesOrder() {
+        if (enrolledAt.isAfter(activatedAt)
+            || enrolledAt.isAfter(deletedAt)
+            || enrolledAt.isAfter(cancelDetails.cancelledAt())
+            || enrolledAt.isAfter(completedAt)
+            || activatedAt.isAfter(completedAt)
+            || (cancelDetails.cancelledAt() != null & completedAt != null)
+        ) {
+            throw new EnrollmentException(EnrollmentErrorCode.INVALID_CHRONOLOGY);
+        }
     }
 
     // ---------- getters

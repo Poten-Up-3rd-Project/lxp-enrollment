@@ -27,6 +27,11 @@ public enum EnrollmentErrorCode implements ErrorCode {
             "ENROLLED 또는 IN_PROGRESS 상태일때는 수강 기록을 삭제할 수 없습니다.",
             "BAD_REQUEST"
     ),
+    INVALID_CHRONOLOGY(
+            "ENROLLMENT_0008",
+            "시점 정합성이 깨졌습니다.",
+            "BAD_REQUEST"
+    ),
     ;
 
     private final String code;
