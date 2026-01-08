@@ -199,6 +199,18 @@ public class Enrollment extends AggregateRoot<UUID> {
         return this.enrolledAt;
     }
 
+    public Instant activatedAt() {
+        return this.activatedAt;
+    }
+
+    public Instant completedAt() {
+        return this.completedAt;
+    }
+
+    public Instant deletedAt() {
+        return this.deletedAt;
+    }
+
     public EnrollmentStatus enrollmentStatus() {
         return this.enrollmentStatus;
     }
