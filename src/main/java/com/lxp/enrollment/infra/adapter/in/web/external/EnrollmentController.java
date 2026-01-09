@@ -28,7 +28,7 @@ public class EnrollmentController {
     }
 
     @PostMapping
-    public ResponseEntity<ApiResponse<EnrollCourseResponse>> enrollCourse(
+    public ResponseEntity<EnrollCourseResponse> enrollCourse(
             @RequestBody @Valid EnrollCourseRequest request
     ) {
         EnrollCourseResult result = enrollCourseUseCase.enroll(request.userId(), request.courseId());
@@ -40,6 +40,6 @@ public class EnrollmentController {
                 DateTimeUtils.toKstDateTime(result.enrolledAt())
         );
 
-        return ResponseEntity.ok(ApiResponse.success(body));
+        return ResponseEntity.ok(body);
     }
 }
