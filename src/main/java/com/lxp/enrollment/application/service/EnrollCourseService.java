@@ -19,6 +19,9 @@ public class EnrollCourseService implements EnrollCourseUseCase {
 
     @Override
     public EnrollCourseResult enroll(UUID userId, UUID courseId) {
+
+        // To Do: content 서비스에 api 요청 전송해서 Course 존재 여부 검증 (동기 방식으로)
+
         Enrollment created = enrollmentRepository.create(Enrollment.create(userId, courseId));
         return new EnrollCourseResult(
                 created.id(),
