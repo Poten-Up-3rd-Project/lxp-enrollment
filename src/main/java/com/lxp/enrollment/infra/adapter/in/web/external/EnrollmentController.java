@@ -1,6 +1,7 @@
 package com.lxp.enrollment.infra.adapter.in.web.external;
 
 import com.lxp.common.infrastructure.exception.ApiResponse;
+import com.lxp.common.util.DateTimeUtils;
 import com.lxp.enrollment.application.port.in.EnrollCourseUseCase;
 import com.lxp.enrollment.application.port.in.dto.EnrollCourseResult;
 import com.lxp.enrollment.infra.adapter.in.web.external.request.EnrollCourseRequest;
@@ -36,15 +37,9 @@ public class EnrollmentController {
                 request.userId(),
                 request.courseId(),
                 result.enrollmentStatus().name(),
-                toKstDateTime(result.enrolledAt())
+                DateTimeUtils.toKstDateTime(result.enrolledAt())
         );
 
         return ResponseEntity.ok(ApiResponse.success(body));
-    }
-
-    // ---------- Helper methods
-
-    private static OffsetDateTime toKstDateTime(Instant at) {
-        return at.atZone(ZoneId.of("Asia/Seoul")).toOffsetDateTime();
     }
 }
