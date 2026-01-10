@@ -32,8 +32,6 @@ dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-validation'
     testImplementation 'org.springframework.amqp:spring-rabbit-test'
     runtimeOnly 'com.mysql:mysql-connector-j'
-    developmentOnly 'org.springframework.boot:spring-boot-docker-compose'
-    implementation 'org.springframework.boot:spring-boot-starter-data-redis'
 
     implementation 'com.github.Poten-Up-3rd-Project.common-lib:common-domain:v1.1.0'
     implementation 'com.github.Poten-Up-3rd-Project.common-lib:common-application:v1.1.0'
