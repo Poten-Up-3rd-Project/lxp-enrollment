@@ -9,23 +9,33 @@ public enum EnrollmentErrorCode implements ErrorCode {
     INVALID_STATUS_CHANGE_INTO_IN_PROGRESS(
             "ENROLLMENT_0003",
             "허용되지 않은 수강 상태 변경: IN_PROGRESS 상태로의 변경은 오직 ENROLLED 상태에서만 가능합니다.",
-            "BAD_REQUEST"),
+            "CONFLICT"),
     INVALID_STATUS_CHANGE_INTO_CANCELLED(
             "ENROLLMENT_0004",
             "허용되지 않은 수강 상태 변경: CANCELLED 상태로의 변경은 오직 ENROLLED, IN_PROGRESS 상태에서만 가능합니다.",
-            "BAD_REQUEST"),
+            "CONFLICT"),
     INVALID_STATUS_CHANGE_INTO_COMPLETED(
             "ENROLLMENT_0005",
             "허용되지 않은 수강 상태 변경: COMPLETED 상태로의 변경은 오직 IN_PROGRESS 상태에서만 가능합니다.",
-            "BAD_REQUEST"),
+            "CONFLICT"),
     INVALID_STATUS_CHANGE_INTO_ENROLLED(
             "ENROLLMENT_0006",
             "허용되지 않은 수강 상태 변경: ENROLLED 상태로의 변경은 오직 CANCELLED 상태에서만 가능합니다.",
-            "BAD_REQUEST"),
+            "CONFLICT"),
     INVALID_DELETION_ATTEMPT_FROM_ENROLLED_OR_IN_PROGRESS_STATUS(
             "ENROLLMENT_0007",
             "ENROLLED 또는 IN_PROGRESS 상태일때는 수강 기록을 삭제할 수 없습니다.",
-            "BAD_REQUEST"
+            "CONFLICT"
+    ),
+    INVALID_CHRONOLOGY(
+            "ENROLLMENT_0008",
+            "시점 정합성이 깨졌습니다.",
+            "CONFLICT"
+    ),
+    ENROLLMENT_NOT_FOUND(
+            "ENROLLMENT_0009",
+            "수강 정보가 없습니다.",
+            "NOT_FOUND"
     ),
     ;
 

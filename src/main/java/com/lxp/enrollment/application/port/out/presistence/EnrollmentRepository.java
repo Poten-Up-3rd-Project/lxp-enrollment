@@ -1,4 +1,4 @@
-package com.lxp.enrollment.domain.repository;
+package com.lxp.enrollment.application.port.out.presistence;
 
 import com.lxp.enrollment.domain.model.Enrollment;
 
@@ -9,5 +9,6 @@ public interface EnrollmentRepository {
     Enrollment findById(UUID id);
     List<Enrollment> findAllByUserId(UUID userId);
     List<Enrollment> findAllByCourseId(UUID courseId);
-    Enrollment save(Enrollment enrollment);
+    Enrollment create(Enrollment enrollment);
+    Enrollment cancel(UUID userId, UUID courseId);
 }

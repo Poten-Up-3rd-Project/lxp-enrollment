@@ -112,6 +112,8 @@ public class Enrollment extends AggregateRoot<UUID> {
 
     public void begin() {
         activatedAt = Instant.now();
+        validateDatesOrder();
+
         enrollmentStatus = enrollmentStatus.toInProgress();
     }
 
@@ -124,6 +126,8 @@ public class Enrollment extends AggregateRoot<UUID> {
         // To Do: 취소 정책 여기에 적용해야 함
         
         enrollmentStatus = enrollmentStatus.toCancelled();
+        validateDatesOrder();
+
         this.cancelDetails = CancelDetails.now(cancelType, cancelReasonType, cancelReasonComment);
 
         this.registerEvent(new EnrollmentCancelled(id.toString(), courseId.toString(), userId.toString()));
@@ -131,24 +135,45 @@ public class Enrollment extends AggregateRoot<UUID> {
 
     public void complete() {
         completedAt = Instant.now();
+        validateDatesOrder();
+
         enrollmentStatus = enrollmentStatus.toCompleted();
     }
 
     public void reEnroll() {
+        enrolledAt = Instant.now();
+        activatedAt = null;
+        deletedAt = null;
+        completedAt = null;
         cancelDetails = null;
         enrollmentStatus = enrollmentStatus.toEnrolled();
     }
 
     public void delete() {
 
-        if (enrollmentStatus.equals(EnrollmentStatus.ENROLLED)
-            || enrollmentStatus.equals(EnrollmentStatus.IN_PROGRESS)) {
+        if (enrollmentStatus == EnrollmentStatus.ENROLLED
+            || enrollmentStatus == EnrollmentStatus.IN_PROGRESS) {
 
             throw new EnrollmentException(
                     EnrollmentErrorCode.INVALID_DELETION_ATTEMPT_FROM_ENROLLED_OR_IN_PROGRESS_STATUS);
         }
 
         deletedAt = Instant.now();
+        validateDatesOrder();
+    }
+
+    // ---------- validators
+
+    private void validateDatesOrder() {
+        if (enrolledAt.isAfter(activatedAt)
+            || enrolledAt.isAfter(deletedAt)
+            || enrolledAt.isAfter(cancelDetails.cancelledAt())
+            || enrolledAt.isAfter(completedAt)
+            || activatedAt.isAfter(completedAt)
+            || (cancelDetails.cancelledAt() != null & completedAt != null)
+        ) {
+            throw new EnrollmentException(EnrollmentErrorCode.INVALID_CHRONOLOGY);
+        }
     }
 
     // ---------- getters
@@ -172,6 +197,18 @@ public class Enrollment extends AggregateRoot<UUID> {
 
     public Instant enrolledAt() {
         return this.enrolledAt;
+    }
+
+    public Instant activatedAt() {
+        return this.activatedAt;
+    }
+
+    public Instant completedAt() {
+        return this.completedAt;
+    }
+
+    public Instant deletedAt() {
+        return this.deletedAt;
     }
 
     public EnrollmentStatus enrollmentStatus() {
