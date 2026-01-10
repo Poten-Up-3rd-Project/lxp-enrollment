@@ -1,4 +1,4 @@
-package com.lxp.enrollment.infra.adapter.in.web.external.request;
+package com.lxp.enrollment.infra.adapter.provided.web.external.request;
 
 import jakarta.validation.constraints.NotNull;
 

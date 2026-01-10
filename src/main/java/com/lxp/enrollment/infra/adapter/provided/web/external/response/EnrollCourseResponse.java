@@ -1,8 +1,7 @@
-package com.lxp.enrollment.infra.adapter.in.web.external.response;
+package com.lxp.enrollment.infra.adapter.provided.web.external.response;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 
-import java.time.Instant;
 import java.time.OffsetDateTime;
 import java.util.UUID;
 

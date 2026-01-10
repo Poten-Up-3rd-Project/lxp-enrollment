@@ -1,8 +1,8 @@
 package com.lxp.enrollment.application.service;
 
-import com.lxp.enrollment.application.port.in.EnrollCourseUseCase;
-import com.lxp.enrollment.application.port.in.dto.EnrollCourseResult;
-import com.lxp.enrollment.application.port.out.presistence.EnrollmentRepository;
+import com.lxp.enrollment.application.port.provided.EnrollCourseUseCase;
+import com.lxp.enrollment.application.port.provided.dto.EnrollCourseResult;
+import com.lxp.enrollment.application.port.required.presistence.EnrollmentRepository;
 import com.lxp.enrollment.domain.model.Enrollment;
 import org.springframework.stereotype.Service;
 
