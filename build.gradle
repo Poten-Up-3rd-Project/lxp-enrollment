@@ -22,14 +22,22 @@ configurations {
 
 repositories {
     mavenCentral()
+    maven { url = 'https://jitpack.io' }
 }
 
 dependencies {
+
+    implementation 'com.github.Poten-Up-3rd-Project.common-lib:common-domain:v1.0.5'
+    implementation 'com.github.Poten-Up-3rd-Project.common-lib:common-application:v1.0.5'
+    implementation 'com.github.Poten-Up-3rd-Project.common-lib:common-infrastructure:v1.0.5'
+
     implementation 'org.springframework.boot:spring-boot-h2console'
     implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
     implementation 'org.springframework.boot:spring-boot-starter-restclient'
     implementation 'org.springframework.boot:spring-boot-starter-validation'
     implementation 'org.springframework.boot:spring-boot-starter-webmvc'
+    implementation 'org.springframework.boot:spring-boot-starter-amqp'
+    testImplementation 'org.springframework.amqp:spring-rabbit-test'
     compileOnly 'org.projectlombok:lombok'
     runtimeOnly 'com.h2database:h2'
     runtimeOnly 'com.mysql:mysql-connector-j'
