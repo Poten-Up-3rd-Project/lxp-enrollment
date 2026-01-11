@@ -10,7 +10,7 @@ public record EnrollCourseResponse(
         UUID userId,
         UUID courseId,
         String status,
-        @JsonFormat(pattern = "yyyy-MM-dd'T'HH:mm:ssXXX", timezone = "Asia/Seoul")
+        @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ssXXX", timezone = "Asia/Seoul")
         OffsetDateTime enrolledAt
 ) {
 }
