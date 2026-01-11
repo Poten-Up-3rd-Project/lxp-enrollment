@@ -37,18 +37,23 @@ public enum EnrollmentErrorCode implements ErrorCode {
             "수강 정보가 없습니다.",
             "NOT_FOUND"
     ),
-    UNEXPECTED_USER_ID(
+    INVALID_USER_ID(
             "ENROLLMENT_0010",
-            "예상치 못한 UserId 형식. UUID 일 것으로 기대했으나, 다른 형식이 전달되었습니다.",
+            "유효하지 않은 UserId 형식. UUID 일 것으로 기대했으나, 다른 형식으로 전달되었습니다.",
             "BAD_REQUEST"
     ),
-    UNEXPECTED_COURSE_ID(
+    INVALID_COURSE_ID(
             "ENROLLMENT_0011",
-            "예상치 못한 CourseId 형식. UUID 일 것으로 기대했으나, 다른 형식이 전달되었습니다.",
+            "유효하지 않은 CourseId 형식. UUID 일 것으로 기대했으나, 다른 형식으로 전달되었습니다.",
+            "BAD_REQUEST"
+    ),
+    INVALID_ENROLLMENT_ID(
+            "ENROLLMENT_0012",
+            "유효하지 않은 EnrollmentId 형식. UUID 일 것으로 기대했으나, 다른 형식으로 전달되었습니다.",
             "BAD_REQUEST"
     ),
     COURSE_NOT_FOUND(
-            "ENROLLMENT_0012",
+            "ENROLLMENT_0013",
             "대상 강좌를 찾을 수 없습니다.",
             "NOT_FOUND"
     ),
