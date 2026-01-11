@@ -1,3 +1,7 @@
+# 서버 포트
+server:
+  port: 8080
+
 spring:
   # MySQL
   datasource:
@@ -33,6 +37,6 @@ management:
       probes:
         enabled: true
 
-# 서버 포트
-server:
-  port: 8080
+services:
+  course-service:
+    url: http://lxp-content:8080
