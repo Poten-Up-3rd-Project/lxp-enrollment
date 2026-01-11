@@ -24,13 +24,8 @@ public class EnrollmentRepositoryJpaAdapter implements EnrollmentRepository {
     public Optional<Enrollment> findById(UUID id) {
         Optional<EnrollmentJpaEntity> optional = enrollmentJpaRepository.findById(id);
 
-        if (optional.isEmpty()) {
-            return Optional.empty();
-        }
+        return optional.map(this::map);
 
-        return Optional.of(
-                map(optional.get())
-        );
     }
 
     @Override
@@ -38,13 +33,8 @@ public class EnrollmentRepositoryJpaAdapter implements EnrollmentRepository {
         Optional<EnrollmentJpaEntity> optional
                 = enrollmentJpaRepository.findByUserIdAndCourseId(userId, courseId);
 
-        if (optional.isEmpty()) {
-            return Optional.empty();
-        }
+        return optional.map(this::map);
 
-        return Optional.of(
-                map(optional.get())
-        );
     }
 
     @Override

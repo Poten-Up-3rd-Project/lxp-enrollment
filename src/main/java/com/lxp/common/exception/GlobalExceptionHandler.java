@@ -45,7 +45,6 @@ public class GlobalExceptionHandler {
                 + (e.getSupportedHttpMethods() == null ? null : e.getSupportedHttpMethods().toString())
                 + ", given: "
                 + e.getMethod();
-        ;
         ErrorResponse body = ErrorResponse.of(errorCode, errorMessage);
 
         log.info("{}: {}", errorCode, errorMessage);
