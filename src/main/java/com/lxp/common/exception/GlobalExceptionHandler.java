@@ -2,13 +2,12 @@ package com.lxp.common.exception;
 
 import com.lxp.common.domain.exception.DomainException;
 import com.lxp.common.exception.ErrorResponse.FieldError;
-import com.lxp.common.passport.InvalidPassportException;
+import com.lxp.enrollment.infra.adapter.provided.web.external.passport.InvalidPassportException;
 import jakarta.servlet.ServletException;
 import jakarta.validation.ConstraintViolationException;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.dao.DataAccessException;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindException;
 import org.springframework.web.HttpRequestMethodNotSupportedException;

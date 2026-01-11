@@ -1,4 +1,4 @@
-package com.lxp.common.passport;
+package com.lxp.enrollment.infra.adapter.provided.web.external.passport;
 
 import java.util.List;
 

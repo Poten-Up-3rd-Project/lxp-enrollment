@@ -1,6 +1,6 @@
 package com.lxp;
 
-import com.lxp.common.passport.PassportKeyProperties;
+import com.lxp.enrollment.infra.adapter.provided.web.external.passport.PassportKeyProperties;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.context.properties.ConfigurationPropertiesScan;

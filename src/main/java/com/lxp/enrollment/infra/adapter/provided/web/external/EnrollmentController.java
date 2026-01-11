@@ -1,7 +1,7 @@
 package com.lxp.enrollment.infra.adapter.provided.web.external;
 
-import com.lxp.common.passport.PassportClaims;
-import com.lxp.common.passport.PassportVerifier;
+import com.lxp.enrollment.infra.adapter.provided.web.external.passport.PassportClaims;
+import com.lxp.enrollment.infra.adapter.provided.web.external.passport.PassportVerifier;
 import com.lxp.common.util.DateTimeUtils;
 import com.lxp.enrollment.application.port.provided.EnrollCourseUseCase;
 import com.lxp.enrollment.application.port.provided.dto.EnrollCourseResult;

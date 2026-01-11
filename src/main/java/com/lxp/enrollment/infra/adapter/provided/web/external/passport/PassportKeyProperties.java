@@ -1,4 +1,4 @@
-package com.lxp.common.passport;
+package com.lxp.enrollment.infra.adapter.provided.web.external.passport;
 
 import org.springframework.boot.context.properties.ConfigurationProperties;
 
