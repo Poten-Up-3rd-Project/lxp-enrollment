@@ -32,6 +32,8 @@ public class EnrollmentController {
         this.enrollCourseUseCase = enrollCourseUseCase;
     }
 
+    // ---------- 수강 등록 요청 핸들러
+
     @PostMapping
     public ResponseEntity<EnrollCourseResponse> enrollCourse(
             @RequestHeader("X-Passport")
