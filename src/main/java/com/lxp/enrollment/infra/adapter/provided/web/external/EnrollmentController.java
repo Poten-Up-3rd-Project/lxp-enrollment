@@ -94,17 +94,18 @@ public class EnrollmentController {
 
     // ---------- 나의 수강 상세 조회
 
-    @GetMapping("/{id}")
+    @GetMapping("/{courseId}")
     public ResponseEntity<EnrollmentDetailsResponse> getEnrollmentDetails(
             @RequestHeader("X-Passport")
             String encodedPassport,
             @PathVariable
-            String id
+            String courseId
     ) {
 
-        UUID uuid = resolveEnrollmentId(id);
+        UUID userUuid = resolveUserId(encodedPassport);
+        UUID courseUuid = resolveCourseId(courseId);
 
-        EnrollmentQueryResult result = enrollmentQueryUseCase.find(uuid);
+        EnrollmentQueryResult result = enrollmentQueryUseCase.find(userUuid, courseUuid);
         EnrollmentDetailsResponse body = EnrollmentDetailsResponse.of(result);
 
         return ResponseEntity.ok(body);
