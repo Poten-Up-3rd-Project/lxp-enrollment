@@ -47,6 +47,11 @@ public enum EnrollmentErrorCode implements ErrorCode {
             "예상치 못한 CourseId 형식. UUID 일 것으로 기대했으나, 다른 형식이 전달되었습니다.",
             "BAD_REQUEST"
     ),
+    COURSE_NOT_FOUND(
+            "ENROLLMENT_0012",
+            "대상 강좌를 찾을 수 없습니다.",
+            "NOT_FOUND"
+    ),
     ;
 
     private final String code;
