@@ -6,5 +6,5 @@ import java.util.UUID;
 
 public interface EnrollmentQueryUseCase {
 
-    EnrollmentQueryResult find(UUID id);
+    EnrollmentQueryResult find(UUID userId, UUID courseId);
 }

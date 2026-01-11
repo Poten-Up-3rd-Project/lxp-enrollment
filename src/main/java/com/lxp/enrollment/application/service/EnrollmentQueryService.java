@@ -20,9 +20,9 @@ public class EnrollmentQueryService implements EnrollmentQueryUseCase {
     }
 
     @Override
-    public EnrollmentQueryResult find(UUID id) {
+    public EnrollmentQueryResult find(UUID userId, UUID courseId) {
 
-        Enrollment found = enrollmentRepository.findById(id)
+        Enrollment found = enrollmentRepository.findByUserIdAndCourseId(userId, courseId)
                 .orElseThrow(() -> new EnrollmentException(EnrollmentErrorCode.ENROLLMENT_NOT_FOUND));
 
         return EnrollmentQueryResult.of(found);
