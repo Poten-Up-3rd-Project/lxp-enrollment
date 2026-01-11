@@ -35,7 +35,7 @@ public class EnrollmentController {
     // ---------- 수강 등록 요청 핸들러
 
     @PostMapping
-    public ResponseEntity<EnrollCourseResponse> enrollCourse(
+    public ResponseEntity<EnrollCourseResponse> enroll(
             @RequestHeader("X-Passport")
             String encodedPassport,
             @RequestParam
