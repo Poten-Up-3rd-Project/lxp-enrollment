@@ -1,4 +1,4 @@
-package com.lxp.enrollment;
+package com.lxp;
 
 import com.lxp.common.passport.PassportKeyProperties;
 import org.springframework.boot.SpringApplication;
