@@ -1,15 +1,13 @@
-# 서버 포트
 server:
   port: 8080
 
 spring:
-  # MySQL
   datasource:
     url: jdbc:mysql://lxp-mysql:3306/lxp_enrollment_dev?useSSL=false&allowPublicKeyRetrieval=true&serverTimezone=Asia/Seoul
     username: ${SPRING_DATASOURCE_USERNAME}
     password: ${SPRING_DATASOURCE_PASSWORD}
     driver-class-name: com.mysql.cj.jdbc.Driver
-  # JPA
+
   jpa:
     hibernate:
       ddl-auto: update
@@ -19,7 +17,6 @@ spring:
         dialect: org.hibernate.dialect.MySQLDialect
         format_sql: true
 
-  # RabbitMQ
   rabbitmq:
     host: rabbitmq
     port: 5672
@@ -36,6 +33,12 @@ management:
     health:
       probes:
         enabled: true
+
+passport:
+  key:
+    private-key-string: ${PRIVATE_KEY_STRING}
+    public-key-string: ${PUBLIC_KEY_STRING}
+    duration-millis: 60000 #60초
 
 services:
   course-service:
