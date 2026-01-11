@@ -31,7 +31,7 @@ import static com.lxp.common.exception.CommonErrorCode.UNSUPPORTED_HTTP_METHOD;
 import static com.lxp.common.exception.CommonErrorCode.VALIDATION_FAILED;
 
 @Slf4j
-@RestControllerAdvice
+@RestControllerAdvice(name = "GlobalExceptionHandlerForEnrollment")
 public class GlobalExceptionHandler {
 
     // ---------- HTTP exceptions handlers
