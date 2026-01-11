@@ -8,6 +8,7 @@ import com.lxp.enrollment.infra.adapter.required.persistence.jpa.model.Enrollmen
 import org.springframework.stereotype.Component;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 
 @Component
@@ -20,40 +21,78 @@ public class EnrollmentRepositoryJpaAdapter implements EnrollmentRepository {
     }
 
     @Override
-    public Enrollment findById(UUID id) {
-        // To Do: findById 구현
-        return null;
+    public Optional<Enrollment> findById(UUID id) {
+        Optional<EnrollmentJpaEntity> optional = enrollmentJpaRepository.findById(id);
+
+        if (optional.isEmpty()) {
+            return Optional.empty();
+        }
+
+        return Optional.of(
+                map(optional.get())
+        );
+    }
+
+    @Override
+    public Optional<Enrollment> findByUserIdAndCourseId(UUID userId, UUID courseId) {
+        Optional<EnrollmentJpaEntity> optional
+                = enrollmentJpaRepository.findByUserIdAndCourseId(userId, courseId);
+
+        if (optional.isEmpty()) {
+            return Optional.empty();
+        }
+
+        return Optional.of(
+                map(optional.get())
+        );
     }
 
     @Override
     public List<Enrollment> findAllByUserId(UUID userId) {
-        // To Do: findAllByUserId 구현
-        return List.of();
+        List<EnrollmentJpaEntity> enrollmentJpaEntities
+                = enrollmentJpaRepository.findAllByUserId(userId);
+
+        return enrollmentJpaEntities.stream()
+                .map(this::map)
+                .toList();
     }
 
     @Override
     public List<Enrollment> findAllByCourseId(UUID courseId) {
-        // To Do: findAllByCourseId 구현
-        return List.of();
+        List<EnrollmentJpaEntity> enrollmentJpaEntities
+                = enrollmentJpaRepository.findAllByCourseId(courseId);
+
+        return enrollmentJpaEntities.stream()
+                .map(this::map)
+                .toList();
     }
 
     @Override
-    public Enrollment create(Enrollment enrollment) {
+    public Enrollment save(Enrollment enrollment) {
 
         EnrollmentJpaEntity saved = enrollmentJpaRepository.save(
                 EnrollmentJpaEntity.create(enrollment)
         );
-        CancelDetailsJpaEmbeddable cancelDetailsJpaEmbeddable = saved.getCancelDetailsJpaEmbeddable();
+
+        return map(saved);
+    }
+
+    // ---------- mapper: jpa entity -> domain entity
+
+    private Enrollment map(EnrollmentJpaEntity enrollmentJpaEntity) {
+
+        CancelDetailsJpaEmbeddable cancelDetailsJpaEmbeddable
+                = enrollmentJpaEntity.getCancelDetailsJpaEmbeddable();
 
         return Enrollment.reconstruct(
-                saved.getId(),
-                saved.getUserId(),
-                saved.getCourseId(),
-                saved.getEnrollmentStatus(),
-                saved.getEnrolledAt(),
-                saved.getActivatedAt(),
-                saved.getCompletedAt(),
-                saved.getDeletedAt(),
+                enrollmentJpaEntity.getId(),
+                enrollmentJpaEntity.getUserId(),
+                enrollmentJpaEntity.getCourseId(),
+                enrollmentJpaEntity.getEnrollmentStatus(),
+                enrollmentJpaEntity.getEnrolledAt(),
+                enrollmentJpaEntity.getActivatedAt(),
+                enrollmentJpaEntity.getCompletedAt(),
+                enrollmentJpaEntity.getDeletedAt(),
                 CancelDetails.of(
                         cancelDetailsJpaEmbeddable.getCanceledAt(),
                         cancelDetailsJpaEmbeddable.getCancelType(),
@@ -61,11 +100,5 @@ public class EnrollmentRepositoryJpaAdapter implements EnrollmentRepository {
                         cancelDetailsJpaEmbeddable.getCancelReasonComment()
                 )
         );
-    }
-
-    @Override
-    public Enrollment cancel(UUID userId, UUID courseId) {
-        // To Do: cancel 구현
-        return null;
     }
 }
