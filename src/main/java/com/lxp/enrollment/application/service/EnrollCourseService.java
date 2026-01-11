@@ -32,7 +32,7 @@ public class EnrollCourseService implements EnrollCourseUseCase {
             throw new EnrollmentException(EnrollmentErrorCode.COURSE_NOT_FOUND);
         }
 
-        Enrollment created = enrollmentRepository.create(Enrollment.create(userId, courseId));
+        Enrollment created = enrollmentRepository.save(Enrollment.create(userId, courseId));
         return EnrollCourseResult.of(created);
     }
 }
