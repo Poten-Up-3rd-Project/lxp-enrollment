@@ -45,13 +45,7 @@ public class EnrollmentController {
         UUID courseUuid = resolveCourseId(courseId);
 
         EnrollCourseResult result = enrollCourseUseCase.enroll(userUuid, courseUuid);
-        EnrollCourseResponse body = new EnrollCourseResponse(
-                result.enrollmentId(),
-                userUuid,
-                courseUuid,
-                result.enrollmentStatus().name(),
-                DateTimeUtils.toKstDateTime(result.enrolledAt())
-        );
+        EnrollCourseResponse body = EnrollCourseResponse.of(result);
 
         return ResponseEntity.ok(body);
     }

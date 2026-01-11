@@ -33,10 +33,6 @@ public class EnrollCourseService implements EnrollCourseUseCase {
         }
 
         Enrollment created = enrollmentRepository.create(Enrollment.create(userId, courseId));
-        return new EnrollCourseResult(
-                created.id(),
-                created.enrollmentStatus(),
-                created.enrolledAt()
-        );
+        return EnrollCourseResult.of(created);
     }
 }
