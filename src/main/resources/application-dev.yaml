@@ -41,5 +41,5 @@ passport:
     duration-millis: 60000 #60초
 
 services:
-  course-service:
-    url: http://lxp-content:8080
+  content-service:
+    url: http://lxp-content:8081
