@@ -2,10 +2,13 @@ package com.lxp.common.exception;
 
 import com.lxp.common.domain.exception.DomainException;
 import com.lxp.common.exception.ErrorResponse.FieldError;
+import com.lxp.common.passport.InvalidPassportException;
 import jakarta.servlet.ServletException;
 import jakarta.validation.ConstraintViolationException;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.dao.DataAccessException;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindException;
 import org.springframework.web.HttpRequestMethodNotSupportedException;
@@ -42,7 +45,8 @@ public class GlobalExceptionHandler {
         String errorMessage = UNSUPPORTED_HTTP_METHOD.getMessage() + ", supported: "
                 + (e.getSupportedHttpMethods() == null ? null : e.getSupportedHttpMethods().toString())
                 + ", given: "
-                + e.getMethod();;
+                + e.getMethod();
+        ;
         ErrorResponse body = ErrorResponse.of(errorCode, errorMessage);
 
         log.info("{}: {}", errorCode, errorMessage);
@@ -162,10 +166,27 @@ public class GlobalExceptionHandler {
                 .body(body);
     }
 
+    @ResponseBody
+    @ExceptionHandler(InvalidPassportException.class)
+    public ResponseEntity<ErrorResponse> handleInvalidPassportException(InvalidPassportException e) {
+
+        String errorCode = "INVALID_PASSPORT_ENROLLMENT";
+        String errorMessage = e.getMessage();
+        ErrorResponse body = ErrorResponse.of(errorCode, errorMessage);
+
+        log.info("{}: {}", errorCode, errorMessage);
+        log.debug("{}: {}", errorCode, errorMessage, e);
+
+        return ResponseEntity
+                .status(HttpStatus.UNAUTHORIZED)
+                .body(body);
+    }
+
     // ---------- Persistence exception handlers
 
     @ResponseBody
     @ExceptionHandler(DataAccessException.class)
+
     public ResponseEntity<ErrorResponse> handleDataAccessException(DataAccessException e) {
 
         String errorCode = DATA_ACCESS_FAILED.getCode();
