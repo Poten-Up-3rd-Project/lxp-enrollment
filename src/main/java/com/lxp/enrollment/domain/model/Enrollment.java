@@ -117,8 +117,7 @@ public class Enrollment extends AggregateRoot<UUID> {
         enrollmentStatus = enrollmentStatus.toInProgress();
     }
 
-    public void cancel(
-            CancelType cancelType,
+    public void cancelByUser(
             CancelReasonType cancelReasonType,
             String cancelReasonComment
     ) {
@@ -128,7 +127,31 @@ public class Enrollment extends AggregateRoot<UUID> {
         enrollmentStatus = enrollmentStatus.toCancelled();
         validateDatesOrder();
 
+        CancelType cancelType = activatedAt == null
+                ? CancelType.CANCEL_BY_USER_BEFORE_ACTIVATE
+                : CancelType.CANCEL_BY_USER_AFTER_ACTIVATE;
+
         this.cancelDetails = CancelDetails.now(cancelType, cancelReasonType, cancelReasonComment);
+
+        this.registerEvent(new EnrollmentCancelled(id.toString(), courseId.toString(), userId.toString()));
+    }
+
+    public void cancelByPenalty() {
+
+        enrollmentStatus = enrollmentStatus.toCancelled();
+        validateDatesOrder();
+
+        this.cancelDetails = CancelDetails.now(CancelType.CANCEL_BY_USER_PENALTY, null, null);
+
+        this.registerEvent(new EnrollmentCancelled(id.toString(), courseId.toString(), userId.toString()));
+    }
+
+    public void cancelByCourseClosed() {
+
+        enrollmentStatus = enrollmentStatus.toCancelled();
+        validateDatesOrder();
+
+        this.cancelDetails = CancelDetails.now(CancelType.CANCEL_BY_COURSE_CLOSED, null, null);
 
         this.registerEvent(new EnrollmentCancelled(id.toString(), courseId.toString(), userId.toString()));
     }
