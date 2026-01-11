@@ -161,7 +161,7 @@ public class GlobalExceptionHandler {
         log.debug("{}: {}", errorCode, errorMessage, e);
 
         return ResponseEntity
-                .badRequest()
+                .status(mapToHttpStatus(e.getGroup()))
                 .body(body);
     }
 
@@ -232,5 +232,20 @@ public class GlobalExceptionHandler {
         return ResponseEntity
                 .badRequest()
                 .body(body);
+    }
+
+    private HttpStatus mapToHttpStatus(String group) {
+        if (group == null) {
+            return HttpStatus.INTERNAL_SERVER_ERROR;
+        }
+
+        return switch (group.toUpperCase()) {
+            case "NOT_FOUND" -> HttpStatus.NOT_FOUND;
+            case "BAD_REQUEST", "INVALID" -> HttpStatus.BAD_REQUEST;
+            case "CONFLICT" -> HttpStatus.CONFLICT;
+            case "FORBIDDEN" -> HttpStatus.FORBIDDEN;
+            case "UNAUTHORIZED" -> HttpStatus.UNAUTHORIZED;
+            default -> HttpStatus.INTERNAL_SERVER_ERROR;
+        };
     }
 }
