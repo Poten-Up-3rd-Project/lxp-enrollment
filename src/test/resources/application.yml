@@ -1,3 +1,6 @@
+server:
+  port: 8080
+
 spring:
   datasource:
     url: jdbc:h2:mem:testdb;DB_CLOSE_DELAY=-1
@@ -8,3 +11,30 @@ spring:
     database-platform: org.hibernate.dialect.H2Dialect
     hibernate:
       ddl-auto: create-drop
+
+  rabbitmq:
+    host: localhost
+    port: 5672
+    username: ${SPRING_RABBITMQ_USERNAME}
+    password: ${SPRING_RABBITMQ_PASSWORD}
+
+# Actuator (Health Check)
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health, info, configprops
+  endpoint:
+    health:
+      probes:
+        enabled: true
+
+passport:
+  key:
+    private-key-string: ${PRIVATE_KEY_STRING}
+    public-key-string: ${PUBLIC_KEY_STRING}
+    duration-millis: 60000 #60초
+
+services:
+  content-service:
+    url: http://localhost:8081/api-v1/internal
