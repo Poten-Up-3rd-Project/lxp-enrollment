@@ -37,6 +37,11 @@ public class CancelDetailsJpaEmbeddable {
     }
 
     public static CancelDetailsJpaEmbeddable of(CancelDetails cancelDetails) {
+
+        if (cancelDetails == null) {
+            return null;
+        }
+
         return new CancelDetailsJpaEmbeddable(
                 cancelDetails.cancelledAt(),
                 cancelDetails.cancelType(),
