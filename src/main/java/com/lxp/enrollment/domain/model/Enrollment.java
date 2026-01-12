@@ -188,12 +188,12 @@ public class Enrollment extends AggregateRoot<UUID> {
     // ---------- validators
 
     private void validateDatesOrder() {
-        if (enrolledAt.isAfter(activatedAt)
-            || enrolledAt.isAfter(deletedAt)
-            || enrolledAt.isAfter(cancelDetails.cancelledAt())
-            || enrolledAt.isAfter(completedAt)
-            || activatedAt.isAfter(completedAt)
-            || (cancelDetails.cancelledAt() != null & completedAt != null)
+        if ((activatedAt != null && enrolledAt.isAfter(activatedAt))
+            || (deletedAt != null && enrolledAt.isAfter(deletedAt))
+            || (cancelDetails != null && cancelDetails.cancelledAt() != null && enrolledAt.isAfter(cancelDetails.cancelledAt()))
+            || (completedAt != null && enrolledAt.isAfter(completedAt))
+            || (completedAt != null && activatedAt.isAfter(completedAt))
+            || (cancelDetails != null && cancelDetails.cancelledAt() != null && completedAt != null)
         ) {
             throw new EnrollmentException(EnrollmentErrorCode.INVALID_CHRONOLOGY);
         }
