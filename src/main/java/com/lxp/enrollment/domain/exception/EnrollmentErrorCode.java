@@ -57,6 +57,22 @@ public enum EnrollmentErrorCode implements ErrorCode {
             "대상 강좌를 찾을 수 없습니다.",
             "NOT_FOUND"
     ),
+    CANCELLED_AT_IS_NULL(
+            "ENROLLMENT_0014",
+            "cancelledAt 이 null 입니다.",
+            "BAD_REQUEST"
+    ),
+    CANCEL_TYPE_IS_NULL(
+            "ENROLLMENT_0015",
+            "cancelType 이 null 입니다.",
+            "BAD_REQUEST"
+    ),
+    CANCEL_REASON_TYPE_IS_NULL(
+            "ENROLLMENT_0016",
+            "cancelReasonType 이 null 입니다.",
+            "BAD_REQUEST"
+    ),
+
     ;
 
     private final String code;
