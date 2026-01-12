@@ -18,7 +18,7 @@ spring:
         format_sql: true
 
   rabbitmq:
-    host: rabbitmq
+    host: localhost
     port: 5672
     username: ${SPRING_RABBITMQ_USERNAME}
     password: ${SPRING_RABBITMQ_PASSWORD}
@@ -28,7 +28,7 @@ management:
   endpoints:
     web:
       exposure:
-        include: health, info
+        include: health, info, configprops
   endpoint:
     health:
       probes:
@@ -42,4 +42,4 @@ passport:
 
 services:
   content-service:
-    url: http://lxp-content:8081/api-v1/internal
+    url: http://localhost:8081/api-v1/internal
