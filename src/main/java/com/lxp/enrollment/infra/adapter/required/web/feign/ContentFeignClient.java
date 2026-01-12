@@ -5,7 +5,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 
-@FeignClient(name = "content-service", url = "${services.content-service.url}")
+@FeignClient(name = "content-service", url = "http://lxp-content:8081/api-v1/internal")
 public interface ContentFeignClient {
 
     @GetMapping("/courses/{courseId}/exists")
