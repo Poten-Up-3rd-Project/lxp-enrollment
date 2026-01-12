@@ -13,6 +13,10 @@ public record CancelDetailsResult(
         String reason
 ) {
     public static CancelDetailsResult of(CancelDetails cancelDetails) {
+        if (cancelDetails == null) {
+            return null;
+        }
+
         return new CancelDetailsResult(
                 cancelDetails.cancelledAt(),
                 cancelDetails.cancelType(),

@@ -16,6 +16,10 @@ public record CancelDetailsResponse(
         String reason
 ) {
     public static CancelDetailsResponse of(CancelDetailsResult cancelDetailsResult) {
+        if (cancelDetailsResult == null) {
+            return null;
+        }
+
         return new CancelDetailsResponse(
                 DateTimeUtils.toKstDateTime(cancelDetailsResult.cancelledAt()),
                 cancelDetailsResult.cancelType(),
