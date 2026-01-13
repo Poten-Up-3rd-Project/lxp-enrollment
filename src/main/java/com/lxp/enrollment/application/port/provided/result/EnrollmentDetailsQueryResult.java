@@ -6,7 +6,8 @@ import com.lxp.enrollment.domain.model.enums.EnrollmentStatus;
 import java.time.Instant;
 import java.util.UUID;
 
-public record EnrollmentQueryResult(
+public record EnrollmentDetailsQueryResult(
+        // To Do: course, progress, tag 정보 포함 시켜야 함
         UUID id,
         UUID courseId,
         EnrollmentStatus status,
@@ -14,8 +15,8 @@ public record EnrollmentQueryResult(
         Instant activatedAt,
         CancelDetailsResult cancelDetailsResult
 ) {
-    public static EnrollmentQueryResult of(Enrollment enrollment) {
-        return new EnrollmentQueryResult(
+    public static EnrollmentDetailsQueryResult of(Enrollment enrollment) {
+        return new EnrollmentDetailsQueryResult(
                 enrollment.id(),
                 enrollment.courseId(),
                 enrollment.enrollmentStatus(),

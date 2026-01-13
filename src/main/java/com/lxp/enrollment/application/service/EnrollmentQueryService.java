@@ -1,7 +1,7 @@
 package com.lxp.enrollment.application.service;
 
 import com.lxp.enrollment.application.port.provided.EnrollmentQueryUseCase;
-import com.lxp.enrollment.application.port.provided.result.EnrollmentQueryResult;
+import com.lxp.enrollment.application.port.provided.result.EnrollmentDetailsQueryResult;
 import com.lxp.enrollment.application.port.required.presistence.EnrollmentRepository;
 import com.lxp.enrollment.domain.exception.EnrollmentErrorCode;
 import com.lxp.enrollment.domain.exception.EnrollmentException;
@@ -20,11 +20,11 @@ public class EnrollmentQueryService implements EnrollmentQueryUseCase {
     }
 
     @Override
-    public EnrollmentQueryResult find(UUID userId, UUID courseId) {
+    public EnrollmentDetailsQueryResult find(UUID userId, UUID courseId) {
 
         Enrollment found = enrollmentRepository.findByUserIdAndCourseId(userId, courseId)
                 .orElseThrow(() -> new EnrollmentException(EnrollmentErrorCode.ENROLLMENT_NOT_FOUND));
 
-        return EnrollmentQueryResult.of(found);
+        return EnrollmentDetailsQueryResult.of(found);
     }
 }

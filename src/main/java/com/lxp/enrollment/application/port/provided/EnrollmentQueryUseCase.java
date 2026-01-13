@@ -1,10 +1,10 @@
 package com.lxp.enrollment.application.port.provided;
 
-import com.lxp.enrollment.application.port.provided.result.EnrollmentQueryResult;
+import com.lxp.enrollment.application.port.provided.result.EnrollmentDetailsQueryResult;
 
 import java.util.UUID;
 
 public interface EnrollmentQueryUseCase {
 
-    EnrollmentQueryResult find(UUID userId, UUID courseId);
+    EnrollmentDetailsQueryResult find(UUID userId, UUID courseId);
 }

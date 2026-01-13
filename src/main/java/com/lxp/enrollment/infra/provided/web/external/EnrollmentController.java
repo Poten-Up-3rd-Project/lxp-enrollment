@@ -3,7 +3,7 @@ package com.lxp.enrollment.infra.provided.web.external;
 import com.lxp.enrollment.application.port.provided.CancelCourseByUserUseCase;
 import com.lxp.enrollment.application.port.provided.EnrollmentQueryUseCase;
 import com.lxp.enrollment.application.port.provided.result.CancelCourseResult;
-import com.lxp.enrollment.application.port.provided.result.EnrollmentQueryResult;
+import com.lxp.enrollment.application.port.provided.result.EnrollmentDetailsQueryResult;
 import com.lxp.enrollment.infra.provided.web.external.passport.PassportClaims;
 import com.lxp.enrollment.infra.provided.web.external.passport.PassportVerifier;
 import com.lxp.enrollment.application.port.provided.EnrollCourseUseCase;
@@ -105,7 +105,7 @@ public class EnrollmentController {
         UUID userUuid = resolveUserId(encodedPassport);
         UUID courseUuid = resolveCourseId(courseId);
 
-        EnrollmentQueryResult result = enrollmentQueryUseCase.find(userUuid, courseUuid);
+        EnrollmentDetailsQueryResult result = enrollmentQueryUseCase.find(userUuid, courseUuid);
         EnrollmentDetailsResponse body = EnrollmentDetailsResponse.of(result);
 
         return ResponseEntity.ok(body);
