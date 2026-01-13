@@ -1,4 +1,4 @@
-package com.lxp.enrollment.application.provided;
+package com.lxp.enrollment.application.provided.usecase;
 
 import com.lxp.enrollment.application.provided.dto.result.EnrollmentDetailsQueryResult;
 

@@ -1,6 +1,6 @@
 package com.lxp.enrollment.application.provided.service;
 
-import com.lxp.enrollment.application.provided.EnrollCourseUseCase;
+import com.lxp.enrollment.application.provided.usecase.EnrollCourseUseCase;
 import com.lxp.enrollment.application.provided.dto.result.EnrollCourseResult;
 import com.lxp.enrollment.application.required.presistence.EnrollmentRepository;
 import com.lxp.enrollment.application.required.web.ContentClient;
