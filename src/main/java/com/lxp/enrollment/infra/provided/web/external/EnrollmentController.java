@@ -1,5 +1,6 @@
 package com.lxp.enrollment.infra.provided.web.external;
 
+import com.lxp.enrollment.application.provided.dto.command.EnrollCommand;
 import com.lxp.enrollment.application.provided.usecase.CancelCourseByUserUseCase;
 import com.lxp.enrollment.application.provided.usecase.EnrollmentQueryUseCase;
 import com.lxp.enrollment.application.provided.dto.result.CancelCourseResult;
@@ -60,7 +61,8 @@ public class EnrollmentController {
         UUID userUuid = resolveUserId(encodedPassport);
         UUID courseUuid = resolveCourseId(courseId);
 
-        EnrollCourseResult result = enrollCourseUseCase.enroll(userUuid, courseUuid);
+        EnrollCommand enrollCommand = new EnrollCommand(userUuid, courseUuid);
+        EnrollCourseResult result = enrollCourseUseCase.enroll(enrollCommand);
         EnrollCourseResponse body = EnrollCourseResponse.of(result);
 
         return ResponseEntity.ok(body);
@@ -95,7 +97,7 @@ public class EnrollmentController {
     // ---------- 나의 수강 상세 조회
 
     @GetMapping("/{courseId}")
-    public ResponseEntity<EnrollmentDetailsResponse> getEnrollmentDetails(
+    public ResponseEntity<EnrollmentDetailsResponse> myEnrollmentDetailsOf(
             @RequestHeader("X-Passport")
             String encodedPassport,
             @PathVariable

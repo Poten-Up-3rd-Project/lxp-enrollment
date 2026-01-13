@@ -1,5 +1,6 @@
 package com.lxp.enrollment.application.provided.service;
 
+import com.lxp.enrollment.application.provided.dto.command.EnrollCommand;
 import com.lxp.enrollment.application.provided.usecase.EnrollCourseUseCase;
 import com.lxp.enrollment.application.provided.dto.result.EnrollCourseResult;
 import com.lxp.enrollment.application.required.presistence.EnrollmentRepository;
@@ -8,8 +9,6 @@ import com.lxp.enrollment.domain.exception.EnrollmentErrorCode;
 import com.lxp.enrollment.domain.exception.EnrollmentException;
 import com.lxp.enrollment.domain.model.Enrollment;
 import org.springframework.stereotype.Service;
-
-import java.util.UUID;
 
 @Service
 public class EnrollCourseService implements EnrollCourseUseCase {
@@ -26,13 +25,15 @@ public class EnrollCourseService implements EnrollCourseUseCase {
     }
 
     @Override
-    public EnrollCourseResult enroll(UUID userId, UUID courseId) {
+    public EnrollCourseResult enroll(EnrollCommand enrollCommand) {
 
-        if (contentClient.courseNotExists(courseId)) {
+        if (contentClient.courseNotExists(enrollCommand.courseId())) {
             throw new EnrollmentException(EnrollmentErrorCode.COURSE_NOT_FOUND);
         }
 
-        Enrollment created = enrollmentRepository.save(Enrollment.create(userId, courseId));
+        Enrollment created = enrollmentRepository.save(
+                Enrollment.create(enrollCommand.userId(), enrollCommand.courseId())
+        );
         return EnrollCourseResult.of(created);
     }
 }
