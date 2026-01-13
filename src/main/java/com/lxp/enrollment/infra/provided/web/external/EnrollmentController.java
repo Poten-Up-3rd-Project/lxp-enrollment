@@ -1,5 +1,6 @@
 package com.lxp.enrollment.infra.provided.web.external;
 
+import com.lxp.enrollment.application.provided.dto.command.CancelByUserCommand;
 import com.lxp.enrollment.application.provided.dto.command.EnrollCommand;
 import com.lxp.enrollment.application.provided.usecase.CancelCourseByUserUseCase;
 import com.lxp.enrollment.application.provided.usecase.EnrollmentQueryUseCase;
@@ -83,12 +84,14 @@ public class EnrollmentController {
         UUID userUuid = resolveUserId(encodedPassport);
         UUID courseUuid = resolveCourseId(courseId);
 
-        CancelCourseResult result = cancelCourseByUserUseCase.cancelByUser(
+        CancelByUserCommand command = new CancelByUserCommand(
                 userUuid,
                 courseUuid,
                 request.reasonType(),
                 request.reason()
         );
+
+        CancelCourseResult result = cancelCourseByUserUseCase.cancelByUser(command);
         CancelCourseResponse body = CancelCourseResponse.of(result);
 
         return ResponseEntity.ok(body);
