@@ -61,8 +61,8 @@ public class EnrollmentController {
         UUID userUuid = resolveUserId(encodedPassport);
         UUID courseUuid = resolveCourseId(courseId);
 
-        EnrollCommand enrollCommand = new EnrollCommand(userUuid, courseUuid);
-        EnrollCourseResult result = enrollCourseUseCase.enroll(enrollCommand);
+        EnrollCommand command = new EnrollCommand(userUuid, courseUuid);
+        EnrollCourseResult result = enrollCourseUseCase.enroll(command);
         EnrollCourseResponse body = EnrollCourseResponse.of(result);
 
         return ResponseEntity.ok(body);
