@@ -1,16 +1,16 @@
 package com.lxp.enrollment.infra.provided.web.external;
 
-import com.lxp.enrollment.application.provided.dto.command.CancelByUserCommand;
-import com.lxp.enrollment.application.provided.dto.command.EnrollCommand;
-import com.lxp.enrollment.application.provided.dto.query.EnrollmentDetailsQuery;
-import com.lxp.enrollment.application.provided.usecase.CancelCourseByUserUseCase;
-import com.lxp.enrollment.application.provided.usecase.EnrollmentDetailsQueryUseCase;
-import com.lxp.enrollment.application.provided.dto.result.CancelCourseResult;
-import com.lxp.enrollment.application.provided.dto.result.EnrollmentDetailsQueryResult;
+import com.lxp.enrollment.application.provided.command.dto.CancelByUserCommand;
+import com.lxp.enrollment.application.provided.command.dto.EnrollCommand;
+import com.lxp.enrollment.application.provided.query.dto.EnrollmentDetailsQuery;
+import com.lxp.enrollment.application.provided.command.usecase.CancelCourseByUserUseCase;
+import com.lxp.enrollment.application.provided.query.usecase.EnrollmentDetailsQueryUseCase;
+import com.lxp.enrollment.application.provided.command.dto.CancelCourseResult;
+import com.lxp.enrollment.application.provided.query.dto.EnrollmentDetailsQueryResult;
 import com.lxp.enrollment.infra.provided.web.external.passport.PassportClaims;
 import com.lxp.enrollment.infra.provided.web.external.passport.PassportVerifier;
-import com.lxp.enrollment.application.provided.usecase.EnrollCourseUseCase;
-import com.lxp.enrollment.application.provided.dto.result.EnrollCourseResult;
+import com.lxp.enrollment.application.provided.command.usecase.EnrollCourseUseCase;
+import com.lxp.enrollment.application.provided.command.dto.EnrollCourseResult;
 import com.lxp.enrollment.domain.exception.EnrollmentErrorCode;
 import com.lxp.enrollment.domain.exception.EnrollmentException;
 import com.lxp.enrollment.infra.provided.web.external.request.CancelCourseRequest;

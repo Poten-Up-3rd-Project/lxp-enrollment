@@ -1,8 +1,8 @@
-package com.lxp.enrollment.application.provided.service;
+package com.lxp.enrollment.application.provided.query.service;
 
-import com.lxp.enrollment.application.provided.dto.query.EnrollmentDetailsQuery;
-import com.lxp.enrollment.application.provided.usecase.EnrollmentDetailsQueryUseCase;
-import com.lxp.enrollment.application.provided.dto.result.EnrollmentDetailsQueryResult;
+import com.lxp.enrollment.application.provided.query.dto.EnrollmentDetailsQuery;
+import com.lxp.enrollment.application.provided.query.usecase.EnrollmentDetailsQueryUseCase;
+import com.lxp.enrollment.application.provided.query.dto.EnrollmentDetailsQueryResult;
 import com.lxp.enrollment.application.required.presistence.EnrollmentRepository;
 import com.lxp.enrollment.domain.exception.EnrollmentErrorCode;
 import com.lxp.enrollment.domain.exception.EnrollmentException;

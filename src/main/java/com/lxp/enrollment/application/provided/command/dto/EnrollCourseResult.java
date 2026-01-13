@@ -1,4 +1,4 @@
-package com.lxp.enrollment.application.provided.dto.result;
+package com.lxp.enrollment.application.provided.command.dto;
 
 import com.lxp.enrollment.domain.model.Enrollment;
 import com.lxp.enrollment.domain.model.enums.EnrollmentStatus;

@@ -1,5 +1,6 @@
-package com.lxp.enrollment.application.provided.dto.result;
+package com.lxp.enrollment.application.provided.query.dto;
 
+import com.lxp.enrollment.application.provided.command.dto.CancelDetailsResult;
 import com.lxp.enrollment.domain.model.Enrollment;
 import com.lxp.enrollment.domain.model.enums.EnrollmentStatus;
 

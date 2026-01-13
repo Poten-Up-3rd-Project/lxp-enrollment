@@ -1,4 +1,4 @@
-package com.lxp.enrollment.application.provided.dto.command;
+package com.lxp.enrollment.application.provided.command.dto;
 
 import com.lxp.enrollment.domain.model.enums.CancelReasonType;
 

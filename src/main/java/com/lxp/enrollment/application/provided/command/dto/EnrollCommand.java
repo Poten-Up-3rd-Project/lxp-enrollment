@@ -1,4 +1,4 @@
-package com.lxp.enrollment.application.provided.dto.command;
+package com.lxp.enrollment.application.provided.command.dto;
 
 import java.util.UUID;
 

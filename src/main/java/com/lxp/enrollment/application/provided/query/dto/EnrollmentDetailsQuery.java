@@ -1,4 +1,4 @@
-package com.lxp.enrollment.application.provided.dto.query;
+package com.lxp.enrollment.application.provided.query.dto;
 
 import java.util.UUID;
 

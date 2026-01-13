@@ -2,7 +2,7 @@ package com.lxp.enrollment.infra.provided.web.external.response;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.lxp.common.util.DateTimeUtils;
-import com.lxp.enrollment.application.provided.dto.result.EnrollCourseResult;
+import com.lxp.enrollment.application.provided.command.dto.EnrollCourseResult;
 
 import java.time.OffsetDateTime;
 import java.util.UUID;
