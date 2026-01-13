@@ -13,6 +13,7 @@ import com.lxp.enrollment.domain.model.vo.CancelDetails;
 import java.time.Instant;
 import java.util.UUID;
 
+// To Do: 동시성 고려(낙관적 락?)
 public class Enrollment extends AggregateRoot<UUID> {
 
     // ---------- Fields

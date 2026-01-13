@@ -1,6 +1,6 @@
-package com.lxp.enrollment.infra.required.persistence.jpa;
+package com.lxp.enrollment.infra.required.persistence.jpa.read;
 
-import com.lxp.enrollment.application.required.presistence.EnrollmentRepository;
+import com.lxp.enrollment.application.required.presistence.read.EnrollmentReadRepository;
 import com.lxp.enrollment.domain.model.Enrollment;
 import com.lxp.enrollment.infra.required.persistence.jpa.mapper.EnrollmentEntityMapper;
 import com.lxp.enrollment.infra.required.persistence.jpa.model.EnrollmentJpaEntity;
@@ -11,22 +11,22 @@ import java.util.Optional;
 import java.util.UUID;
 
 @Component
-public class EnrollmentRepositoryJpaAdapter implements EnrollmentRepository {
+public class EnrollmentReadRepositoryJpaAdapter implements EnrollmentReadRepository {
 
-    private final EnrollmentJpaRepository enrollmentJpaRepository;
+    private final EnrollmentReadJpaRepository enrollmentReadJpaRepository;
     private final EnrollmentEntityMapper enrollmentEntityMapper;
 
-    public EnrollmentRepositoryJpaAdapter(
-            EnrollmentJpaRepository enrollmentJpaRepository,
+    public EnrollmentReadRepositoryJpaAdapter(
+            EnrollmentReadJpaRepository enrollmentReadJpaRepository,
             EnrollmentEntityMapper enrollmentEntityMapper
     ) {
-        this.enrollmentJpaRepository = enrollmentJpaRepository;
+        this.enrollmentReadJpaRepository = enrollmentReadJpaRepository;
         this.enrollmentEntityMapper = enrollmentEntityMapper;
     }
 
     @Override
     public Optional<Enrollment> findById(UUID id) {
-        Optional<EnrollmentJpaEntity> optional = enrollmentJpaRepository.findById(id);
+        Optional<EnrollmentJpaEntity> optional = enrollmentReadJpaRepository.findById(id);
 
         return optional.map(enrollmentEntityMapper::toDomain);
 
@@ -35,7 +35,7 @@ public class EnrollmentRepositoryJpaAdapter implements EnrollmentRepository {
     @Override
     public Optional<Enrollment> findByUserIdAndCourseId(UUID userId, UUID courseId) {
         Optional<EnrollmentJpaEntity> optional
-                = enrollmentJpaRepository.findByUserIdAndCourseId(userId, courseId);
+                = enrollmentReadJpaRepository.findByUserIdAndCourseId(userId, courseId);
 
         return optional.map(enrollmentEntityMapper::toDomain);
 
@@ -44,7 +44,7 @@ public class EnrollmentRepositoryJpaAdapter implements EnrollmentRepository {
     @Override
     public List<Enrollment> findAllByUserId(UUID userId) {
         List<EnrollmentJpaEntity> enrollmentJpaEntities
-                = enrollmentJpaRepository.findAllByUserId(userId);
+                = enrollmentReadJpaRepository.findAllByUserId(userId);
 
         return enrollmentEntityMapper.toDomainList(enrollmentJpaEntities);
     }
@@ -52,18 +52,8 @@ public class EnrollmentRepositoryJpaAdapter implements EnrollmentRepository {
     @Override
     public List<Enrollment> findAllByCourseId(UUID courseId) {
         List<EnrollmentJpaEntity> enrollmentJpaEntities
-                = enrollmentJpaRepository.findAllByCourseId(courseId);
+                = enrollmentReadJpaRepository.findAllByCourseId(courseId);
 
         return enrollmentEntityMapper.toDomainList(enrollmentJpaEntities);
-    }
-
-    @Override
-    public Enrollment save(Enrollment enrollment) {
-
-        EnrollmentJpaEntity saved = enrollmentJpaRepository.save(
-                enrollmentEntityMapper.toEntity(enrollment)
-        );
-
-        return enrollmentEntityMapper.toDomain(saved);
     }
 }
