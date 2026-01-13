@@ -1,7 +1,7 @@
 package com.lxp.enrollment.application.service;
 
 import com.lxp.enrollment.application.port.provided.CancelCourseByUserUseCase;
-import com.lxp.enrollment.application.port.provided.dto.CancelCourseResult;
+import com.lxp.enrollment.application.port.provided.result.CancelCourseResult;
 import com.lxp.enrollment.application.port.required.presistence.EnrollmentRepository;
 import com.lxp.enrollment.domain.exception.EnrollmentErrorCode;
 import com.lxp.enrollment.domain.exception.EnrollmentException;
