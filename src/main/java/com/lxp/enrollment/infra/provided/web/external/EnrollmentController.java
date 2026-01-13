@@ -64,8 +64,8 @@ public class EnrollmentController {
         UUID courseUuid = resolveCourseId(courseId);
 
         EnrollCommand command = new EnrollCommand(userUuid, courseUuid);
-        EnrollCourseView result = enrollCourseUseCase.execute(command);
-        EnrollCourseResponse body = EnrollCourseResponse.of(result);
+        EnrollCourseView view = enrollCourseUseCase.execute(command);
+        EnrollCourseResponse body = EnrollCourseResponse.of(view);
 
         return ResponseEntity.ok(body);
     }
@@ -92,8 +92,8 @@ public class EnrollmentController {
                 request.reason()
         );
 
-        CancelCourseView result = cancelCourseByUserUseCase.execute(command);
-        CancelCourseResponse body = CancelCourseResponse.of(result);
+        CancelCourseView view = cancelCourseByUserUseCase.execute(command);
+        CancelCourseResponse body = CancelCourseResponse.of(view);
 
         return ResponseEntity.ok(body);
     }
@@ -112,8 +112,8 @@ public class EnrollmentController {
         UUID courseUuid = resolveCourseId(courseId);
 
         EnrollmentDetailsQuery query = new EnrollmentDetailsQuery(userUuid, courseUuid);
-        EnrollmentDetailsQueryView result = enrollmentDetailsQueryUseCase.execute(query);
-        EnrollmentDetailsResponse body = EnrollmentDetailsResponse.of(result);
+        EnrollmentDetailsQueryView view = enrollmentDetailsQueryUseCase.execute(query);
+        EnrollmentDetailsResponse body = EnrollmentDetailsResponse.of(view);
 
         return ResponseEntity.ok(body);
     }
