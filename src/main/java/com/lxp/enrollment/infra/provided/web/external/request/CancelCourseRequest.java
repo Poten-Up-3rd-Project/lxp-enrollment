@@ -1,4 +1,4 @@
-package com.lxp.enrollment.infra.adapter.provided.web.external.request;
+package com.lxp.enrollment.infra.provided.web.external.request;
 
 import com.lxp.enrollment.domain.model.enums.CancelReasonType;
 import jakarta.validation.constraints.NotNull;

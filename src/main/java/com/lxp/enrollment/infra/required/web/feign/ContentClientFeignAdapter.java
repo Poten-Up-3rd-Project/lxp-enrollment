@@ -1,4 +1,4 @@
-package com.lxp.enrollment.infra.adapter.required.web.feign;
+package com.lxp.enrollment.infra.required.web.feign;
 
 import com.lxp.enrollment.application.port.required.web.ContentClient;
 import org.springframework.http.ResponseEntity;

@@ -1,4 +1,4 @@
-package com.lxp.enrollment.infra.adapter.provided.web.external.response;
+package com.lxp.enrollment.infra.provided.web.external.response;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.lxp.common.util.DateTimeUtils;

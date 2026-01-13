@@ -1,4 +1,4 @@
-package com.lxp.enrollment.infra.adapter.required.persistence.jpa.model;
+package com.lxp.enrollment.infra.required.persistence.jpa.model;
 
 import com.lxp.enrollment.domain.model.Enrollment;
 import com.lxp.enrollment.domain.model.enums.EnrollmentStatus;

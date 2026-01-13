@@ -1,10 +1,10 @@
-package com.lxp.enrollment.infra.adapter.required.persistence.jpa;
+package com.lxp.enrollment.infra.required.persistence.jpa;
 
 import com.lxp.enrollment.application.port.required.presistence.EnrollmentRepository;
 import com.lxp.enrollment.domain.model.Enrollment;
 import com.lxp.enrollment.domain.model.vo.CancelDetails;
-import com.lxp.enrollment.infra.adapter.required.persistence.jpa.model.CancelDetailsJpaEmbeddable;
-import com.lxp.enrollment.infra.adapter.required.persistence.jpa.model.EnrollmentJpaEntity;
+import com.lxp.enrollment.infra.required.persistence.jpa.model.CancelDetailsJpaEmbeddable;
+import com.lxp.enrollment.infra.required.persistence.jpa.model.EnrollmentJpaEntity;
 import org.springframework.stereotype.Component;
 
 import java.util.List;

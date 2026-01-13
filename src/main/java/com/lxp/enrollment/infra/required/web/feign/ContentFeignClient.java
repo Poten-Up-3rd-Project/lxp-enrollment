@@ -1,4 +1,4 @@
-package com.lxp.enrollment.infra.adapter.required.web.feign;
+package com.lxp.enrollment.infra.required.web.feign;
 
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.http.ResponseEntity;

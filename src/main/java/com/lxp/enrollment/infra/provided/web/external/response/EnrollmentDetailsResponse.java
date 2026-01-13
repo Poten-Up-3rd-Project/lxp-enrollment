@@ -1,14 +1,14 @@
-package com.lxp.enrollment.infra.adapter.provided.web.external.response;
+package com.lxp.enrollment.infra.provided.web.external.response;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.lxp.common.util.DateTimeUtils;
-import com.lxp.enrollment.application.port.provided.dto.CancelCourseResult;
+import com.lxp.enrollment.application.port.provided.dto.EnrollmentQueryResult;
 import com.lxp.enrollment.domain.model.enums.EnrollmentStatus;
 
 import java.time.OffsetDateTime;
 import java.util.UUID;
 
-public record CancelCourseResponse(
+public record EnrollmentDetailsResponse(
         UUID id,
         UUID courseId,
         EnrollmentStatus status,
@@ -18,8 +18,8 @@ public record CancelCourseResponse(
         OffsetDateTime activatedAt,
         CancelDetailsResponse cancelDetails
 ) {
-    public static CancelCourseResponse of(CancelCourseResult result) {
-        return new CancelCourseResponse(
+    public static EnrollmentDetailsResponse of(EnrollmentQueryResult result) {
+        return new EnrollmentDetailsResponse(
                 result.id(),
                 result.courseId(),
                 result.status(),

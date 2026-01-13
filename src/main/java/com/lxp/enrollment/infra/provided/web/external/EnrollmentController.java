@@ -1,19 +1,19 @@
-package com.lxp.enrollment.infra.adapter.provided.web.external;
+package com.lxp.enrollment.infra.provided.web.external;
 
 import com.lxp.enrollment.application.port.provided.CancelCourseByUserUseCase;
 import com.lxp.enrollment.application.port.provided.EnrollmentQueryUseCase;
 import com.lxp.enrollment.application.port.provided.dto.CancelCourseResult;
 import com.lxp.enrollment.application.port.provided.dto.EnrollmentQueryResult;
-import com.lxp.enrollment.infra.adapter.provided.web.external.passport.PassportClaims;
-import com.lxp.enrollment.infra.adapter.provided.web.external.passport.PassportVerifier;
+import com.lxp.enrollment.infra.provided.web.external.passport.PassportClaims;
+import com.lxp.enrollment.infra.provided.web.external.passport.PassportVerifier;
 import com.lxp.enrollment.application.port.provided.EnrollCourseUseCase;
 import com.lxp.enrollment.application.port.provided.dto.EnrollCourseResult;
 import com.lxp.enrollment.domain.exception.EnrollmentErrorCode;
 import com.lxp.enrollment.domain.exception.EnrollmentException;
-import com.lxp.enrollment.infra.adapter.provided.web.external.request.CancelCourseRequest;
-import com.lxp.enrollment.infra.adapter.provided.web.external.response.CancelCourseResponse;
-import com.lxp.enrollment.infra.adapter.provided.web.external.response.EnrollCourseResponse;
-import com.lxp.enrollment.infra.adapter.provided.web.external.response.EnrollmentDetailsResponse;
+import com.lxp.enrollment.infra.provided.web.external.request.CancelCourseRequest;
+import com.lxp.enrollment.infra.provided.web.external.response.CancelCourseResponse;
+import com.lxp.enrollment.infra.provided.web.external.response.EnrollCourseResponse;
+import com.lxp.enrollment.infra.provided.web.external.response.EnrollmentDetailsResponse;
 import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
