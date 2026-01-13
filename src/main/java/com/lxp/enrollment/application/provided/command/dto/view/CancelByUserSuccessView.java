@@ -1,6 +1,5 @@
 package com.lxp.enrollment.application.provided.command.dto.view;
 
-import com.lxp.enrollment.domain.model.Enrollment;
 import com.lxp.enrollment.domain.model.enums.EnrollmentStatus;
 
 import java.time.Instant;
@@ -14,14 +13,4 @@ public record CancelByUserSuccessView(
         Instant activatedAt,
         CancelDetailsView cancelDetailsView
 ) {
-    public static CancelByUserSuccessView of(Enrollment enrollment) {
-        return new CancelByUserSuccessView(
-                enrollment.id(),
-                enrollment.courseId(),
-                enrollment.enrollmentStatus(),
-                enrollment.enrolledAt(),
-                enrollment.activatedAt(),
-                CancelDetailsView.of(enrollment.cancelDetails())
-        );
-    }
 }

@@ -1,7 +1,6 @@
 package com.lxp.enrollment.application.provided.query.dto.view;
 
 import com.lxp.enrollment.application.provided.command.dto.view.CancelDetailsView;
-import com.lxp.enrollment.domain.model.Enrollment;
 import com.lxp.enrollment.domain.model.enums.EnrollmentStatus;
 
 import java.time.Instant;
@@ -16,14 +15,4 @@ public record EnrollmentDetailsQueryView(
         Instant activatedAt,
         CancelDetailsView cancelDetailsView
 ) {
-    public static EnrollmentDetailsQueryView of(Enrollment enrollment) {
-        return new EnrollmentDetailsQueryView(
-                enrollment.id(),
-                enrollment.courseId(),
-                enrollment.enrollmentStatus(),
-                enrollment.enrolledAt(),
-                enrollment.activatedAt(),
-                CancelDetailsView.of(enrollment.cancelDetails())
-        );
-    }
 }

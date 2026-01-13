@@ -13,13 +13,4 @@ public record EnrollSuccessView(
         EnrollmentStatus enrollmentStatus,
         Instant enrolledAt
 ) {
-    public static EnrollSuccessView of(Enrollment enrollment) {
-        return new EnrollSuccessView(
-                enrollment.id(),
-                enrollment.userId(),
-                enrollment.courseId(),
-                enrollment.enrollmentStatus(),
-                enrollment.enrolledAt()
-        );
-    }
 }
