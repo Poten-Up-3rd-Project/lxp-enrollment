@@ -1,4 +1,4 @@
-package com.lxp.enrollment.application.port.required.presistence;
+package com.lxp.enrollment.application.required.presistence;
 
 import com.lxp.enrollment.domain.model.Enrollment;
 

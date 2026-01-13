@@ -1,6 +1,6 @@
 package com.lxp.enrollment.infra.required.persistence.jpa;
 
-import com.lxp.enrollment.application.port.required.presistence.EnrollmentRepository;
+import com.lxp.enrollment.application.required.presistence.EnrollmentRepository;
 import com.lxp.enrollment.domain.model.Enrollment;
 import com.lxp.enrollment.domain.model.vo.CancelDetails;
 import com.lxp.enrollment.infra.required.persistence.jpa.model.CancelDetailsJpaEmbeddable;

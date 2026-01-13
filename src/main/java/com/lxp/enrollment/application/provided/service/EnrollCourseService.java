@@ -1,9 +1,9 @@
-package com.lxp.enrollment.application.service;
+package com.lxp.enrollment.application.provided.service;
 
-import com.lxp.enrollment.application.port.provided.EnrollCourseUseCase;
-import com.lxp.enrollment.application.port.provided.dto.result.EnrollCourseResult;
-import com.lxp.enrollment.application.port.required.presistence.EnrollmentRepository;
-import com.lxp.enrollment.application.port.required.web.ContentClient;
+import com.lxp.enrollment.application.provided.EnrollCourseUseCase;
+import com.lxp.enrollment.application.provided.dto.result.EnrollCourseResult;
+import com.lxp.enrollment.application.required.presistence.EnrollmentRepository;
+import com.lxp.enrollment.application.required.web.ContentClient;
 import com.lxp.enrollment.domain.exception.EnrollmentErrorCode;
 import com.lxp.enrollment.domain.exception.EnrollmentException;
 import com.lxp.enrollment.domain.model.Enrollment;

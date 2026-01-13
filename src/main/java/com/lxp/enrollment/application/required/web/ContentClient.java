@@ -1,4 +1,4 @@
-package com.lxp.enrollment.application.port.required.web;
+package com.lxp.enrollment.application.required.web;
 
 import java.util.UUID;
 

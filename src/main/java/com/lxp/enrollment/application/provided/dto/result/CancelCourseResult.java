@@ -1,4 +1,4 @@
-package com.lxp.enrollment.application.port.provided.dto.result;
+package com.lxp.enrollment.application.provided.dto.result;
 
 import com.lxp.enrollment.domain.model.Enrollment;
 import com.lxp.enrollment.domain.model.enums.EnrollmentStatus;
@@ -6,8 +6,7 @@ import com.lxp.enrollment.domain.model.enums.EnrollmentStatus;
 import java.time.Instant;
 import java.util.UUID;
 
-public record EnrollmentDetailsQueryResult(
-        // To Do: course, progress, tag 정보 포함 시켜야 함
+public record CancelCourseResult(
         UUID id,
         UUID courseId,
         EnrollmentStatus status,
@@ -15,8 +14,8 @@ public record EnrollmentDetailsQueryResult(
         Instant activatedAt,
         CancelDetailsResult cancelDetailsResult
 ) {
-    public static EnrollmentDetailsQueryResult of(Enrollment enrollment) {
-        return new EnrollmentDetailsQueryResult(
+    public static CancelCourseResult of(Enrollment enrollment) {
+        return new CancelCourseResult(
                 enrollment.id(),
                 enrollment.courseId(),
                 enrollment.enrollmentStatus(),

@@ -1,6 +1,6 @@
 package com.lxp.enrollment.infra.required.web.feign;
 
-import com.lxp.enrollment.application.port.required.web.ContentClient;
+import com.lxp.enrollment.application.required.web.ContentClient;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
 

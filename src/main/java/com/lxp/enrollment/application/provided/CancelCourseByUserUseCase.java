@@ -1,6 +1,6 @@
-package com.lxp.enrollment.application.port.provided;
+package com.lxp.enrollment.application.provided;
 
-import com.lxp.enrollment.application.port.provided.dto.result.CancelCourseResult;
+import com.lxp.enrollment.application.provided.dto.result.CancelCourseResult;
 import com.lxp.enrollment.domain.model.enums.CancelReasonType;
 
 import java.util.UUID;
