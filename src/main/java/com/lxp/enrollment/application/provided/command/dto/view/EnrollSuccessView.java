@@ -6,15 +6,15 @@ import com.lxp.enrollment.domain.model.enums.EnrollmentStatus;
 import java.time.Instant;
 import java.util.UUID;
 
-public record EnrollCourseView(
+public record EnrollSuccessView(
         UUID enrollmentId,
         UUID userId,
         UUID courseId,
         EnrollmentStatus enrollmentStatus,
         Instant enrolledAt
 ) {
-    public static EnrollCourseView of(Enrollment enrollment) {
-        return new EnrollCourseView(
+    public static EnrollSuccessView of(Enrollment enrollment) {
+        return new EnrollSuccessView(
                 enrollment.id(),
                 enrollment.userId(),
                 enrollment.courseId(),

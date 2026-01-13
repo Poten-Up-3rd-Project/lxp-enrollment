@@ -1,8 +1,8 @@
 package com.lxp.enrollment.application.provided.command.service;
 
 import com.lxp.enrollment.application.provided.command.dto.EnrollCommand;
-import com.lxp.enrollment.application.provided.command.usecase.EnrollCourseUseCase;
-import com.lxp.enrollment.application.provided.command.dto.view.EnrollCourseView;
+import com.lxp.enrollment.application.provided.command.usecase.EnrollUseCase;
+import com.lxp.enrollment.application.provided.command.dto.view.EnrollSuccessView;
 import com.lxp.enrollment.application.required.presistence.EnrollmentRepository;
 import com.lxp.enrollment.application.required.web.ContentClient;
 import com.lxp.enrollment.domain.exception.EnrollmentErrorCode;
@@ -11,12 +11,12 @@ import com.lxp.enrollment.domain.model.Enrollment;
 import org.springframework.stereotype.Service;
 
 @Service
-public class EnrollCourseService implements EnrollCourseUseCase {
+public class EnrollService implements EnrollUseCase {
 
     private final EnrollmentRepository enrollmentRepository;
     private final ContentClient contentClient;
 
-    public EnrollCourseService(
+    public EnrollService(
             EnrollmentRepository enrollmentRepository,
             ContentClient contentClient
     ) {
@@ -25,7 +25,7 @@ public class EnrollCourseService implements EnrollCourseUseCase {
     }
 
     @Override
-    public EnrollCourseView execute(EnrollCommand command) {
+    public EnrollSuccessView execute(EnrollCommand command) {
 
         if (contentClient.courseNotExists(command.courseId())) {
             throw new EnrollmentException(EnrollmentErrorCode.COURSE_NOT_FOUND);
@@ -34,6 +34,6 @@ public class EnrollCourseService implements EnrollCourseUseCase {
         Enrollment created = enrollmentRepository.save(
                 Enrollment.create(command.userId(), command.courseId())
         );
-        return EnrollCourseView.of(created);
+        return EnrollSuccessView.of(created);
     }
 }
