@@ -4,7 +4,7 @@ import com.lxp.enrollment.application.provided.dto.command.CancelByUserCommand;
 import com.lxp.enrollment.application.provided.dto.command.EnrollCommand;
 import com.lxp.enrollment.application.provided.dto.query.EnrollmentDetailsQuery;
 import com.lxp.enrollment.application.provided.usecase.CancelCourseByUserUseCase;
-import com.lxp.enrollment.application.provided.usecase.EnrollmentQueryUseCase;
+import com.lxp.enrollment.application.provided.usecase.EnrollmentDetailsQueryUseCase;
 import com.lxp.enrollment.application.provided.dto.result.CancelCourseResult;
 import com.lxp.enrollment.application.provided.dto.result.EnrollmentDetailsQueryResult;
 import com.lxp.enrollment.infra.provided.web.external.passport.PassportClaims;
@@ -37,18 +37,18 @@ public class EnrollmentController {
     private final PassportVerifier passportVerifier;
     private final EnrollCourseUseCase enrollCourseUseCase;
     private final CancelCourseByUserUseCase cancelCourseByUserUseCase;
-    private final EnrollmentQueryUseCase enrollmentQueryUseCase;
+    private final EnrollmentDetailsQueryUseCase enrollmentDetailsQueryUseCase;
 
     public EnrollmentController(
             PassportVerifier passportVerifier,
             EnrollCourseUseCase enrollCourseUseCase,
             CancelCourseByUserUseCase cancelCourseByUserUseCase,
-            EnrollmentQueryUseCase enrollmentQueryUseCase
+            EnrollmentDetailsQueryUseCase enrollmentDetailsQueryUseCase
     ) {
         this.passportVerifier = passportVerifier;
         this.enrollCourseUseCase = enrollCourseUseCase;
         this.cancelCourseByUserUseCase = cancelCourseByUserUseCase;
-        this.enrollmentQueryUseCase = enrollmentQueryUseCase;
+        this.enrollmentDetailsQueryUseCase = enrollmentDetailsQueryUseCase;
     }
 
     // ---------- 수강 등록 요청 핸들러
@@ -112,7 +112,7 @@ public class EnrollmentController {
         UUID courseUuid = resolveCourseId(courseId);
 
         EnrollmentDetailsQuery query = new EnrollmentDetailsQuery(userUuid, courseUuid);
-        EnrollmentDetailsQueryResult result = enrollmentQueryUseCase.find(query);
+        EnrollmentDetailsQueryResult result = enrollmentDetailsQueryUseCase.find(query);
         EnrollmentDetailsResponse body = EnrollmentDetailsResponse.of(result);
 
         return ResponseEntity.ok(body);
