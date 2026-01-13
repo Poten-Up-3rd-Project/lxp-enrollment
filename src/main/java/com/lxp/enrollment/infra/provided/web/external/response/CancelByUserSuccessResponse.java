@@ -8,7 +8,7 @@ import com.lxp.enrollment.domain.model.enums.EnrollmentStatus;
 import java.time.OffsetDateTime;
 import java.util.UUID;
 
-public record CancelSuccessResponse(
+public record CancelByUserSuccessResponse(
         UUID id,
         UUID courseId,
         EnrollmentStatus status,
@@ -18,8 +18,8 @@ public record CancelSuccessResponse(
         OffsetDateTime activatedAt,
         CancelDetailsResponse cancelDetails
 ) {
-    public static CancelSuccessResponse of(CancelByUserSuccessView result) {
-        return new CancelSuccessResponse(
+    public static CancelByUserSuccessResponse of(CancelByUserSuccessView result) {
+        return new CancelByUserSuccessResponse(
                 result.id(),
                 result.courseId(),
                 result.status(),

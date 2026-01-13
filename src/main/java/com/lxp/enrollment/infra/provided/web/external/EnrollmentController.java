@@ -7,6 +7,7 @@ import com.lxp.enrollment.application.provided.command.usecase.CancelByUserUseCa
 import com.lxp.enrollment.application.provided.query.usecase.EnrollmentDetailsQueryUseCase;
 import com.lxp.enrollment.application.provided.command.dto.view.CancelByUserSuccessView;
 import com.lxp.enrollment.application.provided.query.dto.view.EnrollmentDetailsQueryView;
+import com.lxp.enrollment.infra.provided.web.external.mapper.EnrollmentResponseMapper;
 import com.lxp.enrollment.infra.provided.web.external.passport.PassportClaims;
 import com.lxp.enrollment.infra.provided.web.external.passport.PassportVerifier;
 import com.lxp.enrollment.application.provided.command.usecase.EnrollUseCase;
@@ -14,7 +15,7 @@ import com.lxp.enrollment.application.provided.command.dto.view.EnrollSuccessVie
 import com.lxp.enrollment.domain.exception.EnrollmentErrorCode;
 import com.lxp.enrollment.domain.exception.EnrollmentException;
 import com.lxp.enrollment.infra.provided.web.external.request.CancelRequest;
-import com.lxp.enrollment.infra.provided.web.external.response.CancelSuccessResponse;
+import com.lxp.enrollment.infra.provided.web.external.response.CancelByUserSuccessResponse;
 import com.lxp.enrollment.infra.provided.web.external.response.EnrollSuccessResponse;
 import com.lxp.enrollment.infra.provided.web.external.response.EnrollmentDetailsResponse;
 import jakarta.validation.Valid;
@@ -38,17 +39,20 @@ public class EnrollmentController {
     private final EnrollUseCase enrollUseCase;
     private final CancelByUserUseCase cancelByUserUseCase;
     private final EnrollmentDetailsQueryUseCase enrollmentDetailsQueryUseCase;
+    private final EnrollmentResponseMapper enrollmentResponseMapper;
 
     public EnrollmentController(
             PassportVerifier passportVerifier,
             EnrollUseCase enrollUseCase,
             CancelByUserUseCase cancelByUserUseCase,
-            EnrollmentDetailsQueryUseCase enrollmentDetailsQueryUseCase
+            EnrollmentDetailsQueryUseCase enrollmentDetailsQueryUseCase,
+            EnrollmentResponseMapper enrollmentResponseMapper
     ) {
         this.passportVerifier = passportVerifier;
         this.enrollUseCase = enrollUseCase;
         this.cancelByUserUseCase = cancelByUserUseCase;
         this.enrollmentDetailsQueryUseCase = enrollmentDetailsQueryUseCase;
+        this.enrollmentResponseMapper = enrollmentResponseMapper;
     }
 
     // ---------- 수강 등록 요청 핸들러
@@ -65,7 +69,7 @@ public class EnrollmentController {
 
         EnrollCommand command = new EnrollCommand(userUuid, courseUuid);
         EnrollSuccessView view = enrollUseCase.execute(command);
-        EnrollSuccessResponse body = EnrollSuccessResponse.of(view);
+        EnrollSuccessResponse body = enrollmentResponseMapper.toEnrollSuccessResponse(view);
 
         return ResponseEntity.ok(body);
     }
@@ -73,7 +77,7 @@ public class EnrollmentController {
     // ---------- 수강 취소 요청 핸들러
 
     @PostMapping("/cancel")
-    public ResponseEntity<CancelSuccessResponse> cancelByUser(
+    public ResponseEntity<CancelByUserSuccessResponse> cancelByUser(
             @RequestHeader("X-Passport")
             String encodedPassport,
             @RequestParam
@@ -93,7 +97,7 @@ public class EnrollmentController {
         );
 
         CancelByUserSuccessView view = cancelByUserUseCase.execute(command);
-        CancelSuccessResponse body = CancelSuccessResponse.of(view);
+        CancelByUserSuccessResponse body = enrollmentResponseMapper.toCancelByUserSuccessResponse(view);
 
         return ResponseEntity.ok(body);
     }
@@ -113,7 +117,7 @@ public class EnrollmentController {
 
         EnrollmentDetailsQuery query = new EnrollmentDetailsQuery(userUuid, courseUuid);
         EnrollmentDetailsQueryView view = enrollmentDetailsQueryUseCase.execute(query);
-        EnrollmentDetailsResponse body = EnrollmentDetailsResponse.of(view);
+        EnrollmentDetailsResponse body = enrollmentResponseMapper.toEnrollmentDetailsResponse(view);
 
         return ResponseEntity.ok(body);
     }
