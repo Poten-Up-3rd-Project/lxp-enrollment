@@ -5,12 +5,12 @@ import com.lxp.enrollment.application.provided.command.dto.EnrollCommand;
 import com.lxp.enrollment.application.provided.query.dto.EnrollmentDetailsQuery;
 import com.lxp.enrollment.application.provided.command.usecase.CancelCourseByUserUseCase;
 import com.lxp.enrollment.application.provided.query.usecase.EnrollmentDetailsQueryUseCase;
-import com.lxp.enrollment.application.provided.command.dto.CancelCourseResult;
-import com.lxp.enrollment.application.provided.query.dto.EnrollmentDetailsQueryResult;
+import com.lxp.enrollment.application.provided.command.dto.view.CancelCourseView;
+import com.lxp.enrollment.application.provided.query.dto.view.EnrollmentDetailsQueryView;
 import com.lxp.enrollment.infra.provided.web.external.passport.PassportClaims;
 import com.lxp.enrollment.infra.provided.web.external.passport.PassportVerifier;
 import com.lxp.enrollment.application.provided.command.usecase.EnrollCourseUseCase;
-import com.lxp.enrollment.application.provided.command.dto.EnrollCourseResult;
+import com.lxp.enrollment.application.provided.command.dto.view.EnrollCourseView;
 import com.lxp.enrollment.domain.exception.EnrollmentErrorCode;
 import com.lxp.enrollment.domain.exception.EnrollmentException;
 import com.lxp.enrollment.infra.provided.web.external.request.CancelCourseRequest;
@@ -64,7 +64,7 @@ public class EnrollmentController {
         UUID courseUuid = resolveCourseId(courseId);
 
         EnrollCommand command = new EnrollCommand(userUuid, courseUuid);
-        EnrollCourseResult result = enrollCourseUseCase.execute(command);
+        EnrollCourseView result = enrollCourseUseCase.execute(command);
         EnrollCourseResponse body = EnrollCourseResponse.of(result);
 
         return ResponseEntity.ok(body);
@@ -92,7 +92,7 @@ public class EnrollmentController {
                 request.reason()
         );
 
-        CancelCourseResult result = cancelCourseByUserUseCase.execute(command);
+        CancelCourseView result = cancelCourseByUserUseCase.execute(command);
         CancelCourseResponse body = CancelCourseResponse.of(result);
 
         return ResponseEntity.ok(body);
@@ -112,7 +112,7 @@ public class EnrollmentController {
         UUID courseUuid = resolveCourseId(courseId);
 
         EnrollmentDetailsQuery query = new EnrollmentDetailsQuery(userUuid, courseUuid);
-        EnrollmentDetailsQueryResult result = enrollmentDetailsQueryUseCase.execute(query);
+        EnrollmentDetailsQueryView result = enrollmentDetailsQueryUseCase.execute(query);
         EnrollmentDetailsResponse body = EnrollmentDetailsResponse.of(result);
 
         return ResponseEntity.ok(body);

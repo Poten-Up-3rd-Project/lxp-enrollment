@@ -1,4 +1,4 @@
-package com.lxp.enrollment.application.provided.command.dto;
+package com.lxp.enrollment.application.provided.command.dto.view;
 
 import com.lxp.enrollment.domain.model.Enrollment;
 import com.lxp.enrollment.domain.model.enums.EnrollmentStatus;
@@ -6,15 +6,15 @@ import com.lxp.enrollment.domain.model.enums.EnrollmentStatus;
 import java.time.Instant;
 import java.util.UUID;
 
-public record EnrollCourseResult(
+public record EnrollCourseView(
         UUID enrollmentId,
         UUID userId,
         UUID courseId,
         EnrollmentStatus enrollmentStatus,
         Instant enrolledAt
 ) {
-    public static EnrollCourseResult of(Enrollment enrollment) {
-        return new EnrollCourseResult(
+    public static EnrollCourseView of(Enrollment enrollment) {
+        return new EnrollCourseView(
                 enrollment.id(),
                 enrollment.userId(),
                 enrollment.courseId(),

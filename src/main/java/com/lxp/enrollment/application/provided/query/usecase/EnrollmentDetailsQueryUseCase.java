@@ -2,10 +2,10 @@ package com.lxp.enrollment.application.provided.query.usecase;
 
 import com.lxp.common.application.port.in.QueryUseCase;
 import com.lxp.enrollment.application.provided.query.dto.EnrollmentDetailsQuery;
-import com.lxp.enrollment.application.provided.query.dto.EnrollmentDetailsQueryResult;
+import com.lxp.enrollment.application.provided.query.dto.view.EnrollmentDetailsQueryView;
 
-public interface EnrollmentDetailsQueryUseCase extends QueryUseCase<EnrollmentDetailsQuery, EnrollmentDetailsQueryResult> {
+public interface EnrollmentDetailsQueryUseCase extends QueryUseCase<EnrollmentDetailsQuery, EnrollmentDetailsQueryView> {
 
     @Override
-    EnrollmentDetailsQueryResult execute(EnrollmentDetailsQuery query);
+    EnrollmentDetailsQueryView execute(EnrollmentDetailsQuery query);
 }

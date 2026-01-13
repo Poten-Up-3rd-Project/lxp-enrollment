@@ -2,7 +2,7 @@ package com.lxp.enrollment.application.provided.command.service;
 
 import com.lxp.enrollment.application.provided.command.dto.EnrollCommand;
 import com.lxp.enrollment.application.provided.command.usecase.EnrollCourseUseCase;
-import com.lxp.enrollment.application.provided.command.dto.EnrollCourseResult;
+import com.lxp.enrollment.application.provided.command.dto.view.EnrollCourseView;
 import com.lxp.enrollment.application.required.presistence.EnrollmentRepository;
 import com.lxp.enrollment.application.required.web.ContentClient;
 import com.lxp.enrollment.domain.exception.EnrollmentErrorCode;
@@ -25,7 +25,7 @@ public class EnrollCourseService implements EnrollCourseUseCase {
     }
 
     @Override
-    public EnrollCourseResult execute(EnrollCommand command) {
+    public EnrollCourseView execute(EnrollCommand command) {
 
         if (contentClient.courseNotExists(command.courseId())) {
             throw new EnrollmentException(EnrollmentErrorCode.COURSE_NOT_FOUND);
@@ -34,6 +34,6 @@ public class EnrollCourseService implements EnrollCourseUseCase {
         Enrollment created = enrollmentRepository.save(
                 Enrollment.create(command.userId(), command.courseId())
         );
-        return EnrollCourseResult.of(created);
+        return EnrollCourseView.of(created);
     }
 }

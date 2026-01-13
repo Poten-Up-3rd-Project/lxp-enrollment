@@ -2,7 +2,7 @@ package com.lxp.enrollment.application.provided.query.service;
 
 import com.lxp.enrollment.application.provided.query.dto.EnrollmentDetailsQuery;
 import com.lxp.enrollment.application.provided.query.usecase.EnrollmentDetailsQueryUseCase;
-import com.lxp.enrollment.application.provided.query.dto.EnrollmentDetailsQueryResult;
+import com.lxp.enrollment.application.provided.query.dto.view.EnrollmentDetailsQueryView;
 import com.lxp.enrollment.application.required.presistence.EnrollmentRepository;
 import com.lxp.enrollment.domain.exception.EnrollmentErrorCode;
 import com.lxp.enrollment.domain.exception.EnrollmentException;
@@ -19,11 +19,11 @@ public class EnrollmentDetailsQueryService implements EnrollmentDetailsQueryUseC
     }
 
     @Override
-    public EnrollmentDetailsQueryResult execute(EnrollmentDetailsQuery query) {
+    public EnrollmentDetailsQueryView execute(EnrollmentDetailsQuery query) {
 
         Enrollment found = enrollmentRepository.findByUserIdAndCourseId(query.userId(), query.courseId())
                 .orElseThrow(() -> new EnrollmentException(EnrollmentErrorCode.ENROLLMENT_NOT_FOUND));
 
-        return EnrollmentDetailsQueryResult.of(found);
+        return EnrollmentDetailsQueryView.of(found);
     }
 }

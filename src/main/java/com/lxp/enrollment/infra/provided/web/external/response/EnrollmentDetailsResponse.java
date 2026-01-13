@@ -2,7 +2,7 @@ package com.lxp.enrollment.infra.provided.web.external.response;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.lxp.common.util.DateTimeUtils;
-import com.lxp.enrollment.application.provided.query.dto.EnrollmentDetailsQueryResult;
+import com.lxp.enrollment.application.provided.query.dto.view.EnrollmentDetailsQueryView;
 import com.lxp.enrollment.domain.model.enums.EnrollmentStatus;
 
 import java.time.OffsetDateTime;
@@ -18,14 +18,14 @@ public record EnrollmentDetailsResponse(
         OffsetDateTime activatedAt,
         CancelDetailsResponse cancelDetails
 ) {
-    public static EnrollmentDetailsResponse of(EnrollmentDetailsQueryResult result) {
+    public static EnrollmentDetailsResponse of(EnrollmentDetailsQueryView result) {
         return new EnrollmentDetailsResponse(
                 result.id(),
                 result.courseId(),
                 result.status(),
                 DateTimeUtils.toKstDateTime(result.enrolledAt()),
                 DateTimeUtils.toKstDateTime(result.activatedAt()),
-                CancelDetailsResponse.of(result.cancelDetailsResult())
+                CancelDetailsResponse.of(result.cancelDetailsView())
         );
     }
 }
