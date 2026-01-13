@@ -13,6 +13,7 @@ import com.lxp.enrollment.domain.model.vo.CancelDetails;
 import java.time.Instant;
 import java.util.UUID;
 
+// To Do: 동시성 고려(낙관적 락?)
 public class Enrollment extends AggregateRoot<UUID> {
 
     // ---------- Fields
@@ -192,7 +193,7 @@ public class Enrollment extends AggregateRoot<UUID> {
             || (deletedAt != null && enrolledAt.isAfter(deletedAt))
             || (cancelDetails != null && cancelDetails.cancelledAt() != null && enrolledAt.isAfter(cancelDetails.cancelledAt()))
             || (completedAt != null && enrolledAt.isAfter(completedAt))
-            || (completedAt != null && activatedAt.isAfter(completedAt))
+            || (activatedAt != null && completedAt != null && activatedAt.isAfter(completedAt))
             || (cancelDetails != null && cancelDetails.cancelledAt() != null && completedAt != null)
         ) {
             throw new EnrollmentException(EnrollmentErrorCode.INVALID_CHRONOLOGY);

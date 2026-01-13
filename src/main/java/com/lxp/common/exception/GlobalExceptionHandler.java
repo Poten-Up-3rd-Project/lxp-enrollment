@@ -1,8 +1,8 @@
 package com.lxp.common.exception;
 
 import com.lxp.common.domain.exception.DomainException;
-import com.lxp.common.exception.ErrorResponse.FieldError;
-import com.lxp.enrollment.infra.adapter.provided.web.external.passport.InvalidPassportException;
+import com.lxp.common.infrastructure.exception.ErrorResponse;
+import com.lxp.enrollment.infra.provided.web.external.passport.InvalidPassportException;
 import jakarta.servlet.ServletException;
 import jakarta.validation.ConstraintViolationException;
 import lombok.extern.slf4j.Slf4j;
@@ -20,8 +20,6 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 import org.springframework.web.method.annotation.HandlerMethodValidationException;
 import org.springframework.web.method.annotation.MethodArgumentTypeMismatchException;
 
-import java.util.List;
-
 import static com.lxp.common.exception.CommonErrorCode.DATA_ACCESS_FAILED;
 import static com.lxp.common.exception.CommonErrorCode.MISSING_HTTP_HEADER;
 import static com.lxp.common.exception.CommonErrorCode.MISSING_REQUEST_PARAMETER;
@@ -34,6 +32,10 @@ import static com.lxp.common.exception.CommonErrorCode.VALIDATION_FAILED;
 @RestControllerAdvice(name = "GlobalExceptionHandlerForEnrollment")
 public class GlobalExceptionHandler {
 
+    private final String BAD_REQUEST = "BAD_REQUEST";
+    private final String UNAUTHORIZED = "UNAUTHORIZED";
+    private final String INTERNAL_SERVER_ERROR = "INTERNAL_SERVER_ERROR";
+
     // ---------- HTTP exceptions handlers
 
     @ResponseBody
@@ -45,14 +47,7 @@ public class GlobalExceptionHandler {
                 + (e.getSupportedHttpMethods() == null ? null : e.getSupportedHttpMethods().toString())
                 + ", given: "
                 + e.getMethod();
-        ErrorResponse body = ErrorResponse.of(errorCode, errorMessage);
-
-        log.info("{}: {}", errorCode, errorMessage);
-        log.debug("{}: {}", errorCode, errorMessage, e);
-
-        return ResponseEntity
-                .badRequest()
-                .body(body);
+        return handleException(errorCode, errorMessage, BAD_REQUEST, e);
     }
 
     @ResponseBody
@@ -61,14 +56,7 @@ public class GlobalExceptionHandler {
 
         String errorCode = MISSING_HTTP_HEADER.getCode();
         String errorMessage = MISSING_HTTP_HEADER.getMessage() + "required: " + e.getHeaderName();
-        ErrorResponse body = ErrorResponse.of(errorCode, errorMessage);
-
-        log.info("{}: {}", errorCode, errorMessage);
-        log.debug("{}: {}", errorCode, errorMessage, e);
-
-        return ResponseEntity
-                .badRequest()
-                .body(body);
+        return handleException(errorCode, errorMessage, BAD_REQUEST, e);
     }
 
     @ResponseBody
@@ -78,14 +66,7 @@ public class GlobalExceptionHandler {
         String errorCode = MISSING_REQUEST_PARAMETER.getCode();
         String errorMessage = MISSING_REQUEST_PARAMETER.getMessage()
                 + ", required: [" + e.getParameterType() + "]" + e.getParameterName();
-        ErrorResponse body = ErrorResponse.of(errorCode, errorMessage);
-
-        log.info("{}: {}", errorCode, errorMessage);
-        log.debug("{}: {}", errorCode, errorMessage, e);
-
-        return ResponseEntity
-                .badRequest()
-                .body(body);
+        return handleException(errorCode, errorMessage, BAD_REQUEST, e);
     }
 
     @ResponseBody
@@ -94,14 +75,7 @@ public class GlobalExceptionHandler {
 
         String errorCode = SERVLET_EXCEPTION.getCode();
         String errorMessage = SERVLET_EXCEPTION.getMessage();
-        ErrorResponse body = ErrorResponse.of(errorCode, errorMessage);
-
-        log.info("{}: {}", errorCode, errorMessage);
-        log.debug("{}: {}", errorCode, errorMessage, e);
-
-        return ResponseEntity
-                .internalServerError()
-                .body(body);
+        return handleException(errorCode, errorMessage, INTERNAL_SERVER_ERROR, e);
     }
 
     // ---------- Validation exception handlers
@@ -110,40 +84,35 @@ public class GlobalExceptionHandler {
     @ExceptionHandler(MethodArgumentNotValidException.class)
     public ResponseEntity<ErrorResponse> handleMethodArgumentNotValidException(MethodArgumentNotValidException e) {
 
-        List<FieldError> fieldErrors = FieldErrorResolver.mapFieldErrors(e);
-        return handleFieldValidateException(fieldErrors, e);
+        return handleValidationException(e);
     }
 
     @ResponseBody
     @ExceptionHandler(BindException.class)
     public ResponseEntity<ErrorResponse> handleBindException(BindException e) {
 
-        List<FieldError> fieldErrors = FieldErrorResolver.mapFieldErrors(e);
-        return handleFieldValidateException(fieldErrors, e);
+        return handleValidationException(e);
     }
 
     @ResponseBody
     @ExceptionHandler(ConstraintViolationException.class)
     public ResponseEntity<ErrorResponse> handleConstraintViolation(ConstraintViolationException e) {
 
-        List<FieldError> fieldErrors = FieldErrorResolver.mapFieldErrors(e);
-        return handleFieldValidateException(fieldErrors, e);
+        return handleValidationException(e);
     }
 
     @ResponseBody
     @ExceptionHandler(HandlerMethodValidationException.class)
     public ResponseEntity<ErrorResponse> handleMethodValidationException(HandlerMethodValidationException e) {
 
-        List<FieldError> fieldErrors = FieldErrorResolver.mapFieldErrors(e);
-        return handleFieldValidateException(fieldErrors, e);
+        return handleValidationException(e);
     }
 
     @ResponseBody
     @ExceptionHandler(MethodArgumentTypeMismatchException.class)
     public ResponseEntity<ErrorResponse> handleMethodArgumentTypeMismatchException(MethodArgumentTypeMismatchException e) {
 
-        List<FieldError> fieldErrors = FieldErrorResolver.mapFieldErrors(e);
-        return handleFieldValidateException(fieldErrors, e);
+        return handleValidationException(e);
     }
 
     // ---------- Domain exception handlers
@@ -154,14 +123,8 @@ public class GlobalExceptionHandler {
 
         String errorCode = e.getCode();
         String errorMessage = e.getMessage();
-        ErrorResponse body = ErrorResponse.of(errorCode, errorMessage);
-
-        log.info("{}: {}", errorCode, errorMessage);
-        log.debug("{}: {}", errorCode, errorMessage, e);
-
-        return ResponseEntity
-                .status(mapToHttpStatus(e.getGroup()))
-                .body(body);
+        String group = e.getGroup();
+        return handleException(errorCode, errorMessage, group, e);
     }
 
     @ResponseBody
@@ -170,14 +133,7 @@ public class GlobalExceptionHandler {
 
         String errorCode = "INVALID_PASSPORT_ENROLLMENT";
         String errorMessage = e.getMessage();
-        ErrorResponse body = ErrorResponse.of(errorCode, errorMessage);
-
-        log.info("{}: {}", errorCode, errorMessage);
-        log.debug("{}: {}", errorCode, errorMessage, e);
-
-        return ResponseEntity
-                .status(HttpStatus.UNAUTHORIZED)
-                .body(body);
+        return handleException(errorCode, errorMessage, UNAUTHORIZED, e);
     }
 
     // ---------- Persistence exception handlers
@@ -189,14 +145,7 @@ public class GlobalExceptionHandler {
 
         String errorCode = DATA_ACCESS_FAILED.getCode();
         String errorMessage = DATA_ACCESS_FAILED.getMessage();
-        ErrorResponse body = ErrorResponse.of(errorCode, errorMessage);
-
-        log.info("{}: {}", errorCode, errorMessage);
-        log.debug("{}: {}", errorCode, errorMessage, e);
-
-        return ResponseEntity
-                .internalServerError()
-                .body(body);
+        return handleException(errorCode, errorMessage, INTERNAL_SERVER_ERROR, e);
     }
 
     // ---------- Uncaught(unexpected) exception handlers
@@ -207,29 +156,25 @@ public class GlobalExceptionHandler {
 
         String errorCode = UNEXPECTED_SERVER_ERROR.getCode();
         String errorMessage = UNEXPECTED_SERVER_ERROR.getMessage();
-        ErrorResponse body = ErrorResponse.of(errorCode, errorMessage);
+        return handleException(errorCode, errorMessage, INTERNAL_SERVER_ERROR, e);
+    }
+
+    // ---------- helpers
+
+    private ResponseEntity<ErrorResponse> handleValidationException(Throwable e) {
+        String errorCode = VALIDATION_FAILED.getCode();
+        String errorMessage = VALIDATION_FAILED.getMessage();
+        return handleException(errorCode, errorMessage, BAD_REQUEST, e);
+    }
+
+    private ResponseEntity<ErrorResponse> handleException(String errorCode, String errorMessage, String group, Throwable e) {
+        ErrorResponse body = new ErrorResponse(errorCode, errorMessage, group);
 
         log.info("{}: {}", errorCode, errorMessage);
         log.debug("{}: {}", errorCode, errorMessage, e);
 
         return ResponseEntity
                 .internalServerError()
-                .body(body);
-    }
-
-    // ---------- helpers
-
-    private ResponseEntity<ErrorResponse> handleFieldValidateException(List<FieldError> fieldErrors, Throwable e) {
-
-        String errorCode = VALIDATION_FAILED.getCode();
-        String errorMessage = VALIDATION_FAILED.getMessage();
-        ErrorResponse body = ErrorResponse.of(errorCode, errorMessage);
-
-        log.info("{}: {}", errorCode, errorMessage);
-        log.debug("{}: {}, \n 상세 원인: {}", errorCode, errorMessage, fieldErrors, e);
-
-        return ResponseEntity
-                .badRequest()
                 .body(body);
     }
 

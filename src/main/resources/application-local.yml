@@ -18,8 +18,9 @@ spring:
         format_sql: true
 
   rabbitmq:
-    host: localhost
-    port: 5672
+    host: 192.168.49.2
+    # rabbitmq dashboard -> 30672
+    port: 30321
     username: ${SPRING_RABBITMQ_USERNAME}
     password: ${SPRING_RABBITMQ_PASSWORD}
 
