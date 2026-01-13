@@ -2,10 +2,10 @@ package com.lxp.enrollment.application.provided.command.usecase;
 
 import com.lxp.common.application.port.in.CommandWithResultUseCase;
 import com.lxp.enrollment.application.provided.command.dto.CancelByUserCommand;
-import com.lxp.enrollment.application.provided.command.dto.view.CancelSuccessView;
+import com.lxp.enrollment.application.provided.command.dto.view.CancelByUserSuccessView;
 
-public interface CancelByUserUseCase extends CommandWithResultUseCase<CancelByUserCommand, CancelSuccessView> {
+public interface CancelByUserUseCase extends CommandWithResultUseCase<CancelByUserCommand, CancelByUserSuccessView> {
 
     @Override
-    CancelSuccessView execute(CancelByUserCommand command);
+    CancelByUserSuccessView execute(CancelByUserCommand command);
 }

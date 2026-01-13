@@ -6,7 +6,7 @@ import com.lxp.enrollment.domain.model.enums.EnrollmentStatus;
 import java.time.Instant;
 import java.util.UUID;
 
-public record CancelSuccessView(
+public record CancelByUserSuccessView(
         UUID id,
         UUID courseId,
         EnrollmentStatus status,
@@ -14,8 +14,8 @@ public record CancelSuccessView(
         Instant activatedAt,
         CancelDetailsView cancelDetailsView
 ) {
-    public static CancelSuccessView of(Enrollment enrollment) {
-        return new CancelSuccessView(
+    public static CancelByUserSuccessView of(Enrollment enrollment) {
+        return new CancelByUserSuccessView(
                 enrollment.id(),
                 enrollment.courseId(),
                 enrollment.enrollmentStatus(),

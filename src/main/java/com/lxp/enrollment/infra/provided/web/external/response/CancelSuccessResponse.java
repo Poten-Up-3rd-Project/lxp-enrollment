@@ -2,7 +2,7 @@ package com.lxp.enrollment.infra.provided.web.external.response;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.lxp.common.util.DateTimeUtils;
-import com.lxp.enrollment.application.provided.command.dto.view.CancelSuccessView;
+import com.lxp.enrollment.application.provided.command.dto.view.CancelByUserSuccessView;
 import com.lxp.enrollment.domain.model.enums.EnrollmentStatus;
 
 import java.time.OffsetDateTime;
@@ -18,7 +18,7 @@ public record CancelSuccessResponse(
         OffsetDateTime activatedAt,
         CancelDetailsResponse cancelDetails
 ) {
-    public static CancelSuccessResponse of(CancelSuccessView result) {
+    public static CancelSuccessResponse of(CancelByUserSuccessView result) {
         return new CancelSuccessResponse(
                 result.id(),
                 result.courseId(),

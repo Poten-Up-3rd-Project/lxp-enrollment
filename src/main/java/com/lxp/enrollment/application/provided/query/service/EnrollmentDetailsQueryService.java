@@ -1,5 +1,6 @@
 package com.lxp.enrollment.application.provided.query.service;
 
+import com.lxp.enrollment.application.provided.mapper.EnrollmentViewMapper;
 import com.lxp.enrollment.application.provided.query.dto.EnrollmentDetailsQuery;
 import com.lxp.enrollment.application.provided.query.usecase.EnrollmentDetailsQueryUseCase;
 import com.lxp.enrollment.application.provided.query.dto.view.EnrollmentDetailsQueryView;
@@ -13,9 +14,14 @@ import org.springframework.stereotype.Service;
 public class EnrollmentDetailsQueryService implements EnrollmentDetailsQueryUseCase {
 
     private final EnrollmentRepository enrollmentRepository;
+    private final EnrollmentViewMapper enrollmentViewMapper;
 
-    public EnrollmentDetailsQueryService(EnrollmentRepository enrollmentRepository) {
+    public EnrollmentDetailsQueryService(
+            EnrollmentRepository enrollmentRepository,
+            EnrollmentViewMapper enrollmentViewMapper
+    ) {
         this.enrollmentRepository = enrollmentRepository;
+        this.enrollmentViewMapper = enrollmentViewMapper;
     }
 
     @Override
@@ -24,6 +30,6 @@ public class EnrollmentDetailsQueryService implements EnrollmentDetailsQueryUseC
         Enrollment found = enrollmentRepository.findByUserIdAndCourseId(query.userId(), query.courseId())
                 .orElseThrow(() -> new EnrollmentException(EnrollmentErrorCode.ENROLLMENT_NOT_FOUND));
 
-        return EnrollmentDetailsQueryView.of(found);
+        return enrollmentViewMapper.toEnrollmentDetailsQueryView(found);
     }
 }
