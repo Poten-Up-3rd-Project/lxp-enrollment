@@ -1,6 +1,5 @@
 package com.lxp.enrollment.infra.required.persistence.jpa.model;
 
-import com.lxp.enrollment.domain.model.Enrollment;
 import com.lxp.enrollment.domain.model.enums.EnrollmentStatus;
 import jakarta.persistence.Column;
 import jakarta.persistence.Embedded;
@@ -84,17 +83,27 @@ public class EnrollmentJpaEntity {
         this.cancelDetailsJpaEmbeddable = cancelDetailsJpaEmbeddable;
     }
 
-    public static EnrollmentJpaEntity create(Enrollment enrollment) {
+    public static EnrollmentJpaEntity create(
+            UUID id,
+            UUID userId,
+            UUID courseId,
+            EnrollmentStatus enrollmentStatus,
+            Instant enrolledAt,
+            Instant activatedAt,
+            Instant completedAt,
+            Instant deletedAt,
+            CancelDetailsJpaEmbeddable cancelDetailsJpaEmbeddable
+    ) {
         return new EnrollmentJpaEntity(
-                enrollment.id(),
-                enrollment.userId(),
-                enrollment.courseId(),
-                enrollment.enrollmentStatus(),
-                enrollment.enrolledAt(),
-                enrollment.activatedAt(),
-                enrollment.completedAt(),
-                enrollment.deletedAt(),
-                CancelDetailsJpaEmbeddable.of(enrollment.cancelDetails())
+                id,
+                userId,
+                courseId,
+                enrollmentStatus,
+                enrolledAt,
+                activatedAt,
+                completedAt,
+                deletedAt,
+                cancelDetailsJpaEmbeddable
         );
     }
 }

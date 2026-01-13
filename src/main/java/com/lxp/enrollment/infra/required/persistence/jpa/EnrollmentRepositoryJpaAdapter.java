@@ -2,8 +2,7 @@ package com.lxp.enrollment.infra.required.persistence.jpa;
 
 import com.lxp.enrollment.application.required.presistence.EnrollmentRepository;
 import com.lxp.enrollment.domain.model.Enrollment;
-import com.lxp.enrollment.domain.model.vo.CancelDetails;
-import com.lxp.enrollment.infra.required.persistence.jpa.model.CancelDetailsJpaEmbeddable;
+import com.lxp.enrollment.infra.required.persistence.jpa.mapper.EnrollmentEntityMapper;
 import com.lxp.enrollment.infra.required.persistence.jpa.model.EnrollmentJpaEntity;
 import org.springframework.stereotype.Component;
 
@@ -15,16 +14,21 @@ import java.util.UUID;
 public class EnrollmentRepositoryJpaAdapter implements EnrollmentRepository {
 
     private final EnrollmentJpaRepository enrollmentJpaRepository;
+    private final EnrollmentEntityMapper enrollmentEntityMapper;
 
-    public EnrollmentRepositoryJpaAdapter(EnrollmentJpaRepository enrollmentJpaRepository) {
+    public EnrollmentRepositoryJpaAdapter(
+            EnrollmentJpaRepository enrollmentJpaRepository,
+            EnrollmentEntityMapper enrollmentEntityMapper
+    ) {
         this.enrollmentJpaRepository = enrollmentJpaRepository;
+        this.enrollmentEntityMapper = enrollmentEntityMapper;
     }
 
     @Override
     public Optional<Enrollment> findById(UUID id) {
         Optional<EnrollmentJpaEntity> optional = enrollmentJpaRepository.findById(id);
 
-        return optional.map(this::map);
+        return optional.map(enrollmentEntityMapper::toDomain);
 
     }
 
@@ -33,7 +37,7 @@ public class EnrollmentRepositoryJpaAdapter implements EnrollmentRepository {
         Optional<EnrollmentJpaEntity> optional
                 = enrollmentJpaRepository.findByUserIdAndCourseId(userId, courseId);
 
-        return optional.map(this::map);
+        return optional.map(enrollmentEntityMapper::toDomain);
 
     }
 
@@ -42,9 +46,7 @@ public class EnrollmentRepositoryJpaAdapter implements EnrollmentRepository {
         List<EnrollmentJpaEntity> enrollmentJpaEntities
                 = enrollmentJpaRepository.findAllByUserId(userId);
 
-        return enrollmentJpaEntities.stream()
-                .map(this::map)
-                .toList();
+        return enrollmentEntityMapper.toDomainList(enrollmentJpaEntities);
     }
 
     @Override
@@ -52,43 +54,16 @@ public class EnrollmentRepositoryJpaAdapter implements EnrollmentRepository {
         List<EnrollmentJpaEntity> enrollmentJpaEntities
                 = enrollmentJpaRepository.findAllByCourseId(courseId);
 
-        return enrollmentJpaEntities.stream()
-                .map(this::map)
-                .toList();
+        return enrollmentEntityMapper.toDomainList(enrollmentJpaEntities);
     }
 
     @Override
     public Enrollment save(Enrollment enrollment) {
 
         EnrollmentJpaEntity saved = enrollmentJpaRepository.save(
-                EnrollmentJpaEntity.create(enrollment)
+                enrollmentEntityMapper.toEntity(enrollment)
         );
 
-        return map(saved);
-    }
-
-    // ---------- mapper: jpa entity -> domain entity
-
-    private Enrollment map(EnrollmentJpaEntity enrollmentJpaEntity) {
-
-        CancelDetailsJpaEmbeddable cancelDetailsJpaEmbeddable
-                = enrollmentJpaEntity.getCancelDetailsJpaEmbeddable();
-
-        return Enrollment.reconstruct(
-                enrollmentJpaEntity.getId(),
-                enrollmentJpaEntity.getUserId(),
-                enrollmentJpaEntity.getCourseId(),
-                enrollmentJpaEntity.getEnrollmentStatus(),
-                enrollmentJpaEntity.getEnrolledAt(),
-                enrollmentJpaEntity.getActivatedAt(),
-                enrollmentJpaEntity.getCompletedAt(),
-                enrollmentJpaEntity.getDeletedAt(),
-                CancelDetails.of(
-                        cancelDetailsJpaEmbeddable.getCanceledAt(),
-                        cancelDetailsJpaEmbeddable.getCancelType(),
-                        cancelDetailsJpaEmbeddable.getCancelReasonType(),
-                        cancelDetailsJpaEmbeddable.getCancelReasonComment()
-                )
-        );
+        return enrollmentEntityMapper.toDomain(saved);
     }
 }

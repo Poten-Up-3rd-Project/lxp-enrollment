@@ -36,17 +36,18 @@ public class CancelDetailsJpaEmbeddable {
         this.cancelReasonComment = cancelReasonComment;
     }
 
-    public static CancelDetailsJpaEmbeddable of(CancelDetails cancelDetails) {
-
-        if (cancelDetails == null) {
-            return null;
-        }
+    public static CancelDetailsJpaEmbeddable of(
+            Instant canceledAt,
+            CancelType cancelType,
+            CancelReasonType cancelReasonType,
+            String cancelReasonComment
+    ) {
 
         return new CancelDetailsJpaEmbeddable(
-                cancelDetails.cancelledAt(),
-                cancelDetails.cancelType(),
-                cancelDetails.cancelReasonType(),
-                cancelDetails.cancelReasonComment()
+                canceledAt,
+                cancelType,
+                cancelReasonType,
+                cancelReasonComment
         );
     }
 }
