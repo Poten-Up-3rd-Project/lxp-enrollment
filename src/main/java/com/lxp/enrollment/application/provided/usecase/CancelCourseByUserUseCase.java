@@ -5,5 +5,5 @@ import com.lxp.enrollment.application.provided.dto.result.CancelCourseResult;
 
 public interface CancelCourseByUserUseCase {
 
-    CancelCourseResult cancelByUser(CancelByUserCommand cancelByUserCommand);
+    CancelCourseResult cancelByUser(CancelByUserCommand command);
 }

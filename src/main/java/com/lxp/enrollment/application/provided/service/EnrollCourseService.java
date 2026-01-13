@@ -25,14 +25,14 @@ public class EnrollCourseService implements EnrollCourseUseCase {
     }
 
     @Override
-    public EnrollCourseResult enroll(EnrollCommand enrollCommand) {
+    public EnrollCourseResult enroll(EnrollCommand command) {
 
-        if (contentClient.courseNotExists(enrollCommand.courseId())) {
+        if (contentClient.courseNotExists(command.courseId())) {
             throw new EnrollmentException(EnrollmentErrorCode.COURSE_NOT_FOUND);
         }
 
         Enrollment created = enrollmentRepository.save(
-                Enrollment.create(enrollCommand.userId(), enrollCommand.courseId())
+                Enrollment.create(command.userId(), command.courseId())
         );
         return EnrollCourseResult.of(created);
     }

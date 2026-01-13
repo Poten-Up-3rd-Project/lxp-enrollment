@@ -19,12 +19,12 @@ public class CancelCourseByUserService implements CancelCourseByUserUseCase {
     }
 
     @Override
-    public CancelCourseResult cancelByUser(CancelByUserCommand cancelByUserCommand) {
+    public CancelCourseResult cancelByUser(CancelByUserCommand command) {
 
-        Enrollment target = enrollmentRepository.findByUserIdAndCourseId(cancelByUserCommand.userId(), cancelByUserCommand.courseId())
+        Enrollment target = enrollmentRepository.findByUserIdAndCourseId(command.userId(), command.courseId())
                 .orElseThrow(() -> new EnrollmentException(EnrollmentErrorCode.ENROLLMENT_NOT_FOUND));
 
-        target.cancelByUser(cancelByUserCommand.cancelReasonType(), cancelByUserCommand.reason());
+        target.cancelByUser(command.cancelReasonType(), command.reason());
         enrollmentRepository.save(target);
 
         return CancelCourseResult.of(target);
