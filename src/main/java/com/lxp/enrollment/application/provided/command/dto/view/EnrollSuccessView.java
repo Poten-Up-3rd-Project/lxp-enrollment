@@ -1,6 +1,5 @@
 package com.lxp.enrollment.application.provided.command.dto.view;
 
-import com.lxp.enrollment.domain.model.Enrollment;
 import com.lxp.enrollment.domain.model.enums.EnrollmentStatus;
 
 import java.time.Instant;

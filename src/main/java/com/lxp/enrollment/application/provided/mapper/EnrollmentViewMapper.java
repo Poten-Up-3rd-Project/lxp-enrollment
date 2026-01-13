@@ -1,9 +1,10 @@
 package com.lxp.enrollment.application.provided.mapper;
 
 import com.lxp.enrollment.application.provided.command.dto.view.CancelByUserSuccessView;
-import com.lxp.enrollment.application.provided.command.dto.view.CancelDetailsView;
+import com.lxp.enrollment.application.provided.command.dto.view.CancelByUserSuccessView.CancelDetailsOfCancelByUserSuccessView;
 import com.lxp.enrollment.application.provided.command.dto.view.EnrollSuccessView;
 import com.lxp.enrollment.application.provided.query.dto.view.EnrollmentDetailsQueryView;
+import com.lxp.enrollment.application.provided.query.dto.view.EnrollmentDetailsQueryView.CancelDetailsOfEnrollmentDetailsQueryView;
 import com.lxp.enrollment.domain.model.Enrollment;
 import com.lxp.enrollment.domain.model.vo.CancelDetails;
 import org.springframework.stereotype.Component;
@@ -13,7 +14,7 @@ public class EnrollmentViewMapper {
 
     public CancelByUserSuccessView toCancelByUserSuccessView(Enrollment enrollment) {
         CancelDetails cancelDetails = enrollment.cancelDetails();
-        CancelDetailsView cancelDetailsView = new CancelDetailsView(
+        CancelDetailsOfCancelByUserSuccessView cancelDetailsView = new CancelDetailsOfCancelByUserSuccessView(
                 cancelDetails.cancelledAt(),
                 cancelDetails.cancelType(),
                 cancelDetails.cancelReasonType(),
@@ -43,7 +44,7 @@ public class EnrollmentViewMapper {
     public EnrollmentDetailsQueryView toEnrollmentDetailsQueryView(Enrollment enrollment) {
 
         CancelDetails cancelDetails = enrollment.cancelDetails();
-        CancelDetailsView cancelDetailsView = new CancelDetailsView(
+        CancelDetailsOfEnrollmentDetailsQueryView cancelDetailsView = new CancelDetailsOfEnrollmentDetailsQueryView(
                 cancelDetails.cancelledAt(),
                 cancelDetails.cancelType(),
                 cancelDetails.cancelReasonType(),

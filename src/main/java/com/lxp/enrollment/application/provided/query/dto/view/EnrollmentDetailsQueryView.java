@@ -1,6 +1,7 @@
 package com.lxp.enrollment.application.provided.query.dto.view;
 
-import com.lxp.enrollment.application.provided.command.dto.view.CancelDetailsView;
+import com.lxp.enrollment.domain.model.enums.CancelReasonType;
+import com.lxp.enrollment.domain.model.enums.CancelType;
 import com.lxp.enrollment.domain.model.enums.EnrollmentStatus;
 
 import java.time.Instant;
@@ -13,6 +14,13 @@ public record EnrollmentDetailsQueryView(
         EnrollmentStatus status,
         Instant enrolledAt,
         Instant activatedAt,
-        CancelDetailsView cancelDetailsView
+        CancelDetailsOfEnrollmentDetailsQueryView cancelDetailsOfEnrollmentDetailsQueryView
 ) {
+    public record CancelDetailsOfEnrollmentDetailsQueryView(
+            Instant cancelledAt,
+            CancelType cancelType,
+            CancelReasonType cancelReasonType,
+            String reason
+    ) {
+    }
 }

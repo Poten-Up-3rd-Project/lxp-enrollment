@@ -2,7 +2,6 @@ package com.lxp.enrollment.infra.required.persistence.jpa.model;
 
 import com.lxp.enrollment.domain.model.enums.CancelReasonType;
 import com.lxp.enrollment.domain.model.enums.CancelType;
-import com.lxp.enrollment.domain.model.vo.CancelDetails;
 import jakarta.persistence.Embeddable;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
