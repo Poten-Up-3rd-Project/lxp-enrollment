@@ -25,7 +25,7 @@ public class EnrollCourseService implements EnrollCourseUseCase {
     }
 
     @Override
-    public EnrollCourseResult enroll(EnrollCommand command) {
+    public EnrollCourseResult execute(EnrollCommand command) {
 
         if (contentClient.courseNotExists(command.courseId())) {
             throw new EnrollmentException(EnrollmentErrorCode.COURSE_NOT_FOUND);

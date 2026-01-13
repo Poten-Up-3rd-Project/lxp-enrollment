@@ -19,7 +19,7 @@ public class EnrollmentDetailsQueryService implements EnrollmentDetailsQueryUseC
     }
 
     @Override
-    public EnrollmentDetailsQueryResult find(EnrollmentDetailsQuery query) {
+    public EnrollmentDetailsQueryResult execute(EnrollmentDetailsQuery query) {
 
         Enrollment found = enrollmentRepository.findByUserIdAndCourseId(query.userId(), query.courseId())
                 .orElseThrow(() -> new EnrollmentException(EnrollmentErrorCode.ENROLLMENT_NOT_FOUND));
