@@ -2,7 +2,7 @@ package com.lxp.enrollment.infra.provided.web.external.response;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.lxp.common.util.DateTimeUtils;
-import com.lxp.enrollment.application.port.provided.result.CancelCourseResult;
+import com.lxp.enrollment.application.port.provided.dto.result.CancelCourseResult;
 import com.lxp.enrollment.domain.model.enums.EnrollmentStatus;
 
 import java.time.OffsetDateTime;

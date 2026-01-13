@@ -1,4 +1,4 @@
-package com.lxp.enrollment.application.port.provided.result;
+package com.lxp.enrollment.application.port.provided.dto.result;
 
 import com.lxp.enrollment.domain.model.enums.CancelReasonType;
 import com.lxp.enrollment.domain.model.enums.CancelType;

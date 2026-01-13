@@ -1,6 +1,6 @@
 package com.lxp.enrollment.application.port.provided;
 
-import com.lxp.enrollment.application.port.provided.result.EnrollCourseResult;
+import com.lxp.enrollment.application.port.provided.dto.result.EnrollCourseResult;
 
 import java.util.UUID;
 
