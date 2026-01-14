@@ -2,7 +2,7 @@ package com.lxp.common.exception;
 
 import com.lxp.common.domain.exception.DomainException;
 import com.lxp.common.infrastructure.exception.ErrorResponse;
-import com.lxp.enrollment.infra.provided.web.external.passport.InvalidPassportException;
+import com.lxp.common.passport.InvalidPassportException;
 import jakarta.servlet.ServletException;
 import jakarta.validation.ConstraintViolationException;
 import lombok.extern.slf4j.Slf4j;

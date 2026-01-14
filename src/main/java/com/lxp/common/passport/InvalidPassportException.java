@@ -1,4 +1,4 @@
-package com.lxp.enrollment.infra.provided.web.external.passport;
+package com.lxp.common.passport;
 
 public class InvalidPassportException extends RuntimeException {
 
