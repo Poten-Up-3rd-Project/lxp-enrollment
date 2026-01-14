@@ -18,9 +18,8 @@ spring:
         format_sql: true
 
   rabbitmq:
-    host: 192.168.49.2
-    # rabbitmq dashboard -> 30672
-    port: 30321
+    host: localhost
+    port: 5672
     username: ${SPRING_RABBITMQ_USERNAME}
     password: ${SPRING_RABBITMQ_PASSWORD}
 
@@ -37,10 +36,16 @@ management:
 
 passport:
   key:
-    private-key-string: ${PRIVATE_KEY_STRING}
-    public-key-string: ${PUBLIC_KEY_STRING}
-    duration-millis: 60000 #60초
+    secret-key: ${PASSPORT_SECRET_KEY:default-secret-key-for-development}
 
 services:
+  auth-service:
+    url: http://localhost:8082/api-v1/internal
+  user-service:
+    url: http://localhost:8083/api-v1/internal
+  admin-service:
+    url: http://localhost:8084/api-v1/internal
   content-service:
-    url: http://localhost:8081/api-v1/internal
+    url: http://localhost:8085/api-v1/internal
+  recommend-service:
+    url: http://localhost:8087/api-v1/internal

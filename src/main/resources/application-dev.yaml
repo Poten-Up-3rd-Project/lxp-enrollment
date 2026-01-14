@@ -36,9 +36,7 @@ management:
 
 passport:
   key:
-    private-key-string: ${PRIVATE_KEY_STRING}
-    public-key-string: ${PUBLIC_KEY_STRING}
-    duration-millis: 60000 #60초
+    secret-key: ${PASSPORT_SECRET_KEY:default-secret-key-for-development}
 
 services:
   content-service:
