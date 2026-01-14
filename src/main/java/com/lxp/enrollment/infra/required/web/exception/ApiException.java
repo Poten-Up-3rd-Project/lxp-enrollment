@@ -1,22 +1,26 @@
 package com.lxp.enrollment.infra.required.web.exception;
 
+import com.lxp.common.domain.exception.ErrorCode;
+
 public class ApiException extends RuntimeException {
 
-    private String code;
+    private ErrorCode errorCode;
     private String additionalInfo;
 
-    public ApiException(String code, String message, String additionalInfo) {
-        super(message);
-        this.code = code;
+    public ApiException(ErrorCode errorCode, String additionalInfo) {
+        super(errorCode.getMessage());
+        this.errorCode = errorCode;
+        this.additionalInfo = additionalInfo;
     }
 
-    public ApiException(String code, String message, String additionalInfo, Throwable cause) {
-        super(message, cause);
-        this.code = code;
+    public ApiException(ErrorCode errorCode, String additionalInfo, Throwable cause) {
+        super(errorCode.getMessage(), cause);
+        this.errorCode = errorCode;
+        this.additionalInfo = additionalInfo;
     }
 
     public String getCode() {
-        return this.code;
+        return this.errorCode.getCode();
     }
 
     public String getAdditionalInfo() {
