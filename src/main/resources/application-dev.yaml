@@ -40,4 +40,4 @@ passport:
 
 services:
   content-service:
-    url: http://lxp-content:8081/api-v1/internal
+    url: http://lxp-content:8081/internal/api-v1

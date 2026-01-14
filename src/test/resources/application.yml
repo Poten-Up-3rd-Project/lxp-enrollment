@@ -37,4 +37,4 @@ passport:
 
 services:
   content-service:
-    url: http://localhost:8081/api-v1/internal
+    url: http://localhost:8081/internal/api-v1
