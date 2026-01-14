@@ -1,4 +1,4 @@
-package com.lxp.common.passport;
+package com.lxp.common.passport.model;
 
 import java.util.List;
 

@@ -1,7 +1,7 @@
 package com.lxp.enrollment.infra.provided.web.external;
 
-import com.lxp.common.passport.PassportClaims;
-import com.lxp.common.passport.PassportVerifier;
+import com.lxp.common.passport.model.PassportClaims;
+import com.lxp.common.passport.support.PassportVerifier;
 import com.lxp.enrollment.application.provided.command.dto.CancelByUserCommand;
 import com.lxp.enrollment.application.provided.command.dto.EnrollCommand;
 import com.lxp.enrollment.application.provided.command.dto.view.CancelByUserSuccessView;

@@ -1,4 +1,4 @@
-package com.lxp.common.passport;
+package com.lxp.common.passport.config;
 
 import io.jsonwebtoken.security.Keys;
 import lombok.Setter;

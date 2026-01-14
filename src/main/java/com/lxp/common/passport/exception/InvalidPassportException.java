@@ -1,4 +1,4 @@
-package com.lxp.common.passport;
+package com.lxp.common.passport.exception;
 
 public class InvalidPassportException extends RuntimeException {
 

@@ -1,6 +1,8 @@
-package com.lxp.common.passport;
+package com.lxp.common.passport.support;
 
 import com.lxp.common.passport.constant.PassportConstants;
+import com.lxp.common.passport.exception.InvalidPassportException;
+import com.lxp.common.passport.model.PassportClaims;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.ExpiredJwtException;
 import io.jsonwebtoken.JwtException;

@@ -1,4 +1,4 @@
-package com.lxp.common.passport;
+package com.lxp.common.passport.support;
 
 import com.lxp.common.passport.constant.PassportConstants;
 import jakarta.servlet.http.HttpServletRequest;
