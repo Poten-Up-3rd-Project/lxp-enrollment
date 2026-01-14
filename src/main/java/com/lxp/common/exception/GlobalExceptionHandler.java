@@ -3,6 +3,7 @@ package com.lxp.common.exception;
 import com.lxp.common.domain.exception.DomainException;
 import com.lxp.common.infrastructure.exception.ErrorResponse;
 import com.lxp.common.passport.exception.InvalidPassportException;
+import com.lxp.enrollment.infra.required.web.exception.ApiException;
 import jakarta.servlet.ServletException;
 import jakarta.validation.ConstraintViolationException;
 import lombok.extern.slf4j.Slf4j;
@@ -134,6 +135,16 @@ public class GlobalExceptionHandler {
         String errorCode = "INVALID_PASSPORT_ENROLLMENT";
         String errorMessage = e.getMessage();
         return handleException(errorCode, errorMessage, UNAUTHORIZED, e);
+    }
+
+    // ---------- API exception handler
+
+    @ResponseBody
+    @ExceptionHandler(ApiException.class)
+    public ResponseEntity<ErrorResponse> handleApiException(ApiException e) {
+        String errorCode = e.getCode();
+        String errorMessage = e.getMessage() + ", " + e.getAdditionalInfo();
+        return handleException(errorCode, errorMessage, INTERNAL_SERVER_ERROR, e);
     }
 
     // ---------- Persistence exception handlers
