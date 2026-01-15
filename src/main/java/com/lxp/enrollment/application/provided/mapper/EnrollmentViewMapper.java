@@ -5,6 +5,10 @@ import com.lxp.enrollment.application.provided.command.dto.view.CancelByUserSucc
 import com.lxp.enrollment.application.provided.command.dto.view.EnrollSuccessView;
 import com.lxp.enrollment.application.provided.query.dto.view.EnrollmentDetailsQueryView;
 import com.lxp.enrollment.application.provided.query.dto.view.EnrollmentDetailsQueryView.CancelDetailsOfEnrollmentDetailsQueryView;
+import com.lxp.enrollment.application.provided.query.dto.view.EnrollmentDetailsQueryView.CourseSummaryView;
+import com.lxp.enrollment.application.provided.query.dto.view.EnrollmentDetailsQueryView.CourseSummaryView.CourseTagView;
+import com.lxp.enrollment.application.required.web.dto.CourseSummary;
+import com.lxp.enrollment.application.required.web.dto.CourseSummary.CourseTag;
 import com.lxp.enrollment.domain.model.Enrollment;
 import com.lxp.enrollment.domain.model.vo.CancelDetails;
 import org.springframework.stereotype.Component;
@@ -41,7 +45,7 @@ public class EnrollmentViewMapper {
         );
     }
 
-    public EnrollmentDetailsQueryView toEnrollmentDetailsQueryView(Enrollment enrollment) {
+    public EnrollmentDetailsQueryView toEnrollmentDetailsQueryView(Enrollment enrollment, CourseSummary courseSummary) {
 
         CancelDetails cancelDetails = enrollment.cancelDetails();
         CancelDetailsOfEnrollmentDetailsQueryView cancelDetailsView = new CancelDetailsOfEnrollmentDetailsQueryView(
@@ -50,13 +54,40 @@ public class EnrollmentViewMapper {
                 cancelDetails.cancelReasonType(),
                 cancelDetails.cancelReasonComment()
         );
+
+        CourseSummaryView courseSummaryView = new CourseSummaryView(
+                courseSummary.thumbnailUrl(),
+                courseSummary.totalProgress(),
+                courseSummary.courseTitle(),
+                courseSummary.courseDescription(),
+                courseSummary.instructorName(),
+                courseSummary.level(),
+                courseSummary.tags()
+                        .stream()
+                        .map(this::toCourseTagView)
+                        .toList()
+        );
+
         return new EnrollmentDetailsQueryView(
                 enrollment.id(),
                 enrollment.courseId(),
                 enrollment.enrollmentStatus(),
                 enrollment.enrolledAt(),
                 enrollment.activatedAt(),
-                cancelDetailsView
+                cancelDetailsView,
+                courseSummaryView
+        );
+    }
+
+    private CourseTagView toCourseTagView(CourseTag courseTag) {
+        return new CourseTagView(
+                courseTag.category(),
+                courseTag.subCategory(),
+                courseTag.tagId(),
+                courseTag.name(),
+                courseTag.state(),
+                courseTag.color(),
+                courseTag.variant()
         );
     }
 }
