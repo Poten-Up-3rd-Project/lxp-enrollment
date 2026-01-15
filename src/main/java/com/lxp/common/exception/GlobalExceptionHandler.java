@@ -185,7 +185,7 @@ public class GlobalExceptionHandler {
         log.debug("{}: {}", errorCode, errorMessage, e);
 
         return ResponseEntity
-                .internalServerError()
+                .status(mapToHttpStatus(group))
                 .body(body);
     }
 
