@@ -1,5 +1,6 @@
 package com.lxp.enrollment.infra.provided.web.external;
 
+import com.lxp.common.passport.exception.InvalidPassportException;
 import com.lxp.common.passport.support.PassportVerifier;
 import com.lxp.enrollment.application.provided.command.dto.CancelByUserCommand;
 import com.lxp.enrollment.application.provided.command.dto.EnrollCommand;
@@ -129,7 +130,7 @@ public class EnrollmentController {
                     .toString();
             return UUID.fromString(uid);
         } catch (Exception ignore) {
-            throw new BadCredentialsException("Passport 또는 uid 를 찾을 수 없습니다.");
+            throw new InvalidPassportException("Passport 또는 uid 를 찾을 수 없습니다.");
         }
     }
 
