@@ -4,5 +4,7 @@ import java.util.UUID;
 
 public interface ContentClient {
 
-    boolean courseNotExists(UUID courseId);
+    Boolean courseExists(UUID courseId);
+
+    Boolean courseNotExists(UUID courseId);
 }
