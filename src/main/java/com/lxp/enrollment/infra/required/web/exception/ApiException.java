@@ -7,6 +7,16 @@ public class ApiException extends RuntimeException {
     private ErrorCode errorCode;
     private String additionalInfo;
 
+    public ApiException(ErrorCode errorCode) {
+        super(errorCode.getMessage());
+        this.errorCode = errorCode;
+    }
+
+    public ApiException(ErrorCode errorCode, Throwable cause) {
+        super(errorCode.getMessage(), cause);
+        this.errorCode = errorCode;
+    }
+
     public ApiException(ErrorCode errorCode, String additionalInfo) {
         super(errorCode.getMessage());
         this.errorCode = errorCode;

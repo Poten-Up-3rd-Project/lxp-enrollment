@@ -5,7 +5,12 @@ import com.lxp.common.domain.exception.ErrorCode;
 public enum ApiErrorCode implements ErrorCode {
     INTERNAL_API_CALL_FAILS(
             "API_CALL_FAILS",
-            "내부 API 요청 실패",
+            "내부 API 요청이 실패했습니다.",
+            "INTERNAL_SERVER_ERROR"
+    ),
+    INTERNAL_API_CALL_ERROR_RESPONSE(
+            "INTERNAL_API_CALL_ERROR",
+            "내부 API 에서 오류가 응답되었습니다.",
             "INTERNAL_SERVER_ERROR"
     ),
     EMPTY_RESPONSE_BODY(
