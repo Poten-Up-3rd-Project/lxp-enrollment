@@ -1,3 +1,6 @@
+server:
+  port: 8080
+
 spring:
   docker:
     compose:
@@ -47,9 +50,9 @@ management:
 
 
 services:
+  user-service:
+    url: http://lxp-user:8081
   content-service:
     url: http://lxp-content:8082
-
-# 서버 포트
-server:
-  port: 8080
+  admin-service:
+    url: http://lxp-admin:8086
