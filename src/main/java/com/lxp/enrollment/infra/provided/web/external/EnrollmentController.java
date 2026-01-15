@@ -1,6 +1,5 @@
 package com.lxp.enrollment.infra.provided.web.external;
 
-import com.lxp.common.passport.model.PassportClaims;
 import com.lxp.common.passport.support.PassportVerifier;
 import com.lxp.enrollment.application.provided.command.dto.CancelByUserCommand;
 import com.lxp.enrollment.application.provided.command.dto.EnrollCommand;
@@ -20,11 +19,11 @@ import com.lxp.enrollment.infra.provided.web.external.response.EnrollSuccessResp
 import com.lxp.enrollment.infra.provided.web.external.response.EnrollmentDetailsResponse;
 import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -59,12 +58,10 @@ public class EnrollmentController {
 
     @PostMapping
     public ResponseEntity<EnrollSuccessResponse> enroll(
-            @RequestHeader("X-Passport")
-            String encodedPassport,
             @RequestParam
             String courseId
     ) {
-        UUID userUuid = resolveUserId(encodedPassport);
+        UUID userUuid = resolveUserId();
         UUID courseUuid = resolveCourseId(courseId);
 
         EnrollCommand command = new EnrollCommand(userUuid, courseUuid);
@@ -78,15 +75,13 @@ public class EnrollmentController {
 
     @PostMapping("/cancel")
     public ResponseEntity<CancelByUserSuccessResponse> cancelByUser(
-            @RequestHeader("X-Passport")
-            String encodedPassport,
             @RequestParam
             String courseId,
             @RequestBody
             @Valid
             CancelRequest request
     ) {
-        UUID userUuid = resolveUserId(encodedPassport);
+        UUID userUuid = resolveUserId();
         UUID courseUuid = resolveCourseId(courseId);
 
         CancelByUserCommand command = new CancelByUserCommand(
@@ -106,13 +101,11 @@ public class EnrollmentController {
 
     @GetMapping("/{courseId}")
     public ResponseEntity<EnrollmentDetailsResponse> myEnrollmentDetailsOf(
-            @RequestHeader("X-Passport")
-            String encodedPassport,
             @PathVariable
             String courseId
     ) {
 
-        UUID userUuid = resolveUserId(encodedPassport);
+        UUID userUuid = resolveUserId();
         UUID courseUuid = resolveCourseId(courseId);
 
         EnrollmentDetailsQuery query = new EnrollmentDetailsQuery(userUuid, courseUuid);
@@ -124,17 +117,16 @@ public class EnrollmentController {
 
     // ---------- Helpers
 
-    private UUID resolveUserId(String encodedPassport) {
+    // To Do: 나중에 컨트롤러 여러 개로 분리하게 되면 아래 메서드들도 별도 클래스로 분리하는 게 좋을 것 같음
+    
+    private UUID resolveUserId() {
 
-        PassportClaims claims = passportVerifier.verify(encodedPassport);
+        String uid = SecurityContextHolder.getContext()
+                .getAuthentication()
+                .getPrincipal()
+                .toString();
 
-        UUID userId;
-        try {
-            userId = UUID.fromString(claims.userId());
-        } catch (IllegalArgumentException e) {
-            throw new EnrollmentException(EnrollmentErrorCode.INVALID_USER_ID);
-        }
-        return userId;
+        return UUID.fromString(uid);
     }
 
     private UUID resolveCourseId(String courseId) {
