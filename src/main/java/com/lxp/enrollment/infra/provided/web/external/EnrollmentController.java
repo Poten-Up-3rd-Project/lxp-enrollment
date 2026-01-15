@@ -1,5 +1,7 @@
 package com.lxp.enrollment.infra.provided.web.external;
 
+import com.lxp.common.domain.pagination.Page;
+import com.lxp.common.infrastructure.persistence.PageConverter;
 import com.lxp.common.passport.exception.InvalidPassportException;
 import com.lxp.common.passport.support.PassportVerifier;
 import com.lxp.enrollment.application.provided.command.dto.CancelByUserCommand;
@@ -9,8 +11,11 @@ import com.lxp.enrollment.application.provided.command.dto.view.EnrollSuccessVie
 import com.lxp.enrollment.application.provided.command.usecase.CancelByUserUseCase;
 import com.lxp.enrollment.application.provided.command.usecase.EnrollUseCase;
 import com.lxp.enrollment.application.provided.query.dto.EnrollmentDetailsQuery;
+import com.lxp.enrollment.application.provided.query.dto.EnrollmentSummariesQuery;
 import com.lxp.enrollment.application.provided.query.dto.view.EnrollmentDetailsQueryView;
+import com.lxp.enrollment.application.provided.query.dto.view.EnrollmentSummaryQueryView;
 import com.lxp.enrollment.application.provided.query.usecase.EnrollmentDetailsQueryUseCase;
+import com.lxp.enrollment.application.provided.query.usecase.EnrollmentSummariesQueryUseCase;
 import com.lxp.enrollment.domain.exception.EnrollmentErrorCode;
 import com.lxp.enrollment.domain.exception.EnrollmentException;
 import com.lxp.enrollment.infra.provided.web.external.mapper.EnrollmentResponseMapper;
@@ -18,9 +23,12 @@ import com.lxp.enrollment.infra.provided.web.external.request.CancelRequest;
 import com.lxp.enrollment.infra.provided.web.external.response.CancelByUserSuccessResponse;
 import com.lxp.enrollment.infra.provided.web.external.response.EnrollSuccessResponse;
 import com.lxp.enrollment.infra.provided.web.external.response.EnrollmentDetailsResponse;
+import com.lxp.enrollment.infra.provided.web.external.response.EnrollmentSummaryResponse;
 import jakarta.validation.Valid;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -40,6 +48,7 @@ public class EnrollmentController {
     private final EnrollUseCase enrollUseCase;
     private final CancelByUserUseCase cancelByUserUseCase;
     private final EnrollmentDetailsQueryUseCase enrollmentDetailsQueryUseCase;
+    private final EnrollmentSummariesQueryUseCase enrollmentSummariesQueryUseCase;
     private final EnrollmentResponseMapper enrollmentResponseMapper;
 
     public EnrollmentController(
@@ -47,12 +56,14 @@ public class EnrollmentController {
             EnrollUseCase enrollUseCase,
             CancelByUserUseCase cancelByUserUseCase,
             EnrollmentDetailsQueryUseCase enrollmentDetailsQueryUseCase,
+            EnrollmentSummariesQueryUseCase enrollmentSummariesQueryUseCase,
             EnrollmentResponseMapper enrollmentResponseMapper
     ) {
         this.passportVerifier = passportVerifier;
         this.enrollUseCase = enrollUseCase;
         this.cancelByUserUseCase = cancelByUserUseCase;
         this.enrollmentDetailsQueryUseCase = enrollmentDetailsQueryUseCase;
+        this.enrollmentSummariesQueryUseCase = enrollmentSummariesQueryUseCase;
         this.enrollmentResponseMapper = enrollmentResponseMapper;
     }
 
@@ -113,6 +124,26 @@ public class EnrollmentController {
         EnrollmentDetailsQuery query = new EnrollmentDetailsQuery(userUuid, courseUuid);
         EnrollmentDetailsQueryView view = enrollmentDetailsQueryUseCase.execute(query);
         EnrollmentDetailsResponse body = enrollmentResponseMapper.toEnrollmentDetailsResponse(view);
+
+        return ResponseEntity.ok(body);
+    }
+
+    // ---------- 나의 수강 목록 조회
+
+    @GetMapping
+    public ResponseEntity<Page<EnrollmentSummaryResponse>> myEnrollments(
+            @PageableDefault(size = 20, sort = "enrolledAt", direction = Sort.Direction.DESC)
+            Pageable request
+    ) {
+
+        UUID userUuid = resolveUserId();
+
+        EnrollmentSummariesQuery query = new EnrollmentSummariesQuery(
+                userUuid,
+                PageConverter.toDomainPageRequest(request)
+        );
+        Page<EnrollmentSummaryQueryView> view = enrollmentSummariesQueryUseCase.execute(query);
+        Page<EnrollmentSummaryResponse> body = enrollmentResponseMapper.toEnrollmentSummariesResponse(view);
 
         return ResponseEntity.ok(body);
     }
