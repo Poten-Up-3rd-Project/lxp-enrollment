@@ -1,10 +1,9 @@
 package com.lxp.enrollment.application.provided.mapper;
 
 import com.lxp.enrollment.application.provided.command.dto.view.CancelByUserSuccessView;
-import com.lxp.enrollment.application.provided.command.dto.view.CancelByUserSuccessView.CancelDetailsOfCancelByUserSuccessView;
+import com.lxp.enrollment.application.provided.command.dto.view.CancelByUserSuccessView.CancelDetailsView;
 import com.lxp.enrollment.application.provided.command.dto.view.EnrollSuccessView;
 import com.lxp.enrollment.application.provided.query.dto.view.EnrollmentDetailsQueryView;
-import com.lxp.enrollment.application.provided.query.dto.view.EnrollmentDetailsQueryView.CancelDetailsOfEnrollmentDetailsQueryView;
 import com.lxp.enrollment.application.provided.query.dto.view.EnrollmentDetailsQueryView.CourseSummaryView;
 import com.lxp.enrollment.application.provided.query.dto.view.EnrollmentDetailsQueryView.CourseSummaryView.CourseTagView;
 import com.lxp.enrollment.application.required.web.dto.CourseSummary;
@@ -18,7 +17,7 @@ public class EnrollmentViewMapper {
 
     public CancelByUserSuccessView toCancelByUserSuccessView(Enrollment enrollment) {
         CancelDetails cancelDetails = enrollment.cancelDetails();
-        CancelDetailsOfCancelByUserSuccessView cancelDetailsView = new CancelDetailsOfCancelByUserSuccessView(
+        CancelDetailsView cancelDetailsView = new CancelDetailsView(
                 cancelDetails.cancelledAt(),
                 cancelDetails.cancelType(),
                 cancelDetails.cancelReasonType(),
@@ -48,7 +47,7 @@ public class EnrollmentViewMapper {
     public EnrollmentDetailsQueryView toEnrollmentDetailsQueryView(Enrollment enrollment, CourseSummary courseSummary) {
 
         CancelDetails cancelDetails = enrollment.cancelDetails();
-        CancelDetailsOfEnrollmentDetailsQueryView cancelDetailsView = new CancelDetailsOfEnrollmentDetailsQueryView(
+        EnrollmentDetailsQueryView.CancelDetailsView cancelDetailsView = new EnrollmentDetailsQueryView.CancelDetailsView(
                 cancelDetails.cancelledAt(),
                 cancelDetails.cancelType(),
                 cancelDetails.cancelReasonType(),

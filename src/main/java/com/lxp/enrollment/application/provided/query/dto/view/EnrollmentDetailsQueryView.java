@@ -16,11 +16,11 @@ public record EnrollmentDetailsQueryView(
         Instant enrolledAt,
         Instant activatedAt,
         // enrollment - cancel
-        CancelDetailsOfEnrollmentDetailsQueryView cancelDetailsOfEnrollmentDetailsQueryView,
+        CancelDetailsView cancelDetailsView,
         // course
         CourseSummaryView courseSummaryView
 ) {
-    public record CancelDetailsOfEnrollmentDetailsQueryView(
+    public record CancelDetailsView(
             Instant cancelledAt,
             CancelType cancelType,
             CancelReasonType cancelReasonType,

@@ -16,9 +16,9 @@ public record CancelByUserSuccessResponse(
         OffsetDateTime enrolledAt,
         @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ssXXX", timezone = "Asia/Seoul")
         OffsetDateTime activatedAt,
-        CancelDetailsOfCancelByUserSuccessResponse cancelDetails
+        CancelDetailsResponse cancelDetails
 ) {
-    public record CancelDetailsOfCancelByUserSuccessResponse(
+    public record CancelDetailsResponse(
             @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ssXXX", timezone = "Asia/Seoul")
             OffsetDateTime cancelledAt,
             CancelType cancelType,

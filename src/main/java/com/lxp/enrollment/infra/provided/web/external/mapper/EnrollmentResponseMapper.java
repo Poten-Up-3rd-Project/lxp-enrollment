@@ -2,16 +2,14 @@ package com.lxp.enrollment.infra.provided.web.external.mapper;
 
 import com.lxp.common.util.DateTimeUtils;
 import com.lxp.enrollment.application.provided.command.dto.view.CancelByUserSuccessView;
-import com.lxp.enrollment.application.provided.command.dto.view.CancelByUserSuccessView.CancelDetailsOfCancelByUserSuccessView;
+import com.lxp.enrollment.application.provided.command.dto.view.CancelByUserSuccessView.CancelDetailsView;
 import com.lxp.enrollment.application.provided.command.dto.view.EnrollSuccessView;
 import com.lxp.enrollment.application.provided.query.dto.view.EnrollmentDetailsQueryView;
-import com.lxp.enrollment.application.provided.query.dto.view.EnrollmentDetailsQueryView.CancelDetailsOfEnrollmentDetailsQueryView;
 import com.lxp.enrollment.application.provided.query.dto.view.EnrollmentDetailsQueryView.CourseSummaryView.CourseTagView;
 import com.lxp.enrollment.infra.provided.web.external.response.CancelByUserSuccessResponse;
-import com.lxp.enrollment.infra.provided.web.external.response.CancelByUserSuccessResponse.CancelDetailsOfCancelByUserSuccessResponse;
+import com.lxp.enrollment.infra.provided.web.external.response.CancelByUserSuccessResponse.CancelDetailsResponse;
 import com.lxp.enrollment.infra.provided.web.external.response.EnrollSuccessResponse;
 import com.lxp.enrollment.infra.provided.web.external.response.EnrollmentDetailsResponse;
-import com.lxp.enrollment.infra.provided.web.external.response.EnrollmentDetailsResponse.CancelDetailsOfEnrollmentDetailsResponse;
 import com.lxp.enrollment.infra.provided.web.external.response.EnrollmentDetailsResponse.CourseSummaryResponse.CourseTagResponse;
 import org.springframework.stereotype.Component;
 
@@ -30,8 +28,8 @@ public class EnrollmentResponseMapper {
 
     public CancelByUserSuccessResponse toCancelByUserSuccessResponse(CancelByUserSuccessView view) {
 
-        CancelDetailsOfCancelByUserSuccessView cancelDetailsView = view.cancelDetailsOfCancelByUserSuccessView();
-        CancelDetailsOfCancelByUserSuccessResponse cancelDetailsResponse = new CancelDetailsOfCancelByUserSuccessResponse(
+        CancelDetailsView cancelDetailsView = view.cancelDetailsView();
+        CancelDetailsResponse cancelDetailsResponse = new CancelDetailsResponse(
                 DateTimeUtils.toKstDateTime(cancelDetailsView.cancelledAt()),
                 cancelDetailsView.cancelType(),
                 cancelDetailsView.cancelReasonType(),
@@ -50,8 +48,8 @@ public class EnrollmentResponseMapper {
 
     public EnrollmentDetailsResponse toEnrollmentDetailsResponse(EnrollmentDetailsQueryView view) {
 
-        CancelDetailsOfEnrollmentDetailsQueryView cancelDetailsView = view.cancelDetailsOfEnrollmentDetailsQueryView();
-        CancelDetailsOfEnrollmentDetailsResponse cancelDetailsResponse = new CancelDetailsOfEnrollmentDetailsResponse(
+        EnrollmentDetailsQueryView.CancelDetailsView cancelDetailsView = view.cancelDetailsView();
+        EnrollmentDetailsResponse.CancelDetailsResponse cancelDetailsResponse = new EnrollmentDetailsResponse.CancelDetailsResponse(
                 DateTimeUtils.toKstDateTime(cancelDetailsView.cancelledAt()),
                 cancelDetailsView.cancelType(),
                 cancelDetailsView.cancelReasonType(),

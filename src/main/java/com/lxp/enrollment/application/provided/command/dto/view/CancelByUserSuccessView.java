@@ -13,9 +13,9 @@ public record CancelByUserSuccessView(
         EnrollmentStatus status,
         Instant enrolledAt,
         Instant activatedAt,
-        CancelDetailsOfCancelByUserSuccessView cancelDetailsOfCancelByUserSuccessView
+        CancelDetailsView cancelDetailsView
 ) {
-    public record CancelDetailsOfCancelByUserSuccessView(
+    public record CancelDetailsView(
             Instant cancelledAt,
             CancelType cancelType,
             CancelReasonType cancelReasonType,

@@ -19,7 +19,7 @@ public record EnrollmentDetailsResponse(
         @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ssXXX", timezone = "Asia/Seoul")
         OffsetDateTime activatedAt,
         // enrollment - cancel
-        CancelDetailsOfEnrollmentDetailsResponse cancelDetails,
+        CancelDetailsResponse cancelDetails,
         // course
         String thumbnailUrl,
         Double totalProgress,
@@ -30,7 +30,7 @@ public record EnrollmentDetailsResponse(
         List<CourseSummaryResponse.CourseTagResponse> tags
 ) {
 
-    public record CancelDetailsOfEnrollmentDetailsResponse(
+    public record CancelDetailsResponse(
             @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ssXXX", timezone = "Asia/Seoul")
             OffsetDateTime cancelledAt,
             CancelType cancelType,
