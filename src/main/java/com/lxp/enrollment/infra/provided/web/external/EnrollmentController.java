@@ -3,7 +3,6 @@ package com.lxp.enrollment.infra.provided.web.external;
 import com.lxp.common.domain.pagination.Page;
 import com.lxp.common.infrastructure.persistence.PageConverter;
 import com.lxp.common.passport.exception.InvalidPassportException;
-import com.lxp.common.passport.support.PassportVerifier;
 import com.lxp.enrollment.application.provided.command.dto.CancelByUserCommand;
 import com.lxp.enrollment.application.provided.command.dto.EnrollCommand;
 import com.lxp.enrollment.application.provided.command.dto.view.CancelByUserSuccessView;
@@ -44,7 +43,6 @@ import java.util.UUID;
 @RequestMapping("/api-v1/enrollments")
 public class EnrollmentController {
 
-    private final PassportVerifier passportVerifier;
     private final EnrollUseCase enrollUseCase;
     private final CancelByUserUseCase cancelByUserUseCase;
     private final EnrollmentDetailsQueryUseCase enrollmentDetailsQueryUseCase;
@@ -52,14 +50,12 @@ public class EnrollmentController {
     private final EnrollmentResponseMapper enrollmentResponseMapper;
 
     public EnrollmentController(
-            PassportVerifier passportVerifier,
             EnrollUseCase enrollUseCase,
             CancelByUserUseCase cancelByUserUseCase,
             EnrollmentDetailsQueryUseCase enrollmentDetailsQueryUseCase,
             EnrollmentSummariesQueryUseCase enrollmentSummariesQueryUseCase,
             EnrollmentResponseMapper enrollmentResponseMapper
     ) {
-        this.passportVerifier = passportVerifier;
         this.enrollUseCase = enrollUseCase;
         this.cancelByUserUseCase = cancelByUserUseCase;
         this.enrollmentDetailsQueryUseCase = enrollmentDetailsQueryUseCase;
