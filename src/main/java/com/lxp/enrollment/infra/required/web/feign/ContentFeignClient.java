@@ -21,6 +21,6 @@ public interface ContentFeignClient {
     @GetMapping("/courses/{courseId}/exists")
     ResponseEntity<Boolean> courseExists(@PathVariable String courseId);
 
-    @GetMapping("/courses/get-by-filters")
+    @GetMapping("/courses/filter")
     public ResponseEntity<List<CourseSummary>> getCourseSummary(@RequestBody CourseFilterInternalRequest request);
 }
