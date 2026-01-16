@@ -48,6 +48,9 @@ management:
       probes:
         enabled: true
 
+passport:
+  key:
+    secret-key: ${PASSPORT_SECRET_KEY:default-secret-key-for-development}
 
 services:
   content-service:
