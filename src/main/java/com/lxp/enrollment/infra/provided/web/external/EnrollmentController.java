@@ -165,7 +165,7 @@ public class EnrollmentController {
         try {
             return UUID.fromString(courseId);
         } catch (IllegalArgumentException e) {
-            throw new EnrollmentException(EnrollmentErrorCode.INVALID_USER_ID);
+            throw new EnrollmentException(EnrollmentErrorCode.INVALID_COURSE_ID);
         }
     }
 
@@ -173,7 +173,7 @@ public class EnrollmentController {
         try {
             return UUID.fromString(enrollmentId);
         } catch (IllegalArgumentException e) {
-            throw new EnrollmentException(EnrollmentErrorCode.INVALID_USER_ID);
+            throw new EnrollmentException(EnrollmentErrorCode.INVALID_ENROLLMENT_ID);
         }
     }
 }
