@@ -1,5 +1,5 @@
 server:
-  port: 8080
+  port: 8079
 
 spring:
   datasource:
@@ -35,4 +35,4 @@ passport:
 
 services:
   content-service:
-    url: http://localhost:8082/internal/api-v1
+    url: http://localhost:8082

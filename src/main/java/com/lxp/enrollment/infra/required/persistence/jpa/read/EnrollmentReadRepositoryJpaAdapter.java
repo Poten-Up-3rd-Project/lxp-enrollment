@@ -1,5 +1,8 @@
 package com.lxp.enrollment.infra.required.persistence.jpa.read;
 
+import com.lxp.common.domain.pagination.Page;
+import com.lxp.common.domain.pagination.PageRequest;
+import com.lxp.common.infrastructure.persistence.PageConverter;
 import com.lxp.enrollment.application.required.presistence.read.EnrollmentReadRepository;
 import com.lxp.enrollment.domain.model.Enrollment;
 import com.lxp.enrollment.infra.required.persistence.jpa.mapper.EnrollmentEntityMapper;
@@ -47,6 +50,23 @@ public class EnrollmentReadRepositoryJpaAdapter implements EnrollmentReadReposit
                 = enrollmentReadJpaRepository.findAllByUserId(userId);
 
         return enrollmentEntityMapper.toDomainList(enrollmentJpaEntities);
+    }
+
+    @Override
+    public Page<Enrollment> findAllByUserId(UUID userId, PageRequest pageRequest) {
+        org.springframework.data.domain.Page<EnrollmentJpaEntity> jpaPageResult = enrollmentReadJpaRepository
+                .findAllByUserId(
+                        userId, PageConverter.toSpringPageable(pageRequest)
+                );
+
+        List<EnrollmentJpaEntity> content = jpaPageResult.getContent();
+
+        return Page.of(
+                enrollmentEntityMapper.toDomainList(content),
+                jpaPageResult.getNumber(),
+                jpaPageResult.getSize(),
+                jpaPageResult.getTotalElements()
+        );
     }
 
     @Override
