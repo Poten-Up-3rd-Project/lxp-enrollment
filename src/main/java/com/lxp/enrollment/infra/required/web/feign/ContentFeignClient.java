@@ -1,12 +1,13 @@
 package com.lxp.enrollment.infra.required.web.feign;
 
+import com.lxp.enrollment.application.required.web.dto.CourseFilterInternalRequest;
 import com.lxp.enrollment.application.required.web.dto.CourseSummary;
 import com.lxp.enrollment.infra.required.web.feign.config.FeignErrorConfig;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RequestBody;
 
 import java.util.List;
 
@@ -21,5 +22,5 @@ public interface ContentFeignClient {
     ResponseEntity<Boolean> courseExists(@PathVariable String courseId);
 
     @GetMapping("/courses/get-by-filters")
-    public ResponseEntity<List<CourseSummary>> getCourseSummary(@RequestParam List<String> courseIds, int count);
+    public ResponseEntity<List<CourseSummary>> getCourseSummary(@RequestBody CourseFilterInternalRequest request);
 }

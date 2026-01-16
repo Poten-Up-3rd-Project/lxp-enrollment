@@ -1,6 +1,7 @@
 package com.lxp.enrollment.infra.required.web.feign;
 
 import com.lxp.enrollment.application.required.web.ContentClient;
+import com.lxp.enrollment.application.required.web.dto.CourseFilterInternalRequest;
 import com.lxp.enrollment.application.required.web.dto.CourseSummary;
 import com.lxp.enrollment.infra.required.web.utils.ApiPostman;
 import lombok.extern.slf4j.Slf4j;
@@ -35,8 +36,14 @@ public class ContentClientFeignAdapter implements ContentClient {
     @Override
     public CourseSummary getCourseSummary(UUID courseId) {
 
+        CourseFilterInternalRequest request = new CourseFilterInternalRequest(
+                List.of(courseId.toString()),
+                null,
+                1
+        );
+
         List<CourseSummary> courseSummary = ApiPostman.demand(
-                () -> contentFeignClient.getCourseSummary(List.of(courseId.toString()), 1)
+                () -> contentFeignClient.getCourseSummary(request)
         );
 
         // To Do: 응답 검증해야 함 (ex. 필수 값 null 여부)
@@ -49,11 +56,13 @@ public class ContentClientFeignAdapter implements ContentClient {
     @Override
     public List<CourseSummary> getCourseSummaries(Set<UUID> courseIds) {
 
-        List<CourseSummary> courseSummary = ApiPostman.demand(
-                () -> contentFeignClient.getCourseSummary(
-                        courseIds.stream().map(UUID::toString).toList(), courseIds.size()
-                )
+        CourseFilterInternalRequest request = new CourseFilterInternalRequest(
+                courseIds.stream().map(UUID::toString).toList(),
+                null,
+                courseIds.size()
         );
+
+        List<CourseSummary> courseSummary = ApiPostman.demand(() -> contentFeignClient.getCourseSummary(request));
 
         // To Do: 응답 검증해야 함 (ex. 필수 값 null 여부)
         // courseSummary.required == null
