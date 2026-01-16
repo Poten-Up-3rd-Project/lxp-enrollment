@@ -19,7 +19,7 @@ public class EnrollmentEntityMapper implements DomainMapper<Enrollment, Enrollme
         CancelDetailsJpaEmbeddable cancelDetailsJpaEmbeddable = entity.getCancelDetailsJpaEmbeddable();
 
         CancelDetails cancelDetails = null;
-        if (cancelDetailsJpaEmbeddable == null) {
+        if (cancelDetailsJpaEmbeddable != null) {
             cancelDetails = CancelDetails.of(
                     cancelDetailsJpaEmbeddable.getCanceledAt(),
                     cancelDetailsJpaEmbeddable.getCancelType(),
@@ -54,7 +54,7 @@ public class EnrollmentEntityMapper implements DomainMapper<Enrollment, Enrollme
         CancelDetails cancelDetails = domain.cancelDetails();
 
         CancelDetailsJpaEmbeddable cancelDetailsJpaEmbeddable = null;
-        if (cancelDetails == null) {
+        if (cancelDetails != null) {
             cancelDetailsJpaEmbeddable = CancelDetailsJpaEmbeddable.of(
                     cancelDetails.cancelledAt(),
                     cancelDetails.cancelType(),
