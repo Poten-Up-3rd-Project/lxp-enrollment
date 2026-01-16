@@ -7,6 +7,7 @@ import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 
 import java.util.List;
@@ -21,6 +22,6 @@ public interface ContentFeignClient {
     @GetMapping("/courses/{courseId}/exists")
     ResponseEntity<Boolean> courseExists(@PathVariable String courseId);
 
-    @GetMapping("/courses/filter")
+    @PostMapping("/courses/filter")
     public ResponseEntity<List<CourseSummary>> getCourseSummary(@RequestBody CourseFilterInternalRequest request);
 }
