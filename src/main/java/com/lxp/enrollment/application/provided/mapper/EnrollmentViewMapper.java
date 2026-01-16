@@ -24,12 +24,15 @@ public class EnrollmentViewMapper {
 
     public CancelByUserSuccessView toCancelByUserSuccessView(Enrollment enrollment) {
         CancelDetails cancelDetails = enrollment.cancelDetails();
-        CancelDetailsView cancelDetailsView = new CancelDetailsView(
-                cancelDetails.cancelledAt(),
-                cancelDetails.cancelType(),
-                cancelDetails.cancelReasonType(),
-                cancelDetails.cancelReasonComment()
-        );
+        CancelDetailsView cancelDetailsView = null;
+        if (cancelDetails != null) {
+            cancelDetailsView = new CancelDetailsView(
+                    cancelDetails.cancelledAt(),
+                    cancelDetails.cancelType(),
+                    cancelDetails.cancelReasonType(),
+                    cancelDetails.cancelReasonComment()
+            );
+        }
 
         return new CancelByUserSuccessView(
                 enrollment.id(),
@@ -58,12 +61,16 @@ public class EnrollmentViewMapper {
     public EnrollmentDetailsQueryView toEnrollmentDetailsQueryView(Enrollment enrollment, CourseSummary courseSummary) {
 
         CancelDetails cancelDetails = enrollment.cancelDetails();
-        EnrollmentDetailsQueryView.CancelDetailsView cancelDetailsView = new EnrollmentDetailsQueryView.CancelDetailsView(
-                cancelDetails.cancelledAt(),
-                cancelDetails.cancelType(),
-                cancelDetails.cancelReasonType(),
-                cancelDetails.cancelReasonComment()
-        );
+
+        EnrollmentDetailsQueryView.CancelDetailsView cancelDetailsView = null;
+        if (cancelDetails != null) {
+            cancelDetailsView = new EnrollmentDetailsQueryView.CancelDetailsView(
+                    cancelDetails.cancelledAt(),
+                    cancelDetails.cancelType(),
+                    cancelDetails.cancelReasonType(),
+                    cancelDetails.cancelReasonComment()
+            );
+        }
 
         CourseSummaryView courseSummaryView = new CourseSummaryView(
                 courseSummary.thumbnailUrl(),
@@ -133,6 +140,10 @@ public class EnrollmentViewMapper {
         );
     }
     private EnrollmentSummaryQueryView.CancelDetailsView toCancelDetailsView(CancelDetails cancelDetails) {
+        if (cancelDetails == null) {
+            return null;
+        }
+
         return new EnrollmentSummaryQueryView.CancelDetailsView(
                 cancelDetails.cancelledAt(),
                 cancelDetails.cancelType(),

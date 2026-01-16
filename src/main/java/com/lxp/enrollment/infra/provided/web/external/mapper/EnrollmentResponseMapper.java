@@ -36,12 +36,16 @@ public class EnrollmentResponseMapper {
     public CancelByUserSuccessResponse toCancelByUserSuccessResponse(CancelByUserSuccessView view) {
 
         CancelDetailsView cancelDetailsView = view.cancelDetailsView();
-        CancelDetailsResponse cancelDetailsResponse = new CancelDetailsResponse(
-                DateTimeUtils.toKstDateTime(cancelDetailsView.cancelledAt()),
-                cancelDetailsView.cancelType(),
-                cancelDetailsView.cancelReasonType(),
-                cancelDetailsView.reason()
-        );
+
+        CancelDetailsResponse cancelDetailsResponse = null;
+        if (cancelDetailsView != null) {
+            cancelDetailsResponse = new CancelDetailsResponse(
+                    DateTimeUtils.toKstDateTime(cancelDetailsView.cancelledAt()),
+                    cancelDetailsView.cancelType(),
+                    cancelDetailsView.cancelReasonType(),
+                    cancelDetailsView.reason()
+            );
+        }
 
         return new CancelByUserSuccessResponse(
                 view.id(),
@@ -58,12 +62,16 @@ public class EnrollmentResponseMapper {
     public EnrollmentDetailsResponse toEnrollmentDetailsResponse(EnrollmentDetailsQueryView view) {
 
         EnrollmentDetailsQueryView.CancelDetailsView cancelDetailsView = view.cancelDetailsView();
-        EnrollmentDetailsResponse.CancelDetailsResponse cancelDetailsResponse = new EnrollmentDetailsResponse.CancelDetailsResponse(
-                DateTimeUtils.toKstDateTime(cancelDetailsView.cancelledAt()),
-                cancelDetailsView.cancelType(),
-                cancelDetailsView.cancelReasonType(),
-                cancelDetailsView.reason()
-        );
+
+        EnrollmentDetailsResponse.CancelDetailsResponse cancelDetailsResponse = null;
+        if (cancelDetailsView != null) {
+            cancelDetailsResponse = new EnrollmentDetailsResponse.CancelDetailsResponse(
+                    DateTimeUtils.toKstDateTime(cancelDetailsView.cancelledAt()),
+                    cancelDetailsView.cancelType(),
+                    cancelDetailsView.cancelReasonType(),
+                    cancelDetailsView.reason()
+            );
+        }
 
         return new EnrollmentDetailsResponse(
                 view.id(),
@@ -134,6 +142,11 @@ public class EnrollmentResponseMapper {
     private EnrollmentSummaryResponse.CancelDetailsResponse toCancelDetailsResponse(
             EnrollmentSummaryQueryView.CancelDetailsView view
     ) {
+
+        if (view == null) {
+            return null;
+        }
+
         return new EnrollmentSummaryResponse.CancelDetailsResponse(
                 DateTimeUtils.toKstDateTime(view.cancelledAt()),
                 view.cancelType(),
@@ -144,6 +157,7 @@ public class EnrollmentResponseMapper {
     private EnrollmentSummaryResponse.CourseSummaryResponse.CourseTagResponse toCourseSummaryResponse(
             EnrollmentSummaryQueryView.CourseSummaryView.CourseTagView view
     ) {
+
         return new EnrollmentSummaryResponse.CourseSummaryResponse.CourseTagResponse(
                 view.category(),
                 view.subCategory(),
