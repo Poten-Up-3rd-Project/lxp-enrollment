@@ -27,7 +27,7 @@ public class PassportSecurityConfig {
                 .authorizeHttpRequests(authz -> authz
                         .requestMatchers("/health", "/actuator/**").permitAll()  // 헬스 체크는 인증 제외
                         .requestMatchers(HttpMethod.POST, "/login").permitAll()  // 이 외의 공개 api
-                        .requestMatchers("/internal/api-v1").permitAll()  // 이 외의 internal api
+                        .requestMatchers("/internal/api-v1/**").permitAll()  // 이 외의 internal api
                         .anyRequest().authenticated()
                 )
                 .exceptionHandling(ex -> ex
