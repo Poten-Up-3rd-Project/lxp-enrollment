@@ -8,7 +8,7 @@ import java.time.Instant;
 import java.util.List;
 import java.util.UUID;
 
-public record EnrollmentDetailsQueryView(
+public record EnrollmentSummaryQueryView(
         // enrollment
         UUID id,
         UUID courseId,
@@ -36,7 +36,7 @@ public record EnrollmentDetailsQueryView(
             String instructorName,
             String level,
             List<CourseTagView> tagsView
-    ) {
+    ){
         public record CourseTagView(
                 String category,
                 String subCategory,

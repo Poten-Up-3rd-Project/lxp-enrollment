@@ -9,7 +9,7 @@ import java.time.OffsetDateTime;
 import java.util.List;
 import java.util.UUID;
 
-public record EnrollmentDetailsResponse(
+public record EnrollmentSummaryResponse(
         // enrollment
         UUID id,
         UUID courseId,
@@ -29,7 +29,6 @@ public record EnrollmentDetailsResponse(
         String level,
         List<CourseSummaryResponse.CourseTagResponse> tags
 ) {
-
     public record CancelDetailsResponse(
             @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ssXXX", timezone = "Asia/Seoul")
             OffsetDateTime cancelledAt,
