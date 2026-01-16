@@ -8,7 +8,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 
 import java.util.List;
-import java.util.Set;
 
 @FeignClient(
         name = "content-service",
@@ -20,11 +19,6 @@ public interface ContentFeignClient {
     @GetMapping("/courses/{courseId}/exists")
     ResponseEntity<Boolean> courseExists(@PathVariable String courseId);
 
-    // To Do: 아직 해당 내부 api 확정 안 됨, 왔다고 치고 구현
-    @GetMapping("/courses/{courseId}")
-    ResponseEntity<CourseSummary> getCourseSummary(@PathVariable String courseId);
-
-    // To Do: 아직 해당 내부 api 확정 안 됨, 왔다고 치고 구현
-    @GetMapping("/courses")
-    ResponseEntity<List<CourseSummary>> getCourseSummaries(@PathVariable Set<String> courseIds);
+    @GetMapping("/courses/get-by-filters")
+    public ResponseEntity<List<CourseSummary>> getCourseSummary(List<String> courseIds, int count);
 }
