@@ -17,12 +17,16 @@ public class EnrollmentEntityMapper implements DomainMapper<Enrollment, Enrollme
     public Enrollment toDomain(EnrollmentJpaEntity entity) {
 
         CancelDetailsJpaEmbeddable cancelDetailsJpaEmbeddable = entity.getCancelDetailsJpaEmbeddable();
-        CancelDetails cancelDetails = CancelDetails.of(
-                cancelDetailsJpaEmbeddable.getCanceledAt(),
-                cancelDetailsJpaEmbeddable.getCancelType(),
-                cancelDetailsJpaEmbeddable.getCancelReasonType(),
-                cancelDetailsJpaEmbeddable.getCancelReasonComment()
-        );
+
+        CancelDetails cancelDetails = null;
+        if (cancelDetailsJpaEmbeddable == null) {
+            cancelDetails = CancelDetails.of(
+                    cancelDetailsJpaEmbeddable.getCanceledAt(),
+                    cancelDetailsJpaEmbeddable.getCancelType(),
+                    cancelDetailsJpaEmbeddable.getCancelReasonType(),
+                    cancelDetailsJpaEmbeddable.getCancelReasonComment()
+            );
+        }
 
         return Enrollment.reconstruct(
                 entity.getId(),
@@ -48,12 +52,16 @@ public class EnrollmentEntityMapper implements DomainMapper<Enrollment, Enrollme
     public EnrollmentJpaEntity toEntity(Enrollment domain) {
 
         CancelDetails cancelDetails = domain.cancelDetails();
-        CancelDetailsJpaEmbeddable cancelDetailsJpaEmbeddable = CancelDetailsJpaEmbeddable.of(
-                cancelDetails.cancelledAt(),
-                cancelDetails.cancelType(),
-                cancelDetails.cancelReasonType(),
-                cancelDetails.cancelReasonComment()
-        );
+
+        CancelDetailsJpaEmbeddable cancelDetailsJpaEmbeddable = null;
+        if (cancelDetails == null) {
+            cancelDetailsJpaEmbeddable = CancelDetailsJpaEmbeddable.of(
+                    cancelDetails.cancelledAt(),
+                    cancelDetails.cancelType(),
+                    cancelDetails.cancelReasonType(),
+                    cancelDetails.cancelReasonComment()
+            );
+        }
 
         return EnrollmentJpaEntity.create(
                 domain.id(),
