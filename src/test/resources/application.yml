@@ -34,9 +34,5 @@ passport:
     secret-key: ${PASSPORT_SECRET_KEY:default-secret-key-for-development}
 
 services:
-  user-service:
-    url: http://lxp-user:8081
   content-service:
     url: http://localhost:8082
-  admin-service:
-    url: http://lxp-admin:8086
