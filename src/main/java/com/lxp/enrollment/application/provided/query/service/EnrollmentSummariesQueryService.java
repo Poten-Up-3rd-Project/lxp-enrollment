@@ -38,7 +38,6 @@ public class EnrollmentSummariesQueryService implements EnrollmentSummariesQuery
     @Override
     public Page<EnrollmentSummaryQueryView> execute(EnrollmentSummariesQuery query) {
 
-
         Page<Enrollment> found
                 = enrollmentReadRepository.findAllByUserId(query.userId(), query.pageRequest());
 
@@ -46,7 +45,11 @@ public class EnrollmentSummariesQueryService implements EnrollmentSummariesQuery
                 .map(Enrollment::courseId)
                 .collect(Collectors.toSet());
 
-        List<CourseSummary> courseSummaries = contentClient.getCourseSummaries(courseIds);
+        List<CourseSummary> courseSummaries = List.of();
+        if (!courseIds.isEmpty()) {
+            courseSummaries = contentClient.getCourseSummaries(courseIds);
+        }
+
         Map<UUID, CourseSummary> courseSummaryMap = courseSummaries
                 .stream()
                 .collect(Collectors.toMap(
