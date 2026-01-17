@@ -7,6 +7,11 @@ import java.time.ZoneId;
 public class DateTimeUtils {
 
     public static OffsetDateTime toKstDateTime(Instant at) {
+
+        if (at == null) {
+            return null;
+        }
+
         return at.atZone(ZoneId.of("Asia/Seoul")).toOffsetDateTime();
     }
 }
