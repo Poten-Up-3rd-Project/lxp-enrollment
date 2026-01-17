@@ -35,7 +35,6 @@ public class EnrollService implements EnrollUseCase {
             throw new EnrollmentException(EnrollmentErrorCode.COURSE_NOT_FOUND);
         }
 
-        // To Do: 중복 생성 처리 (throw new EnrollmentException(EnrollmentErrorCode.ENROLLMENT_ALREADY_EXISTS)
         Enrollment created = enrollmentWriteRepository.save(
                 Enrollment.create(command.userId(), command.courseId())
         );
