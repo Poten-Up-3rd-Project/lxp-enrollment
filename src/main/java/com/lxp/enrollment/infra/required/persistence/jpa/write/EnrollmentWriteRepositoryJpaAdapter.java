@@ -32,7 +32,7 @@ public class EnrollmentWriteRepositoryJpaAdapter implements EnrollmentWriteRepos
             );
             return enrollmentEntityMapper.toDomain(saved);
         } catch (DataIntegrityViolationException e) {
-            if (isUniqueViolation(e, "uq_user_id_course_id")) {
+            if (isUniqueViolation(e, "enrollment.uq_user_id_course_id")) {
                 throw new EnrollmentException(EnrollmentErrorCode.ENROLLMENT_ALREADY_EXISTS);
             }
             throw e;
