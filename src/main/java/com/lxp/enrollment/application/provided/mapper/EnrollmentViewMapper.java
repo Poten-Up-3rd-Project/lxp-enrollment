@@ -75,9 +75,9 @@ public class EnrollmentViewMapper {
         CourseSummaryView courseSummaryView = new CourseSummaryView(
                 courseSummary.thumbnailUrl(),
                 courseSummary.totalProgress(),
-                courseSummary.courseTitle(),
-                courseSummary.courseDescription(),
-                courseSummary.instructorName(),
+                courseSummary.title(),
+                courseSummary.description(),
+                courseSummary.Instructor().name(),
                 courseSummary.level(),
                 courseSummary.tags()
                         .stream()
@@ -99,9 +99,9 @@ public class EnrollmentViewMapper {
         return new CourseTagView(
                 courseTag.category(),
                 courseTag.subCategory(),
-                courseTag.tagId(),
-                courseTag.name(),
-                courseTag.state(),
+                courseTag.id(),
+                courseTag.content(),
+                "ACTIVE",
                 courseTag.color(),
                 courseTag.variant()
         );
@@ -155,9 +155,9 @@ public class EnrollmentViewMapper {
         return new EnrollmentSummaryQueryView.CourseSummaryView(
                 courseSummary.thumbnailUrl(),
                 courseSummary.totalProgress(),
-                courseSummary.courseTitle(),
-                courseSummary.courseDescription(),
-                courseSummary.instructorName(),
+                courseSummary.title(),
+                courseSummary.description(),
+                courseSummary.Instructor().name(),
                 courseSummary.level(),
                 courseSummary.tags()
                         .stream()
@@ -169,9 +169,9 @@ public class EnrollmentViewMapper {
         return new EnrollmentSummaryQueryView.CourseSummaryView.CourseTagView(
                 courseTag.category(),
                 courseTag.subCategory(),
-                courseTag.tagId(),
-                courseTag.name(),
-                courseTag.state(),
+                courseTag.id(),
+                courseTag.content(),
+                "ACTIVE",
                 courseTag.color(),
                 courseTag.variant()
         );
