@@ -124,6 +124,9 @@ public class Enrollment extends AggregateRoot<UUID> {
     ) {
         
         // To Do: 취소 정책 여기에 적용해야 함
+        if (enrollmentStatus == EnrollmentStatus.CANCELLED) {
+            throw new EnrollmentException(EnrollmentErrorCode.ENROLLMENT_ALREADY_CANCELLED);
+        }
         
         enrollmentStatus = enrollmentStatus.toCancelled();
         validateDatesOrder();
@@ -139,6 +142,10 @@ public class Enrollment extends AggregateRoot<UUID> {
 
     public void cancelByPenalty() {
 
+        if (enrollmentStatus == EnrollmentStatus.CANCELLED) {
+            throw new EnrollmentException(EnrollmentErrorCode.ENROLLMENT_ALREADY_CANCELLED);
+        }
+
         enrollmentStatus = enrollmentStatus.toCancelled();
         validateDatesOrder();
 
@@ -148,6 +155,10 @@ public class Enrollment extends AggregateRoot<UUID> {
     }
 
     public void cancelByCourseClosed() {
+
+        if (enrollmentStatus == EnrollmentStatus.CANCELLED) {
+            throw new EnrollmentException(EnrollmentErrorCode.ENROLLMENT_ALREADY_CANCELLED);
+        }
 
         enrollmentStatus = enrollmentStatus.toCancelled();
         validateDatesOrder();

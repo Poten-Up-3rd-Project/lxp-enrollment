@@ -72,7 +72,16 @@ public enum EnrollmentErrorCode implements ErrorCode {
             "cancelReasonType 이 null 입니다.",
             "BAD_REQUEST"
     ),
-
+    ENROLLMENT_ALREADY_EXISTS(
+            "ENROLLMENT_0017",
+            "이미 존재하는 수강입니다.",
+            "CONFLICT"
+    ),
+    ENROLLMENT_ALREADY_CANCELLED(
+            "ENROLLMENT_0018",
+            "이미 취소된 수강입니다.",
+            "CONFLICT"
+    ),
     ;
 
     private final String code;

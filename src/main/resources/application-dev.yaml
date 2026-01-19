@@ -36,7 +36,7 @@ management:
 
 passport:
   key:
-    secret-key: ${PASSPORT_SECRET_KEY:default-secret-key-for-development}
+    secret-key: ${PASSPORT_SECRET:default-secret-key-for-development}
 
 services:
   content-service:

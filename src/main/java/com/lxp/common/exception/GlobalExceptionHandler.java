@@ -21,6 +21,8 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 import org.springframework.web.method.annotation.HandlerMethodValidationException;
 import org.springframework.web.method.annotation.MethodArgumentTypeMismatchException;
 
+import java.util.Arrays;
+
 import static com.lxp.common.exception.CommonErrorCode.DATA_ACCESS_FAILED;
 import static com.lxp.common.exception.CommonErrorCode.MISSING_HTTP_HEADER;
 import static com.lxp.common.exception.CommonErrorCode.MISSING_REQUEST_PARAMETER;
@@ -181,8 +183,7 @@ public class GlobalExceptionHandler {
     private ResponseEntity<ErrorResponse> handleException(String errorCode, String errorMessage, String group, Throwable e) {
         ErrorResponse body = new ErrorResponse(errorCode, errorMessage, group);
 
-        log.info("{}: {}", errorCode, errorMessage);
-        log.debug("{}: {}", errorCode, errorMessage, e);
+        log.info("{}: {}", errorCode, errorMessage, e);
 
         return ResponseEntity
                 .status(mapToHttpStatus(group))
