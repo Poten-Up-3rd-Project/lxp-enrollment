@@ -2,7 +2,6 @@ package com.lxp.enrollment.infra.provided.web.external;
 
 import com.lxp.common.domain.pagination.Page;
 import com.lxp.common.infrastructure.persistence.PageConverter;
-import com.lxp.common.passport.exception.InvalidPassportException;
 import com.lxp.enrollment.application.provided.command.dto.CancelByUserCommand;
 import com.lxp.enrollment.application.provided.command.dto.EnrollCommand;
 import com.lxp.enrollment.application.provided.command.dto.view.CancelByUserSuccessView;
@@ -23,12 +22,12 @@ import com.lxp.enrollment.infra.provided.web.external.response.CancelByUserSucce
 import com.lxp.enrollment.infra.provided.web.external.response.EnrollSuccessResponse;
 import com.lxp.enrollment.infra.provided.web.external.response.EnrollmentDetailsResponse;
 import com.lxp.enrollment.infra.provided.web.external.response.EnrollmentSummaryResponse;
+import com.lxp.passport.core.context.PassportContext;
 import jakarta.validation.Valid;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -38,6 +37,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.UUID;
+
+import static com.lxp.enrollment.domain.exception.EnrollmentErrorCode.INVALID_USER_ID;
 
 @RestController
 @RequestMapping("/api-v1/enrollments")
@@ -50,11 +51,11 @@ public class EnrollmentController {
     private final EnrollmentResponseMapper enrollmentResponseMapper;
 
     public EnrollmentController(
-            EnrollUseCase enrollUseCase,
-            CancelByUserUseCase cancelByUserUseCase,
-            EnrollmentDetailsQueryUseCase enrollmentDetailsQueryUseCase,
-            EnrollmentSummariesQueryUseCase enrollmentSummariesQueryUseCase,
-            EnrollmentResponseMapper enrollmentResponseMapper
+        EnrollUseCase enrollUseCase,
+        CancelByUserUseCase cancelByUserUseCase,
+        EnrollmentDetailsQueryUseCase enrollmentDetailsQueryUseCase,
+        EnrollmentSummariesQueryUseCase enrollmentSummariesQueryUseCase,
+        EnrollmentResponseMapper enrollmentResponseMapper
     ) {
         this.enrollUseCase = enrollUseCase;
         this.cancelByUserUseCase = cancelByUserUseCase;
@@ -67,8 +68,7 @@ public class EnrollmentController {
 
     @PostMapping
     public ResponseEntity<EnrollSuccessResponse> enroll(
-            @RequestParam
-            String courseId
+        @RequestParam String courseId
     ) {
         UUID userUuid = resolveUserId();
         UUID courseUuid = resolveCourseId(courseId);
@@ -84,20 +84,20 @@ public class EnrollmentController {
 
     @PostMapping("/cancel")
     public ResponseEntity<CancelByUserSuccessResponse> cancelByUser(
-            @RequestParam
-            String courseId,
-            @RequestBody
-            @Valid
-            CancelRequest request
+        @RequestParam
+        String courseId,
+        @RequestBody
+        @Valid
+        CancelRequest request
     ) {
         UUID userUuid = resolveUserId();
         UUID courseUuid = resolveCourseId(courseId);
 
         CancelByUserCommand command = new CancelByUserCommand(
-                userUuid,
-                courseUuid,
-                request.reasonType(),
-                request.reason()
+            userUuid,
+            courseUuid,
+            request.reasonType(),
+            request.reason()
         );
 
         CancelByUserSuccessView view = cancelByUserUseCase.execute(command);
@@ -110,8 +110,7 @@ public class EnrollmentController {
 
     @GetMapping("/{courseId}")
     public ResponseEntity<EnrollmentDetailsResponse> myEnrollmentDetailsOf(
-            @PathVariable
-            String courseId
+        @PathVariable String courseId
     ) {
 
         UUID userUuid = resolveUserId();
@@ -128,15 +127,14 @@ public class EnrollmentController {
 
     @GetMapping
     public ResponseEntity<Page<EnrollmentSummaryResponse>> myEnrollments(
-            @PageableDefault(size = 20, sort = "enrolledAt", direction = Sort.Direction.DESC)
-            Pageable request
+        @PageableDefault(size = 20, sort = "enrolledAt", direction = Sort.Direction.DESC) Pageable request
     ) {
 
         UUID userUuid = resolveUserId();
 
         EnrollmentSummariesQuery query = new EnrollmentSummariesQuery(
-                userUuid,
-                PageConverter.toDomainPageRequest(request)
+            userUuid,
+            PageConverter.toDomainPageRequest(request)
         );
         Page<EnrollmentSummaryQueryView> view = enrollmentSummariesQueryUseCase.execute(query);
         Page<EnrollmentSummaryResponse> body = enrollmentResponseMapper.toEnrollmentSummariesResponse(view);
@@ -147,18 +145,11 @@ public class EnrollmentController {
     // ---------- Helpers
 
     // To Do: 나중에 컨트롤러 여러 개로 분리하게 되면 아래 메서드들도 별도 클래스로 분리하는 게 좋을 것 같음
-    
-    private UUID resolveUserId() {
 
-        try {
-            String uid = SecurityContextHolder.getContext()
-                    .getAuthentication()
-                    .getPrincipal()
-                    .toString();
-            return UUID.fromString(uid);
-        } catch (Exception ignore) {
-            throw new InvalidPassportException("Passport 또는 uid 를 찾을 수 없습니다.");
-        }
+    private UUID resolveUserId() {
+        return PassportContext.getOptional()
+            .map(claim -> UUID.fromString(claim.userId()))
+            .orElseThrow(() -> new EnrollmentException(INVALID_USER_ID, "Passport 또는 uid 를 찾을 수 없습니다."));
     }
 
     private UUID resolveCourseId(String courseId) {
