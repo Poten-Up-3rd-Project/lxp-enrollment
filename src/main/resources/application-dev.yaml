@@ -37,6 +37,10 @@ management:
 passport:
   key:
     secret-key: ${PASSPORT_SECRET:default-secret-key-for-development}
+  filter:
+    exclude-paths:
+      - /actuator/**
+      - /internal/api-v1/**
 
 services:
   content-service:

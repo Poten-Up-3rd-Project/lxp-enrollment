@@ -5,6 +5,8 @@ plugins {
 }
 ext {
     springCloudVersion = "2025.0.1"
+    commonLibVersion = "v1.1.6"
+    passportLibVersion = "v1.2.2"
 }
 
 group = 'com.lxp'
@@ -37,9 +39,14 @@ dependencies {
     testImplementation 'org.springframework.amqp:spring-rabbit-test'
     runtimeOnly 'com.mysql:mysql-connector-j'
 
-    implementation 'com.github.Poten-Up-3rd-Project.common-lib:common-domain:v1.1.0'
-    implementation 'com.github.Poten-Up-3rd-Project.common-lib:common-application:v1.1.0'
-    implementation 'com.github.Poten-Up-3rd-Project.common-lib:common-infrastructure:v1.1.0'
+    //common
+    implementation "com.github.Poten-Up-3rd-Project.common-lib:common-domain:$commonLibVersion"
+    implementation "com.github.Poten-Up-3rd-Project.common-lib:common-application:$commonLibVersion"
+    implementation "com.github.Poten-Up-3rd-Project.common-lib:common-infrastructure:$commonLibVersion"
+
+    //passport
+    implementation "com.github.Poten-Up-3rd-Project.passport-lib:passport-starter:$passportLibVersion"
+    implementation "com.github.Poten-Up-3rd-Project.passport-lib:passport-authorization:$passportLibVersion"
 
     implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
     implementation 'org.springframework.boot:spring-boot-starter-web'
@@ -56,15 +63,6 @@ dependencies {
     testImplementation "org.testcontainers:testcontainers"
     testImplementation "org.testcontainers:junit-jupiter"
     testImplementation "org.testcontainers:rabbitmq"
-
-    // Spring Security
-    implementation 'org.springframework.boot:spring-boot-starter-security'
-    testImplementation 'org.springframework.security:spring-security-test'
-
-    //jjwt
-    implementation 'io.jsonwebtoken:jjwt-api:0.13.0'
-    implementation 'io.jsonwebtoken:jjwt-impl:0.13.0'
-    runtimeOnly 'io.jsonwebtoken:jjwt-jackson:0.13.0'
 
     testImplementation 'org.awaitility:awaitility:4.2.0'
     testRuntimeOnly('com.h2database:h2')
