@@ -33,11 +33,11 @@ class EnrollmentEventSerializerTest {
         );
 
         String json = ser.serialize(evt);
-        OutboxEvent outbox = mockOutbox("enrollment.created", json);
+        OutboxEvent outbox = mockOutbox("enroll.created", json);
 
         IntegrationEvent back = ser.deserialize(outbox);
         assertThat(back.getEventId()).isEqualTo("evt-1");
-        assertThat(back.getEventType()).isEqualTo("enrollment.created");
+        assertThat(back.getEventType()).isEqualTo("enroll.created");
     }
 
     @Test

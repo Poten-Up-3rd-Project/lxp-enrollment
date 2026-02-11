@@ -12,8 +12,8 @@ import org.springframework.stereotype.Component;
 @RequiredArgsConstructor
 public class EnrollmentIntegrationEventProducer implements EventProducer {
 
-    private static final String ENROLLMENT_EXCHANGE = "enrollment.exchange";
-    private static final String DLQ_EXCHANGE = "dlq.exchange";
+    private static final String ENROLLMENT_EXCHANGE = "enroll.events";
+    private static final String DLQ_EXCHANGE = "enroll.dlq";
 
     private final RabbitTemplate rabbitTemplate;
     private final EventSerializer serializer;

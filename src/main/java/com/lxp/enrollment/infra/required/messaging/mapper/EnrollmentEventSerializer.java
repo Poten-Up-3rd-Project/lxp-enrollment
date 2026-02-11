@@ -37,8 +37,8 @@ public class EnrollmentEventSerializer implements EventSerializer {
 
     Class<? extends IntegrationEvent> resolveEventClass(String eventType) {
         return switch (eventType) {
-            case "enrollment.created" -> EnrollmentCreatedIntegrationEvent.class;
-            case "enrollment.cancelled" -> EnrollmentCancelledIntegrationEvent.class;
+            case "enroll.created" -> EnrollmentCreatedIntegrationEvent.class;
+            case "enroll.deleted" -> EnrollmentCancelledIntegrationEvent.class;
             default -> throw new IllegalArgumentException("Unknown event type: " + eventType);
         };
     }

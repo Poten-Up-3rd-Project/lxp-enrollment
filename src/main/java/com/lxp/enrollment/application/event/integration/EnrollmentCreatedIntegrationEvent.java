@@ -24,6 +24,6 @@ public class EnrollmentCreatedIntegrationEvent extends BaseIntegrationEventEnvel
 
     @Override
     public String getEventType() {
-        return "enrollment.created";
+        return "enroll.created";
     }
 }

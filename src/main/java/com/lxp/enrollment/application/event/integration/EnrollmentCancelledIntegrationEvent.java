@@ -27,6 +27,6 @@ public class EnrollmentCancelledIntegrationEvent extends BaseIntegrationEventEnv
 
     @Override
     public String getEventType() {
-        return "enrollment.cancelled";
+        return "enroll.deleted";
     }
 }
