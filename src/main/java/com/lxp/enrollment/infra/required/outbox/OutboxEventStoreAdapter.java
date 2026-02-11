@@ -7,8 +7,11 @@ import com.lxp.enrollment.application.event.integration.EventMetadata;
 import com.lxp.enrollment.application.required.EventSerializer;
 import com.lxp.enrollment.application.required.OutboxEventStore;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Component;
 
+@Slf4j
 @Component
 @RequiredArgsConstructor
 public class OutboxEventStoreAdapter implements OutboxEventStore {
@@ -18,6 +21,11 @@ public class OutboxEventStoreAdapter implements OutboxEventStore {
 
     @Override
     public void save(IntegrationEvent event, EventMetadata metadata, OutboxOptions options) {
+        if (outboxRepository.findByEventId(event.getEventId()).isPresent()) {
+            log.debug("Outbox already has eventId={}, skipping save", event.getEventId());
+            return;
+        }
+
         OutboxEvent outbox = new OutboxEvent(
             event.getEventId(),
             event.getEventType(),
@@ -27,6 +35,10 @@ public class OutboxEventStoreAdapter implements OutboxEventStore {
             event.getOccurredAt(),
             options
         );
-        outboxRepository.save(outbox);
+        try {
+            outboxRepository.save(outbox);
+        } catch (DataIntegrityViolationException e) {
+            log.debug("Outbox insert raced for eventId={}, treating as idempotent save", event.getEventId());
+        }
     }
 }
