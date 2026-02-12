@@ -48,9 +48,21 @@ management:
       probes:
         enabled: true
 
+outbox:
+  polling:
+    interval: 5000
+  retry:
+    interval: 60000
+  dlq:
+    interval: 100000
+
 passport:
   key:
     secret-key: ${PASSPORT_SECRET:default-secret-key-for-development}
+  filter:
+    exclude-paths:
+      - /actuator/**
+      - /internal/api-v1/**
 
 services:
   content-service:

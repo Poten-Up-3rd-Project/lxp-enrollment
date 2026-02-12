@@ -8,11 +8,11 @@ public class EnrollmentException extends DomainException {
         super(errorCode);
     }
 
-    protected EnrollmentException(ErrorCode errorCode, String message) {
+    public EnrollmentException(ErrorCode errorCode, String message) {
         super(errorCode, message);
     }
 
-    protected EnrollmentException(ErrorCode errorCode, String message, Throwable cause) {
+    public EnrollmentException(ErrorCode errorCode, String message, Throwable cause) {
         super(errorCode, message, cause);
     }
 }

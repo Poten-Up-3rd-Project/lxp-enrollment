@@ -1,10 +1,13 @@
 package com.lxp.enrollment.domain.event;
 
 import com.lxp.common.domain.event.BaseDomainEvent;
+import com.lxp.common.event.CrudEvent;
+import lombok.Getter;
 
 import java.time.LocalDateTime;
 
-public class EnrollmentCreated extends BaseDomainEvent {
+@Getter
+public class EnrollmentCreated extends BaseDomainEvent implements CrudEvent {
     private final String courseUUID;
     private final String userUUID;
 
@@ -19,5 +22,10 @@ public class EnrollmentCreated extends BaseDomainEvent {
         super(eventId, enrollmentUuid, occurredAt);
         this.courseUUID = courseId;
         this.userUUID = userId;
+    }
+
+    @Override
+    public CrudType getCrudType() {
+        return CrudType.CREATED;
     }
 }
